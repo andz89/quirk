@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Library_code</title>
+
+    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="./library_js/cropper.css">
+</head>
+<body>
+
+    <div id="modal-cropper" class="modal-cropper" >
+    <div class="modal-container">
+        <div class="modal-content-cropper-container">
+                <div class="button-container">
+                        <div class="buttons">
+                        <button id="crop-image" type="button" class="btn btn-primary">Crop Image</button>
+                        <button id="crop-cancel" type="button" class="btn btn-dark">Skip cropping</button>
+                        </div>
+                </div>
+                <div class="modal-content-cropper">
+
+                </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="alert"></div>
+    <div id="createCanvasModal"></div>
+<header>
+ <ul> 
+    <div class="logo"> <li href="">QUIRK</li></div>
+    <div class="dropdown dropdown-files">
+        <li  class="dropbtn dropbtn-files">Files</li>
+        <div id="myDropdown" class="dropdown-content">
+        <a id="showCreateCanvasModalBtn">Create Canvas</a>
+        <a id="open_file">Open File</a>
+        <a id="save_json">Save</a>
+        <!-- <a id="save_again">Save_again</a> -->
+        </div>
+    </div>
+    <div class="dropdown dropdown-insert-shape">
+        <li  class="dropbtn dropbtn-insert-shape">Insert Shape</li>
+        <div id="myDropdown" class="dropdown-content">
+        <a id="square"> Square</a>
+        <a id="circle">Circle</a>
+        <a id="diamond">Diamond</a>
+        </div>
+    </div>
+    <div class="dropdown dropdown-insert-text">
+        <li id="insert-text-btn" class="dropbtn dropbtn-insert-text">Insert Text</li>
+     
+    </div>
+    <div class="dropdown dropdown-insert-image">
+        <li id="upload_image" class="dropbtn dropbtn-insert-image">Insert Image</li>
+    </div>
+
+    <div class="dropdown dropdown-clip-image">
+        <li id="clip"  class="dropbtn dropbtn-clip-image">Clip</li>
+    
+    </div>
+
+  
+</ul> 
+
+</header>
+<div class="sub_header">
+    <div id="file_name">
+    graduation
+    </div>
+    |
+   <div class="order"> 
+   
+      <img id="sendToFront" src="./icons/order_up.png" title="bring to front" draggable="false" alt="">
+      <img id="sendToBack"  src="./icons/order_down.png" title="bring to back" draggable="false" alt="">
+
+  </div>
+        |
+    <div>
+    <img id="sendToBack"  src="./icons/align_left.png" title="align-left" draggable="false" alt="">
+    <img id="sendToBack"  src="./icons/align_center.png" title="align-center" draggable="false" alt="">
+    <img id="sendToBack"  src="./icons/align_right.png" title="align-right" draggable="false" alt="">
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <img id="sendToBack"  src="./icons/align_bottom.png" title="align-bottom" draggable="false" alt="">
+    <img id="sendToBack"  src="./icons/align_mid.png" title="align-middle" draggable="false" alt="">
+    <img id="sendToBack"  src="./icons/align_top.png" title="align-top" draggable="false" alt="">
+
+
+    </div>
+        |
+
+    <div>
+        <!-- <label for="center_canvas" class="btn btn-sm btn-primary">Align to canvas</label> -->
+    <select name="center_canvas" id="">
+        <option value="">Align to canvas</option>
+        <option value="">Horizontal</option>
+        <option value="">Vertical</option>
+
+    </select>
+    </div>
+    <div class="canvas-options-container">
+        <span id="canvas-property-btn" class="btn btn-primary">Canvas</span>
+        <div class="canvas-options" style="display: none;">
+            <div class="close-container">
+                 <span class="close-container-btn">x</span> 
+            </div>
+            <div class="canvas-options-btn" >
+               
+                <li  class="canvas-option-background">
+                    <label>Background</label>
+                    <input id="canvas_background" value="#008080" type="color"> 
+                    <img id="transparent"  src="./icons/transparent.png" title="align-top" draggable="false" alt="">
+                </li>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<main>
+  
+        <div id="canvas-background"></div>
+
+    <div id="canvas-tools-container">
+         <div class="hide-tools-btn-container">
+            <button id="hide-tools-btn">>></button>
+        </div>
+        <!-- zoom btm -->
+        <div class="canvas-tools">
+        <div class="zoom-container">
+        <button id="zoomOut">&#9866;</button>
+        VIEW
+        <button id="zoomIn">&#10010; </button>
+        </div>
+       
+   
+
+        <div class="fonts_and_text-center">
+            <div class="fonts-Select-size">
+        <select id="fontFamilySelect" class="fontFamilySelect  "></select>
+        <input type="number" value="18" id="fontSize" class=" ">
+             </div>
+         <div class="text-center-container">
+            <!-- color -->
+            <label  for="color">  <img id="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4LjMxIDEwLjA3Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZvbnQtc2l6ZTo5LjAzcHg7ZmlsbDojZmZmO2ZvbnQtZmFtaWx5OkFyaWFsUm91bmRlZE1UQm9sZCwgQXJpYWwgUm91bmRlZCBNVCBCb2xkO30uY2xzLTJ7ZmlsbDojMDBhOTlkO308L3N0eWxlPjwvZGVmcz48dGl0bGU+Y29sb3IgaWNvbjwvdGl0bGU+PGcgaWQ9IkxheWVyXzIiIGRhdGEtbmFtZT0iTGF5ZXIgMiI+PGcgaWQ9IkxheWVyXzEtMiIgZGF0YS1uYW1lPSJMYXllciAxIj48dGV4dCBjbGFzcz0iY2xzLTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuOTEgNy44KSI+QTwvdGV4dD48cmVjdCBjbGFzcz0iY2xzLTIiIHk9IjguNDUiIHdpZHRoPSI4LjMxIiBoZWlnaHQ9IjEuNjEiIHJ4PSIwLjM5Ii8+PC9nPjwvZz48L3N2Zz4=" width="15" alt="">
+            </label>
+            <input type="color" id="color" class="color  " value="#008080">
+
+            <!-- color -->
+            <label id="bold" >  <img  class=" " src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3LjMzIDguNTgiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojY2NjO308L3N0eWxlPjwvZGVmcz48dGl0bGU+QXNzZXQgMTA8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJMYXllcl8zIiBkYXRhLW5hbWU9IkxheWVyIDMiPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTS4zMywxMC4zMnYtMWwuOTEtLjE4VjNMLjMzLDIuNzh2LTFINC4xNGE0LjA5LDQuMDksMCwwLDEsMi4zNi41OSwyLDIsMCwwLDEsLjg1LDEuNzZBMS44OSwxLjg5LDAsMCwxLDcsNS4xNmExLjk0LDEuOTQsMCwwLDEtLjkyLjcsMi4wOCwyLjA4LDAsMCwxLC44Ni40LDEuNjMsMS42MywwLDAsMSwuNTEuNjgsMi4xMywyLjEzLDAsMCwxLC4xNy44OCwyLjI0LDIuMjQsMCwwLDEtLjgxLDEuODcsMy42OCwzLjY4LDAsMCwxLTIuMy42M1pNMyw1LjM0SDQuMmExLjcxLDEuNzEsMCwwLDAsMS4wNi0uMjksMSwxLDAsMCwwLC4zNy0uODIsMSwxLDAsMCwwLS4zNy0uODgsMS44MywxLjgzLDAsMCwwLTEuMTItLjI4SDNaTTMsOUg0LjU1YTEuNTksMS41OSwwLDAsMCwxLS4zQTEuMDgsMS4wOCwwLDAsMCw2LDcuODJhMS42NiwxLjY2LDAsMCwwLS4xNC0uNzEsMSwxLDAsMCwwLS40MS0uNDQsMS42OCwxLjY4LDAsMCwwLS43Mi0uMTRIM1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0wLjMzIC0xLjc0KSIvPjwvZz48L2c+PC9zdmc+"" width="13" alt="">
+            </label>
+
+            <!-- italic -->
+            <label id="italic">
+            <img  class=" " src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1LjIgOC43NiI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNjY2M7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT5pdGFsaWM8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJMYXllcl80IiBkYXRhLW5hbWU9IkxheWVyIDQiPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUuMjEsMi43NEM0LjA4LDIuODMsNCwyLjkxLDMuNzksMy44OUwyLjcxLDkuNTRjLS4yLDEtLjA4LDEuMTIsMSwxLjJsLS4wNy4zOEguMDlsLjA5LS4zOGMxLjA5LS4xLDEuMjEtLjE5LDEuNDEtMS4yTDIuNjgsMy44OWMuMTktMSwuMDgtMS4wNi0xLjA1LTEuMTVsLjA4LS4zOEg1LjNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMC4wOSAtMi4zNikiLz48L2c+PC9nPjwvc3ZnPg==" width="8" alt="" />
+            </label>
+
+            <!-- alignLeftText -->
+            <label id="alignLeftText" >
+            <img class=" " src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4LjAzIDcuMjkiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojY2NjO308L3N0eWxlPjwvZGVmcz48dGl0bGU+bGVmdDwvdGl0bGU+PGcgaWQ9IkxheWVyXzIiIGRhdGEtbmFtZT0iTGF5ZXIgMiI+PGcgaWQ9IkxheWVyXzYiIGRhdGEtbmFtZT0iTGF5ZXIgNiI+PHJlY3QgY2xhc3M9ImNscy0xIiB4PSIwLjAzIiB3aWR0aD0iOCIgaGVpZ2h0PSIwLjkxIiByeD0iMC4yOCIvPjxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iNCIgd2lkdGg9IjgiIGhlaWdodD0iMC45MSIgcng9IjAuMjgiLz48cmVjdCBjbGFzcz0iY2xzLTEiIHk9IjEuOTMiIHdpZHRoPSI1Ljk3IiBoZWlnaHQ9IjAuOTEiIHJ4PSIwLjI0Ii8+PHJlY3QgY2xhc3M9ImNscy0xIiB5PSI2LjM4IiB3aWR0aD0iNS43NiIgaGVpZ2h0PSIwLjkxIiByeD0iMC4yNCIvPjwvZz48L2c+PC9zdmc+" width="15" alt="" />
+            </label>
+
+            <!-- alignCenterText -->
+            <label id="alignCenterText">
+            <img  class=" " src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDcuMjkiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojY2NjO308L3N0eWxlPjwvZGVmcz48dGl0bGU+Y2VudGVyXzE8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJjZW50ZXIiPjxyZWN0IGNsYXNzPSJjbHMtMSIgd2lkdGg9IjgiIGhlaWdodD0iMC45MSIgcng9IjAuMjgiLz48cmVjdCBjbGFzcz0iY2xzLTEiIHk9IjQiIHdpZHRoPSI4IiBoZWlnaHQ9IjAuOTEiIHJ4PSIwLjI4Ii8+PHJlY3QgY2xhc3M9ImNscy0xIiB4PSIxLjEzIiB5PSIxLjkzIiB3aWR0aD0iNS43NCIgaGVpZ2h0PSIwLjkxIiByeD0iMC4yNCIvPjxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iMS4yMyIgeT0iNi4zOCIgd2lkdGg9IjUuNTMiIGhlaWdodD0iMC45MSIgcng9IjAuMjMiLz48L2c+PC9nPjwvc3ZnPg==" width="15" alt="" />
+            </label>
+            <!-- alignRightText -->
+            <label id="alignRightText">
+            <img  class=" " src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDcuMjkiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojY2NjO308L3N0eWxlPjwvZGVmcz48dGl0bGU+cmlnaHQ8L3RpdGxlPjxnIGlkPSJMYXllcl8yIiBkYXRhLW5hbWU9IkxheWVyIDIiPjxnIGlkPSJyaWdodCI+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iOCIgaGVpZ2h0PSIwLjkxIiByeD0iMC4yOCIvPjxyZWN0IGNsYXNzPSJjbHMtMSIgeT0iNCIgd2lkdGg9IjgiIGhlaWdodD0iMC45MSIgcng9IjAuMjgiLz48cmVjdCBjbGFzcz0iY2xzLTEiIHg9IjIuMDMiIHk9IjEuOTMiIHdpZHRoPSI1Ljk3IiBoZWlnaHQ9IjAuOTEiIHJ4PSIwLjI0Ii8+PHJlY3QgY2xhc3M9ImNscy0xIiB4PSIyLjI0IiB5PSI2LjM4IiB3aWR0aD0iNS43NiIgaGVpZ2h0PSIwLjkxIiByeD0iMC4yNCIvPjwvZz48L2c+PC9zdmc+" alt="" width="15" />
+            </label>
+
+        </div>
+     
+        </div>
+
+        
+       
+
+        <!-- fill-tools -->
+        <div class="fill-tools">
+            <div class="fill-tools-container">
+
+        <div>
+        <label style="position: relative;" class="fill-icon" for="shapeFill">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3LjE1IDcuOTMiPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojZjE1YTI0O30uY2xzLTJ7ZmlsbDojY2NjO308L3N0eWxlPjwvZGVmcz48dGl0bGU+MTExPC90aXRsZT48ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIj48ZyBpZD0iTGF5ZXJfMS0yIiBkYXRhLW5hbWU9IkxheWVyIDEiPjxyZWN0IGNsYXNzPSJjbHMtMSIgeD0iMC4wNyIgeT0iNi43OSIgd2lkdGg9IjcuMDEiIGhlaWdodD0iMS4xNSIgcng9IjAuMzUiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02LjM2LDRhNS4yMyw1LjIzLDAsMCwwLS44LDEuNTkuOC44LDAsMCwwLC44LjguNzkuNzksMCwwLDAsLjc5LS44QTUuMjYsNS4yNiwwLDAsMCw2LjM2LDRaTTYuMjQsMi43LDMuNjYuMTJBLjM4LjM4LDAsMCwwLDMuMzgsMCwuMzkuMzksMCwwLDAsMy4xLjEybC0xLDFMMSwuMDZhLjE5LjE5LDAsMCwwLS4yOCwwTC40Ni4zNGEuMTkuMTksMCwwLDAsMCwuMjhMMS41MywxLjY5LjM1LDIuODdhMS4xOSwxLjE5LDAsMCwwLDAsMS42OUwxLjgsNmExLjIyLDEuMjIsMCwwLDAsLjg1LjM1QTEuMiwxLjIsMCwwLDAsMy40OSw2TDYuMjQsMy4yNkEuMzkuMzksMCwwLDAsNi4yNCwyLjdaTTQuOCwzLjU4aC00YS40LjQsMCwwLDEsLjA5LS4xNWwuMTYtLjE2LDEtMUwyLjgyLDNhLjM5LjM5LDAsMCwwLC41NiwwLC40LjQsMCwwLDAsMC0uNTZsLS43My0uNzNMMy4zOCwxbDIsMi0uNi42WiIvPjwvZz48L2c+PC9zdmc+"  width="15" alt="" />
+        <span>Fill Color</span>
+        <input type="color"  id="shapeFill"  value="#d6d6d6" class="shape-color  ">
+        </label>
+        </div>
+        
+                
+        <button id="removeColor" class="btn transparent" >Transparent  <img id="sendToBack"  src="./icons/transparent.png" title="align-top" width="20px" draggable="false" alt=""></button>
+
+         </div>
+        </div>
+
+        <!-- stroke -->
+        <div class="stroke-tools ">
+        <div class="stroke-color">
+        <label for="strokeInput">Stroke Color</label>
+        <input type="color"  id="strokeInput" value="#f4911f" >
+        </div>
+        <div class="strokeWidth-container">
+        <span>Stroke width</span>
+        <input type="number" id="strokeWidthInput"  min="0" max="100" value="30" >
+        </div>
+        </div>
+
+
+        <!-- opacity -->
+        
+    <div class="opacity-container hover">
+    <label for="opacity">Opacity</label>
+    <input type="range" id="opacity" class=" " name="opacity" min="1" max="10" value="10" style="width:100%" >
+    </div>
+
+   
+
+
+    <div class="icons">
+
+    <div title="duplicate" id="duplicate" class="duplicate-btn  "> 
+    <span>&#10064;</span>
+    </div>
+
+
+    <span title="lock Element"  id="lock" class="lock-btn  ">&#x1F512;</span>
+    <!-- <span  title="unlock Element" id="unlock" class="lock-btn  ">&#128275;</span> -->
+
+    <small title="group" id="group" class="folder-btn  ">&#128448;</small>
+    <small title="ungroup"  id="ungroup" class="folder-btn  ">&#128449;</small>
+    <small title="ungroup"  id="ungroup-fake" class="folder-btn  ungroup-fake">&#128449;</small>
+
+
+
+    </div>
+
+
+    <small>Lock element appear here</small>
+    <small id="edit_lockName">Edit</small>
+    <div  class="lock-object-container  ">
+    </div>
+   
+    </div>
+    </div>
+
+    
+</main>
+<div id="canvas_test">
+
+</div>
+<img id="img-test" src="./img.jpeg" alt="">
+<script type="module" src="main.js"></script>
+<script  src="./library_js/fabric.js"></script>
+<script src="./library_js/cropper.js"></script>
+
+<!-- <script type="module" src="./js_file/_modal.js"></script> -->
+</body>
+</html>
