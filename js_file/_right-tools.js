@@ -147,86 +147,116 @@ this.canvas.renderAll()
 }
    
 
-clip_image(){
+// clip_image(){
 
-let object = this.canvas.getActiveObject()
-document.querySelector('#clip').addEventListener('click', ()=>{
-    let image = document.querySelector('#img-test').src
- fabric.Image.fromURL(image, (img)=> {
-    // var scalar = 1, abort;
-    var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
-    var shell = new fabric.Path(path, { 
-      fill: '',
-      stroke: 'blue',
-      strokeWidth: 5,
-      scaleX: 2,
-      scaleY: 2,
-      lockScalingX: true,
-      lockScalingY: true,
-      lockSkewingX: true,
-      lockSkewingY: true,
-      originX: 'center',
-      originY: 'center',
-    });
+// let object = this.canvas.getActiveObject()
+// document.querySelector('#clip').addEventListener('click', ()=>{
+//     // let image = document.querySelector('#img-test').src
+//  fabric.Image.fromURL(image, (img)=> {
+//     // var scalar = 1, abort;
+//     var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
+//     var shell = new fabric.Path(path, { 
+//       fill: '',
+//       stroke: 'blue',
+//       strokeWidth: 5,
+//       scaleX: 2,
+//       scaleY: 2,
+//     //   lockScalingX: true,
+//     //   lockScalingY: true,
+//     //   lockSkewingX: true,
+//     //   lockSkewingY: true,
+//       originX: 'center',
+//       originY: 'center',
+//     });
     
-    var clipPath = new fabric.Path(path, {
-      absolutePositioned: true,
-      originX: 'center',
-      originY: 'center',
-      scaleX: 2,
-      scaleY: 2
-    });
+//     var clipPath = new fabric.Path(path, {
+//       absolutePositioned: true,
+//       originX: 'center',
+//       originY: 'center',
+//       scaleX: 2,
+//       scaleY: 2
+//     });
    
     
-    // function animate() {
-    //   abort = fabric.util.animate({
-    //     startValue: 0,
-    //     endValue: 360 * scalar,
-    //     duration: 1000,
-    //     easing: fabric.util.ease.easeInOutSine,
-    //     onChange: function (value) {
-    //       shell.set('angle', value);
-    //       clipPath.set('angle', value);
-    //       img.set('dirty', true);
-    //     },
-    //     onComplete: function () {
-    //       scalar += Math.sign(scalar);
-    //       scalar *= -1;
-    //       animate();
-    //     }
-    //   });
-    // }
+//     // function animate() {
+//     //   abort = fabric.util.animate({
+//     //     startValue: 0,
+//     //     endValue: 360 * scalar,
+//     //     duration: 1000,
+//     //     easing: fabric.util.ease.easeInOutSine,
+//     //     onChange: function (value) {
+//     //       shell.set('angle', value);
+//     //       clipPath.set('angle', value);
+//     //       img.set('dirty', true);
+//     //     },
+//     //     onComplete: function () {
+//     //       scalar += Math.sign(scalar);
+//     //       scalar *= -1;
+//     //       animate();
+//     //     }
+//     //   });
+//     // }
 
-    img.scale(0.5).set({
-      left: 200,
-      top: 180,
-      clipPath: clipPath
-    });
-    shell.on('moving', ({ e, transform, pointer }) => {
-      //  only because they are absolutePositioned
-      clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
-      img.set('dirty', true);
-    });
-    // shell.on('rotating', () => {
-    //   clipPath.set({ angle: shell.angle });
-    //   img.set('dirty', true);
-    // });
-    // shell.on('selected', () => {
-    //   abort();
-    // });
-    // shell.on('deselected', () => {
-    //   scalar = 1;
-    // //   animate()
-    // });
-    img.clipPath = clipPath;
-    this.canvas.add(img, shell);
-    this.canvas.setActiveObject(img);
+//     img.scale(0.5).set({
+//       left: 200,
+//       top: 180,
+//       clipPath: clipPath
+//     });
+//     shell.on('moving', ({ e, transform, pointer }) => {
+//       //  only because they are absolutePositioned
+//       clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
+//       img.set('dirty', true);
+//     });
+//     // shell.on('rotating', () => {
+//     //   clipPath.set({ angle: shell.angle });
+//     //   img.set('dirty', true);
+//     // });
+//     // shell.on('selected', () => {
+//     //   abort();
+//     // });
+//     // shell.on('deselected', () => {
+//     //   scalar = 1;
+//     // //   animate()
+//     // });
+//     img.clipPath = clipPath;
+//     this.canvas.add(img, shell);
+//     this.canvas.setActiveObject(img);
 
-    // animate();
-  });
-})
+//     // animate();
+//   });
+// })
  
 
+// }
+
+crop_image(){
+        document.querySelector('#log').addEventListener('click', () => {
+            let active_object = this.canvas.getActiveObject();
+            console.log(active_object)
+        })
+        
+        document.querySelector('#crop').addEventListener('click', ()=>{
+        let objects = this.canvas.getActiveObjects();
+        let img = objects[0]._originalElement;
+        let cropper_objects = objects[1]
+        // console.log()
+     console.log( `height` + ` `+ cropper_objects.getScaledHeight())
+
+
+        let  imgInstance = new fabric.Image(img, {
+        height:cropper_objects.getScaledHeight(), //unsa katas on ang pag crop
+        // cropY:0//asa ng sugod ang crop
+        });
+       
+        // console.log()
+     console.log( `height` + ` `+ img.height)
+
+        this.adding_object_style(imgInstance);
+        // this.canvas.add(imgInstance)
+        })
+     
+
+        
 }
 
 }

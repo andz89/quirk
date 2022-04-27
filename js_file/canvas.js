@@ -43,19 +43,22 @@ let menu_tools = new Menu_tools({
         menu_tools.uploadImageLocalFile('#upload_image')
         menu_tools.save_file_json()
         menu_tools.canvasBackgroundColor()
-        // menu_tools.canvasBackgroundColor()
+        menu_tools.bringToFront_object()
+        menu_tools.bringToBack_object()
+
   
 
         //shapes
         menu_tools.insert_shape('#square',()=>{
         var object = new fabric.Rect({
-        width:90,
-        height:90,
+        width:549,
+        height:549,
         shape: 'square',
         fill: 'gray'
         });
         object.name ="square"
         this.adding_object_style(object)
+   
         })
           menu_tools.insert_shape('#circle',()=>{
         var object = new fabric.Circle({
@@ -65,6 +68,7 @@ let menu_tools = new Menu_tools({
         top: 100,
         });
         object.name ="circle"
+      
         this.adding_object_style(object)
         })
 
@@ -94,8 +98,8 @@ let right_tools = new Right_tools({
         right_tools.backgroundColor()
         right_tools.remove_fill_color()
         right_tools.fontColor('#color')
-        right_tools.clip_image()
-
+        // right_tools.clip_image()
+        right_tools.crop_image()
    
 
 

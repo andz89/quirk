@@ -44,7 +44,7 @@ document.querySelector('.canvas-options').style.display = "none"
     canvasOn(property){
     this.canvas.on({
     'selection:updated': function(o){
-    var activeObj = o.target;
+    var activeObj = o.selected[0];//to throw error type o.target
 
     //reset fontSize
     if(activeObj.type == "textbox"){
@@ -64,12 +64,24 @@ document.querySelector('.canvas-options').style.display = "none"
     'selection:created': function(o){
         // console.log(o.selected[0].type)
     var activeObj = o.selected[0];
-     
+    if(activeObj.group  !== undefined){
+     let group = activeObj.group
+    group.set("borderColor","#333");
+    group.set("cornerColor","#17a2b8");
+    group.set("cornerSize",15);
+    group.set("cornerStyle","circle");
+    group.set("transparentCorners",false);
+    group.set("lockUniScaling",true);
+    }
     //reset fontSize
     if(activeObj.type == "textbox"){
     let fontSize = document.querySelector(property.fontSize)
     fontSize.value = activeObj.fontSize
+    
     }
+
+
+
 
     activeObj.set("borderColor","#333");
     activeObj.set("cornerColor","#17a2b8");

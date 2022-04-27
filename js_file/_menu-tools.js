@@ -128,7 +128,7 @@ async save_file_json(){
     }
 
     canvasBackgroundColor(){
-        console.log('andz')
+   
     let canvasBackground = document.querySelector('#canvas_background')
     canvasBackground.oninput = (e)=>{
     
@@ -147,7 +147,24 @@ async save_file_json(){
     }
     }
     
+bringToFront_object(){
 
+ let bringToFront  =   document.querySelector('#bringToFront_object')
+bringToFront.onclick = (e)=>{
+ 
+let object = this.canvas.getActiveObject();
+
+this.canvas.bringToFront(object)
+ 
+}
+}
+bringToBack_object(){
+ let bringToBack  =   document.querySelector('#bringToBack_object')
+bringToBack.onclick = (e)=>{
+let object = this.canvas.getActiveObject();
+this.canvas.sendToBack(object)
+}
+}
 
 
    
