@@ -7,7 +7,38 @@
 <link rel="stylesheet" href="./library_js/cropper.css">
 </head>
 <body>
+<div class="modal-loader">
 
+  </div>
+  <div id="modal-clip">
+      <div class="modal-container">
+          <div class="buttons">
+                <button class="btn btn-primary" id="clip-save">Save</button>
+                <button class="btn btn-danger" id="clip-cancel">Cancel</button>
+          </div>
+         
+
+        <div class="modal-clip-content">
+
+      </div>
+      <div class="clip-tools">
+  
+
+
+        <label for="">Stroke size</label>
+        <input type="range" id="clip-stroke-size" min="0" max="100">
+
+
+         <label for="">Stroke Color</label>
+        <input type="color" id="clip-stroke-color">
+
+          <label for="">Background Color</label>
+        <input type="color" id="clip-background-color">
+        
+      </div>
+      </div>
+      
+  </div>
     <div id="modal-cropper" class="modal-cropper" >
     <div class="modal-container">
         <div class="modal-content-cropper-container">
@@ -61,15 +92,21 @@
     </div>
 
     <div class="dropdown dropdown-clip-image">
-        <li id="crop"  class="dropbtn dropbtn-clip-image">Crop</li>
+        <li id="crop_init"  class="dropbtn dropbtn-clip-image">Crop</li>
     
     </div>
       <div class="dropdown dropdown-clip-image">
         <li id="log"  class="dropbtn dropbtn-clip-image">log object</li>
     
     </div>
-
-  
+   <div class="dropdown dropdown-clip-image">
+        <li id="position"  class="dropbtn dropbtn-clip-image">position</li>
+    
+    </div>
+     <div class="dropdown dropdown-clip-image">
+        <li id="crop_test"  class="dropbtn dropbtn-clip-image">Crop test</li>
+    
+    </div>
 </ul> 
 
 </header>
@@ -221,7 +258,7 @@
         
     <div class="opacity-container hover">
     <label for="opacity">Opacity</label>
-    <input type="range" id="opacity" class=" " name="opacity" min="1" max="10" value="10" style="width:100%" >
+    <input type="range" id="opacity" class=" " name="opacity" min="100" max="500" value="10" style="width:100%" >
     </div>
 
    
@@ -256,10 +293,10 @@
 
     
 </main>
-<div id="canvas_test">
 
-</div>
-<img id="img-test" src="./img.jpeg" alt="">
+
+
+<!-- <img id="img-test" src="./img.jpeg" alt=""> -->
 <script type="module" src="main.js"></script>
 <script  src="./library_js/fabric.js"></script>
 <script src="./library_js/cropper.js"></script>

@@ -25,8 +25,12 @@ let utils = new Utilities({
         utils.canvasOn({fontSize:'#fontSize'})
         utils.discardActiveObject()
       
-
-
+        let objects = this.canvas._objects
+        objects.forEach((e)=>{
+                console.log(e.type)
+           
+        })
+        // console.log(this.canvas._objects)
 
 let menu_tools = new Menu_tools({
         canvas : this.canvas,
@@ -45,8 +49,8 @@ let menu_tools = new Menu_tools({
         menu_tools.canvasBackgroundColor()
         menu_tools.bringToFront_object()
         menu_tools.bringToBack_object()
+        menu_tools.crop_image_init()
 
-  
 
         //shapes
         menu_tools.insert_shape('#square',()=>{
@@ -98,10 +102,14 @@ let right_tools = new Right_tools({
         right_tools.backgroundColor()
         right_tools.remove_fill_color()
         right_tools.fontColor('#color')
-        // right_tools.clip_image()
-        right_tools.crop_image()
-   
 
+
+        menu_tools.log()
+        menu_tools.clip()
+        menu_tools.position()
+        menu_tools.crop_test()
+        
+   
 
           
 }

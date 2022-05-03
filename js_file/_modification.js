@@ -26,8 +26,8 @@ export class Modification{
     else{
     object.scaleToWidth(250);
     }
-    object.originX ="center"
-    object.originY ="center"
+    // object.originX ="center"
+    // object.originY ="center"
     }  
 
 
@@ -48,63 +48,79 @@ export class Modification{
       return  canvas.toDataURL();
       }
 
-    crop_image( cropper){
+    crop_image( cropper, image_original_url, top, left){
 
       let crop_image = document.querySelector('#crop-image')
       crop_image.onclick = ()=>{
-      document.querySelector(".modal-cropper").style.display = "none"
+        this.loaderShow()
+        setTimeout(()=>{
+             document.querySelector(".modal-cropper").style.visibility = "hidden"
       let img = cropper.getCroppedCanvas();
 
+      let crop_size = cropper.getCropBoxData()
+      console.log(cropper.getCropBoxData())
       let dataURL =   this.getDataUrl(img)
-      fabric.Image.fromURL(dataURL,(img)=>{
+      fabric.Image.fromURL(dataURL, (img)=>{
 
       img.name = img.type
+      img.orig_url = image_original_url
+      img.cropBoxData = crop_size
+      img.left = left;
+      img.top = top
 
-          this.adding_object_style(img)
- 
+      this.objectSizeOnCanvas(img)
+      this.canvas.add(img);
+      this.canvas.renderAll()
+      this.canvas.remove(this.canvas.getActiveObject());
+        this.loaderHide()
       });
 
-
       cropper.destroy();
+      cropper.clear()
       cropper = null;
       document.querySelector(".modal-content-cropper").innerHTML = ""
+        },100)
+     
+
       }
       }
 
-       crop_canceled(cropper, imageElement){
+       crop_canceled(){
       let crop_cancel = document.querySelector('#crop-cancel')
       crop_cancel.onclick = ()=>{
-      document.querySelector(".modal-cropper").style.display = "none"
+        document.querySelector(".modal-cropper").style.visibility = "hidden"
 
-      let dataURL =   this.getDataUrl(imageElement)
 
-      fabric.Image.fromURL(dataURL, (img)=>{
-      img.name = img.type
 
-     
-        this.adding_object_style(img)
-
-      cropper.destroy();
-      cropper = null;
       document.querySelector(".modal-content-cropper").innerHTML = ""
-      });
-
-      }
-
-      }
-
-
-
- adding_object_style(object){
-    this.canvas.setActiveObject(object);
-      this.objectSizeOnCanvas(object)
-      this.canvas.viewportCenterObject(object)
-      this.canvas.add(object);
       
-      this.canvas.renderAll()
+      }
+
+    
+
+      }
+
+
+
+  adding_object_style(object){
+  this.canvas.setActiveObject(object);
+  this.objectSizeOnCanvas(object)
+  this.canvas.viewportCenterObject(object)
+  this.canvas.add(object);
+  this.canvas.renderAll()
 }
 
 
+        loaderShow(){
+
+        document.querySelector(".modal-loader").classList.add("spinner-1");
+        document.querySelector(".modal-loader").style.display = "block";
+
+        }
+        loaderHide(){
+        document.querySelector(".modal-loader").classList.remove("spinner-1");
+        document.querySelector(".modal-loader").style.display = "none";
+        }
 
 
 

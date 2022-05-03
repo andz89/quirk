@@ -229,34 +229,33 @@ this.canvas.renderAll()
 
 // }
 
-crop_image(){
-        document.querySelector('#log').addEventListener('click', () => {
-            let active_object = this.canvas.getActiveObject();
-            console.log(active_object)
-        })
+// crop_image(){
+      
         
-        document.querySelector('#crop').addEventListener('click', ()=>{
-        let objects = this.canvas.getActiveObjects();
-        let img = objects[0]._originalElement;
-        let cropper_objects = objects[1]
-        // console.log()
-     console.log( `height` + ` `+ cropper_objects.getScaledHeight())
+//         document.querySelector('#crop').addEventListener('click', ()=>{
+//         let objects = this.canvas.getActiveObjects();
+//         let img = objects[0]._originalElement;
+//         let cropper_objects = objects[1]
+//         // console.log()
+//      console.log( `height` + ` `+ cropper_objects.getScaledHeight())
 
 
-        let  imgInstance = new fabric.Image(img, {
-        height:cropper_objects.getScaledHeight(), //unsa katas on ang pag crop
-        // cropY:0//asa ng sugod ang crop
-        });
+//         let  imgInstance = new fabric.Image(img, {
+//         height:cropper_objects.getScaledHeight(), //unsa katas on ang pag crop
+//         // cropY:0//asa ng sugod ang crop
+//         });
        
-        // console.log()
-     console.log( `height` + ` `+ img.height)
+//         // console.log()
+//      console.log( `height` + ` `+ img.height)
 
-        this.adding_object_style(imgInstance);
-        // this.canvas.add(imgInstance)
-        })
+//         this.adding_object_style(imgInstance);
+//         // this.canvas.add(imgInstance)
+//         })
      
 
         
-}
+// }
 
-}
+
+
+}   

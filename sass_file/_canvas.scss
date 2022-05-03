@@ -1,12 +1,12 @@
    #canvas-background{
             overflow-y: auto;
             overflow-x: auto;
-            position: relative;
+            // position: relative;
             display: flex;
             justify-content: center;
             width: 100%;
-      
-            padding: 100px;
+            align-items: center;
+            // padding: 100px;
             background-color:#333;
            
             .upper-canvas{

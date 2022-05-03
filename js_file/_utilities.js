@@ -30,13 +30,33 @@ export class Utilities extends Modification{
     window.onclick = (e)=>{
 
     if(e.target.id  === 'canvas-background'){
-document.querySelector('.canvas-options').style.display = "none"
+    document.querySelector('.canvas-options').style.display = "none"
 
     this.canvas.discardActiveObject()
     this.canvas.renderAll()
     }
 
     }
+
+    //this is from header, to display 'none' the dropdown btn
+    //gebutang ini diri kay dili mo detect kung gawas sa classing ibutang
+      window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.style.display == 'block') {
+          openDropdown.style.display = 'none';
+    
+  
+        }
+      }
+      document.querySelectorAll('li').forEach((e)=>{
+      e.style.backgroundColor = '';
+      })
+    }
+  }
 
     }
 
@@ -62,7 +82,6 @@ document.querySelector('.canvas-options').style.display = "none"
 
     },
     'selection:created': function(o){
-        // console.log(o.selected[0].type)
     var activeObj = o.selected[0];
     if(activeObj.group  !== undefined){
      let group = activeObj.group
@@ -95,6 +114,7 @@ document.querySelector('.canvas-options').style.display = "none"
     });
 
     }
+
 
 
 
