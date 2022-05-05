@@ -20,9 +20,9 @@ export class Open_file{
   let text = await fileData.text()
 
 
-  let globalJson =  await JSON.parse(text)
+  let canvas =  await JSON.parse(text)
 
-  return await  {globalJson , fileHandle}
+  return await  {canvas , fileHandle}
 
 }
 }

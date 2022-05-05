@@ -144,13 +144,14 @@ zoomOut("#zoomOut")
 //================= open json file and create canvas ===========================//
 document.querySelector('#open_file').addEventListener('click', async function(){
 let open = new Open_file();
+console.log(open)
 let json_file = await open.get_file_json()
  
 
   let canvasScale = 1;
   let SCALE_FACTOR = 1.1;
-  let width =  json_file.globalJson.size.w;
-  let height = json_file.globalJson.size.h;
+  let width =  json_file.canvas.size.w;
+  let height = json_file.canvas.size.h;
    
 
 
@@ -167,7 +168,7 @@ preserveObjectStacking:true,
 }
 let canvas_created = canvas(width, height)
 
-canvas_created.loadFromJSON(json_file.globalJson.json, function() {
+canvas_created.loadFromJSON(json_file.canvas.json, function() {
 
 
   let obj =  canvas_created.getObjects()

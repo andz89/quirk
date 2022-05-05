@@ -7,9 +7,7 @@
 <link rel="stylesheet" href="./library_js/cropper.css">
 </head>
 <body>
-<div class="modal-loader">
-
-  </div>
+<div class="modal-loader"></div>
   <div id="modal-clip">
       <div class="modal-container">
           <div class="buttons">
@@ -18,22 +16,21 @@
           </div>
          
 
-        <div class="modal-clip-content">
-
-      </div>
+        <div class="modal-clip-content"> </div>
       <div class="clip-tools">
-  
-
-
         <label for="">Stroke size</label>
         <input type="range" id="clip-stroke-size" min="0" max="100">
-
-
-         <label for="">Stroke Color</label>
-        <input type="color" id="clip-stroke-color">
-
-          <label for="">Background Color</label>
-        <input type="color" id="clip-background-color">
+        <div class="clip-colors">
+        <div>
+            <label for="">Stroke Color</label>
+            <input type="color" id="clip-stroke-color" value="#17a2b8">
+        </div>
+        <div>
+            <label for="">Background Color</label>
+            <input type="color" id="clip-background-color" value="#bbbdc0">
+        </div>
+        </div>
+       
         
       </div>
       </div>
@@ -88,25 +85,19 @@
 
     <div class="dropdown dropdown-clip-image">
         <li id="clip"  class="dropbtn dropbtn-clip-image">Clip</li>
-    
+          <div id="myDropdown" class="dropdown-content">
+            <a id="clip_circle">Circle</a>
+            <a id="clip_square"> Square</a>
+     
+       
+        </div>
     </div>
 
-    <div class="dropdown dropdown-clip-image">
+    <div class="dropdown">
         <li id="crop_init"  class="dropbtn dropbtn-clip-image">Crop</li>
-    
+   
     </div>
-      <div class="dropdown dropdown-clip-image">
-        <li id="log"  class="dropbtn dropbtn-clip-image">log object</li>
-    
-    </div>
-   <div class="dropdown dropdown-clip-image">
-        <li id="position"  class="dropbtn dropbtn-clip-image">position</li>
-    
-    </div>
-     <div class="dropdown dropdown-clip-image">
-        <li id="crop_test"  class="dropbtn dropbtn-clip-image">Crop test</li>
-    
-    </div>
+   
 </ul> 
 
 </header>
@@ -302,5 +293,6 @@
 <script src="./library_js/cropper.js"></script>
 
 <!-- <script type="module" src="./js_file/_modal.js"></script> -->
+
 </body>
 </html>

@@ -17,6 +17,10 @@ if(element.classList.contains('dropbtn-insert-shape')){
 document.querySelector(".dropdown-insert-shape .dropdown-content").style.display = 'block';
 }
 
+if(element.classList.contains('dropbtn-clip-image')){
+document.querySelector(".dropdown-clip-image .dropdown-content").style.display = 'block';
+}
+
 
 
 }

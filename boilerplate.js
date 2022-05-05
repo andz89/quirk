@@ -1,72 +1,56 @@
-// import {Modal} from "./js_file/_modal.js";
 
-// let first_modal = new Modal('#myfirst_modal', {
-//     backgroundColor: 'rgba(51, 51, 51, 0.705)',
-//      width:'300px',
-//      height:'200px',
-//      title: 'Login',
-//      showButton:'#modal-btn-open',
-//      modalHeaderColor:'teal',
-//      windowClickClose: true,
-//      modalContentBackgroundColor:'wheat'
-//     })
+  function uploadImageLocalFile(selector){
 
-//     let firstElement = `
-   
-//     <form action="">
-//        <label for="account_name">Account Name:</label>
-   
-//         <input type="text" name="account-name" id="" autoComplete ="off">
+    document.querySelector(selector).addEventListener('click',  async ()=>{
+        const [fileHandle] = await window.showOpenFilePicker({
+    types: [{
+    description: 'Images',
+    accept: {
+    "image/jpeg": [".jpg", ".jpeg"],
+    "image/png": [".png"],
+    "image/svg+xml": [".svg"],
+    }
+    }],
+    })
+    this.loaderShow()
+    const file = await fileHandle.getFile();
+    // const arrayBuffer = await file.arrayBuffer();
+    // const arrayBufferView = new Uint8Array(arrayBuffer);
+    // const blob = new Blob([arrayBufferView], { type: file });
+    // const urlCreator = window.URL || window.webkitURL;
+    // const mediaUrl =  urlCreator.createObjectURL(blob);
+
+    console.log(file)
+        let reader = new FileReader();
+        reader.readAsDataURL(file)
+
+        reader.onload = () => {
+        fabric.Image.fromURL(reader.result, (img)=>{
+        img.name = img.type
+
+        this.adding_object_style(img)
+        // new_image_element.remove()
+        this.loaderHide()
+        })
+
+        };
+
+    // let new_image_element = document.createElement('img')
+    //  new_image_element.src = mediaUrl;
+    //  document.querySelector('body').appendChild(new_image_element)
+    //  new_image_element.style.display = 'none';
+    // setTimeout(()=>{
+    //     let dataURL =   this.getDataUrl(new_image_element)
+    //     fabric.Image.fromURL(dataURL, (img)=>{
+    //     img.name = img.type
       
-//         <label for="password">Password:</label>
+    //     this.adding_object_style(img)
+    //     new_image_element.remove()
+    //      this.loaderHide()
+    // })
     
-//         <input type="password" class="password">
-//     </form>
+    // }, 100);
 
-//     `
-
-let dataStored = [];
-const butDir = document.getElementById('butDirectory');
-butDir.addEventListener('click', async () => {
- const dirHandle = await window.showDirectoryPicker();
-const promises = [];
-for await (const entry of dirHandle.values()) {
-if (entry.kind !== 'file') {
-break;
-}
-promises.push(entry.getFile().then((file) => file.text()));
-}
-let file = await Promise.all(promises)
-
-let  jas
-file.forEach((e)=>{
-jas = JSON.parse(e)
-dataStored.push(jas)
-})
-
-
-})
-document.querySelector('#showData').addEventListener('click',()=>{
-  
-dataStored.forEach(element => {
-  let li =  document.createElement('li');
-  li.className ='list'
-  li.innerHTML= `${element.title}`
-  document.querySelector('#title').appendChild(li);
-});
-
-
-document.querySelector('#title').addEventListener('click',(e)=>{
-let data =  dataStored.filter((d)=>{
-  return  d.title == e.target.innerHTML
-  })
-  data.forEach((d)=>{
-document.querySelector('#lyrics').innerHTML = d.lyrics
-
-  })
-})
-
-})
-
-
-      
+    })
+    
+}   

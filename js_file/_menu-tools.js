@@ -49,27 +49,20 @@ export class Menu_tools extends Modification{
     })
     this.loaderShow()
     const file = await fileHandle.getFile();
-    const arrayBuffer = await file.arrayBuffer();
-    const arrayBufferView = new Uint8Array(arrayBuffer);
-    const blob = new Blob([arrayBufferView], { type: file });
-    const urlCreator = window.URL || window.webkitURL;
-    const mediaUrl =  urlCreator.createObjectURL(blob);
-    let new_image_element = document.createElement('img')
-     new_image_element.src = mediaUrl;
-     document.querySelector('body').appendChild(new_image_element)
-     new_image_element.style.display = 'none';
-    setTimeout(()=>{
-        let dataURL =   this.getDataUrl(new_image_element)
-        fabric.Image.fromURL(dataURL, (img)=>{
-        img.name = img.type
-      
-        this.adding_object_style(img)
-        new_image_element.remove()
-         this.loaderHide()
-    })
-    
-    }, 100);
+  
+        let reader = new FileReader();
+        reader.readAsDataURL(file)
 
+        reader.onload = () => {
+        fabric.Image.fromURL(reader.result, (img)=>{
+        img.name = img.type
+
+        this.adding_object_style(img)
+    
+        this.loaderHide()
+        })
+
+        };
     })
     
 }   
@@ -130,62 +123,71 @@ console.log(json)
     }
 
     canvasBackgroundColor(){
-   
+
     let canvasBackground = document.querySelector('#canvas_background')
     canvasBackground.oninput = (e)=>{
-    
+
 
     this.canvas.setBackgroundColor(e.target.value)
     this.canvas.renderAll()
     }
     let transparent = document.querySelector('#transparent')
     transparent.onclick = ()=>{
-        console.log('tr')
+    console.log('tr')
 
     this.canvas.setBackgroundColor(null)
     this.canvas.renderAll()
-       
+
 
     }
     }
-    
-bringToFront_object(){
 
- let bringToFront  =   document.querySelector('#bringToFront_object')
-bringToFront.onclick = (e)=>{
- 
-let object = this.canvas.getActiveObject();
+    bringToFront_object(){
 
-this.canvas.bringToFront(object)
- 
-}
-}
-bringToBack_object(){
- let bringToBack  =   document.querySelector('#bringToBack_object')
-bringToBack.onclick = (e)=>{
-let object = this.canvas.getActiveObject();
-this.canvas.sendToBack(object)
-}
-}
+    let bringToFront  =   document.querySelector('#bringToFront_object')
+    bringToFront.onclick = (e)=>{
+
+    let object = this.canvas.getActiveObject();
+
+    this.canvas.bringToFront(object)
+
+    }
+    }
+    bringToBack_object(){
+    let bringToBack  =   document.querySelector('#bringToBack_object')
+    bringToBack.onclick = (e)=>{
+    let object = this.canvas.getActiveObject();
+    this.canvas.sendToBack(object)
+    }
+    }
 
 
-   crop_image_init(){
+    crop_image_init(){
     document.querySelector('#crop_init').addEventListener('click', ()=>{
 
     let image = this.canvas.getActiveObject()
     if(image.type !== 'image'){return false;}
-     this.loaderShow()
+    this.loaderShow()
     let top = image.top;
     let left = image.left;
 
     let crop_image_element =   document.createElement('img')
-    
-   if(image.orig_url === undefined){
+
+    if(image.orig_url === undefined){
     crop_image_element.src = image._originalElement.currentSrc;
+
+        // let reader = new FileReader();
+        // reader.readAsDataURL(image)
+
+        // reader.onload = () => {
+
+        //     console.log(reader.result);
+        // }
+
     document.querySelector(".modal-content-cropper").appendChild(crop_image_element)
     setTimeout(() => {
     document.querySelector(".modal-cropper").style.visibility = "visible"
-            this.loaderHide()
+    this.loaderHide()
 
     })
 
@@ -195,30 +197,30 @@ this.canvas.sendToBack(object)
 
     this.crop_image(cropper, image._originalElement.currentSrc,  top, left)
     this.crop_canceled()
-   }else{
+    }else{
 
     crop_image_element.src = image.orig_url;
 
     document.querySelector(".modal-content-cropper").appendChild(crop_image_element)
 
-     let cropper = new Cropper(crop_image_element);
+    let cropper = new Cropper(crop_image_element);
 
 
     setTimeout(() => {
     document.querySelector(".modal-cropper").style.visibility = "visible"
 
     cropper.setCropBoxData(image.cropBoxData)
-        this.loaderHide()
+    this.loaderHide()
     }, 1000);
-  
+
     this.crop_image(cropper, image.orig_url, top, left)
     this.crop_canceled()
-   }
+    }
 
 
-       })
-      
-   }
+    })
+
+    }
 
    
    
@@ -249,20 +251,48 @@ this.canvas.sendToBack(object)
             object.set("lockUniScaling",true);
             }
 
-        document.querySelector('#clip').addEventListener('click', ()=>{
+        document.querySelector('#clip_circle').addEventListener('click', ()=>{
         let object = this.canvas.getActiveObject();
-     
+
+        let shape_object =  new fabric.Circle({radius: 250, fill: null,stroke:'#333',strokeWidth:20,lockMovementX: true,lockMovementY: true,lockScalingX: true,lockScalingY: true,lockRotation: true,selectable: false,originY:"center",originX:"center",
+        });
+
+        let clipPath =  new fabric.Circle({ radius: 250 , top: 500 / 2, left: 500 / 2,   originX:"center", originY:"center" ,absolutePositioned: true})
+        if(object === undefined){return false}//to check if object is selected
+        clip_circle(object, clipPath, shape_object)
+        })
+
+
+        document.querySelector('#clip_square').addEventListener('click', ()=>{
+        let object = this.canvas.getActiveObject();
+
+        let shape_object =  new fabric.Rect({width: 500,height: 500, fill: null,stroke:'#333',strokeWidth:20,lockMovementX: true,lockMovementY: true,lockScalingX: true,lockScalingY: true,lockRotation: true,selectable: false,originY:"center",originX:"center",
+        });
+
+        let clipPath =  new fabric.Rect({ width: 500,height: 500, top: 500 / 2, left: 500 / 2,   originX:"center", originY:"center" ,absolutePositioned: true})
+        if(object === undefined){return false}//to check if object is selected
+
+        clip_circle(object, clipPath, shape_object)
+
+        })
+
+
+      const clip_circle = (object, clipPath, shape_object)=>{
+            
+
         let image_to_clip;
-        object.clip_image_src_org;
+
+        //checking if image is new in clip
         if(object.clip_image_src_org == null){
-        image_to_clip = object._originalElement.currentSrc
+        image_to_clip = object._originalElement.currentSrc;
         }else{
-        image_to_clip = object.clip_image_src_org
+        image_to_clip = object.clip_image_src_org;
         }
   
-        let width = 500
-        let height =500
+        let width = 500;
+        let height = 500;
 
+        //function to create canvas
         const canvas = (width, height) => {
         let c = document.createElement("canvas")
         c.id = "canvas_2"
@@ -275,154 +305,139 @@ this.canvas.sendToBack(object)
         backgroundColor:"#fff",
         preserveObjectStacking:true,
         perPixelTargetFind:true, 
-        clipPath: new fabric.Circle({ radius: 250 , top: 500 / 2, left: 500 / 2,   originX:"center", originY:"center" ,absolutePositioned: true})
+        clipPath: clipPath
         })
         }
-        let canvas_created = canvas(width, height)
-      
 
-       fabric.Image.fromURL(image_to_clip, (img)=>{
+        //init and create canvas
+        let   canvas_clip = canvas(width, height)
+       
+        //to check if naa naka save na canvas background color
+        if(object.clip_image_src_org != null){
+            canvas_clip.backgroundColor = object.canvas_backgroundColor
+        }
 
-
-          objectStyle(img)
-            objectSizeOnCanvas(img, width, height)
-            canvas_created.viewportCenterObject(img)
-            canvas_created.add(img)
-            canvas_created.sendToBack(img)
-
-            canvas_created.renderAll()
+        //create image from image selected
+        fabric.Image.fromURL(image_to_clip, (img)=>{
+            //to check if naa naka save na properties 'example: scaleY....' sa image
+        if(object.clip_image_src_org != null) {
+        img.scaleX = object.image_value_in_canvas.scaleX;
+        img.scaleY = object.image_value_in_canvas.scaleY;
+        img.top = object.image_value_in_canvas.top;
+        img.left = object.image_value_in_canvas.left;
+        objectStyle(img)
+          canvas_clip.add(img)
+          canvas_clip.sendToBack(img)
+          canvas_clip.renderAll()
+        }else{
+        objectStyle(img)
+        objectSizeOnCanvas(img, width, height)
+          canvas_clip.viewportCenterObject(img)
+          canvas_clip.add(img)
+          canvas_clip.sendToBack(img)
+          canvas_clip.renderAll()
+        }
+   
         })
           
-
-
-        var circle = new fabric.Circle({
-            radius: 250, 
-            fill: null,
-            stroke:'#333',
-            strokeWidth:20,
-            lockMovementX: true,
-            lockMovementY: true,
-            lockScalingX: true,
-            lockScalingY: true,
-            lockRotation: true,
-            selectable: false,
-            originY:"center",
-            originX:"center",
-        });
-        objectStyle(circle)
-        canvas_created.viewportCenterObject(circle)
-
-        canvas_created.add(circle)
-        // canvas_created.bringToFront(circle)
-
-        canvas_created.renderAll()
-
-
-        
-
-        document.querySelector('#clip-save').onclick = () => {
-            let clip_image_url = canvas_created.toDataURL('png')
-      
-            fabric.Image.fromURL(clip_image_url, (img)=>{
-
-            img.clip_image_src_org = image_to_clip
-
-            img.left = object.left;
-            img.top = object.top
-       
-            this.objectSizeOnCanvas(img)
-            this.canvas.add(img);
-            this.canvas.renderAll()
-            this.canvas.remove(this.canvas.getActiveObject());
-            canvas_created.clear()
-            document.querySelector('.modal-clip-content').innerHTML = ''
-            document.querySelector('#modal-clip').style.display = "none"
-            })
-         
-        }
-        document.querySelector('#clip-cancel').onclick = () =>{
-        canvas_created.clear()
-        document.querySelector('.modal-clip-content').innerHTML = ''
-        document.querySelector('#modal-clip').style.display = "none"
-        }
-
-        document.querySelector('#clip-stroke-size').oninput = (e) =>{
-          
-        circle.strokeWidth = parseInt(e.target.value) 
-        circle.dirty = true
-        circle.objectCaching = false,
-        canvas_created.renderAll()
-
-        }
-
-        document.querySelector('#clip-stroke-color').oninput = (e) =>{
-        circle.stroke = e.target.value;
-        circle.objectCaching = false,
-        circle.dirty = true;
-        canvas_created.renderAll()
-        }
-         document.querySelector('#clip-background-color').oninput = (e) =>{
-        canvas_created.backgroundColor = e.target.value
-        canvas_created.renderAll()
-        }
-
-       
-        })
-
-      
-
-
-    }
-
-
-
-
-
-
-
-    log(){
-        document.querySelector('#log').addEventListener('click', ()=>{
-            let object = this.canvas.getActiveObject()
-
-        console.log(object)
-
-        })
-    }
-
-    position(){
-        document.querySelector('#position').onclick = ()=>{
-        let object = this.canvas.getActiveObject()
-        object.clipPath.absolutePositioned = true;
-        this.canvas.renderAll()
-        }
     
+        //to check if naa naka save na properties 'example: stroke....' sa shape
+        let shape = shape_object
+        if(object.clip_image_src_org != null) {
+        shape.stroke = object.shape_value_in_canvas.stroke;
+        shape.strokeWidth = object.shape_value_in_canvas.strokeWidth;
+        canvas_clip.viewportCenterObject(shape)
+        canvas_clip.add(shape)
+        canvas_clip.renderAll()
+        }else{
+          canvas_clip.viewportCenterObject(shape)
+          canvas_clip.add(shape)
+          canvas_clip.renderAll()
+        }
+
+     
+
+    //save or create new image and export to canvas
+        document.querySelector('#clip-save').onclick = () => {
+    
+    let objects_properties_in_canvas = canvas_clip.getObjects()
+
+   
+    let shape_value_in_canvas = {}
+    let image_value_in_canvas = {}
+    let canvas_backgroundColor =    canvas_clip.backgroundColor
+
+    objects_properties_in_canvas.forEach((obj)=>{
+    if(obj.type === "circle"){
+    shape_value_in_canvas.scaleX = obj.scaleX;
+    shape_value_in_canvas.scaleY = obj.scaleY;
+    shape_value_in_canvas.strokeWidth = obj.strokeWidth;
+    shape_value_in_canvas.stroke = obj.stroke;
+    }
+     if(obj.type === "rect"){
+    shape_value_in_canvas.scaleX = obj.scaleX;
+    shape_value_in_canvas.scaleY = obj.scaleY;
+    shape_value_in_canvas.strokeWidth = obj.strokeWidth;
+    shape_value_in_canvas.stroke = obj.stroke;
+    }
+    if(obj.type === 'image'){
+    image_value_in_canvas.scaleX = obj.scaleX;
+    image_value_in_canvas.scaleY = obj.scaleY;
+    image_value_in_canvas.top = obj.top;
+    image_value_in_canvas.left = obj.left;
     }
 
-    crop_test(){
-         document.querySelector('#crop_test').onclick = ()=>{
-            let objects = this.canvas.getActiveObjects();
-            let image = objects[0]
-            let shape = objects[1]
-            shape.width = shape.width + 10
-            this.canvas.renderAll()
-            console.log(image.width)
-            console.log(image.getScaledWidth())
+    })
 
-            console.log(shape.width)
+    let clip_image_url =   canvas_clip.toDataURL('png')
+    fabric.Image.fromURL(clip_image_url, (img)=>{
 
-            console.log('scaledWith' + shape.getScaledWidth())
+    img.clip_image_src_org = image_to_clip
+    img.shape_value_in_canvas = shape_value_in_canvas
+    img.image_value_in_canvas = image_value_in_canvas
+    img.canvas_backgroundColor = canvas_backgroundColor
+    img.left = object.left;
+    img.top = object.top
 
-            image =  image._originalElement
-
-           const img = new  fabric.Image(image, {
-                width: shape.getScaledWidth() - 70,//ang kalaparan sa horizontal
-                cropX:0,//asa mag sugod ang crop sa horizontal
-            })
-             console.log(shape.getScaledWidth())
-            //   this.objectSizeOnCanvas(img)
-            console.log(img.width)
-            this.canvas.add(img)
-
-         }
+    this.objectSizeOnCanvas(img)
+    this.canvas.add(img);
+    this.canvas.renderAll()
+    this.canvas.remove(this.canvas.getActiveObject());
+    canvas_clip.clear()
+    document.querySelector('.modal-clip-content').innerHTML = ''
+    document.querySelector('#modal-clip').style.display = "none"
+    })
+         
     }
+
+    document.querySelector('#clip-cancel').onclick = () =>{
+    canvas_clip.clear()
+    document.querySelector('.modal-clip-content').innerHTML = ''
+    document.querySelector('#modal-clip').style.display = "none"
+    }
+
+    document.querySelector('#clip-stroke-size').oninput = (e) =>{
+
+    shape.strokeWidth = parseInt(e.target.value) 
+    shape.dirty = true
+    shape.objectCaching = false,
+    canvas_clip.renderAll()
+
+    }
+
+    document.querySelector('#clip-stroke-color').oninput = (e) =>{
+    shape.stroke = e.target.value;
+    shape.objectCaching = false,
+    shape.dirty = true;
+    canvas_clip.renderAll()
+    }
+    document.querySelector('#clip-background-color').oninput = (e) =>{
+    canvas_clip.backgroundColor = e.target.value
+    canvas_clip.renderAll()
+    }
+            }
+
+    }
+
+
 }

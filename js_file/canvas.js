@@ -104,10 +104,10 @@ let right_tools = new Right_tools({
         right_tools.fontColor('#color')
 
 
-        menu_tools.log()
+        // menu_tools.log()
         menu_tools.clip()
-        menu_tools.position()
-        menu_tools.crop_test()
+        // menu_tools.position()
+        // menu_tools.crop_test()
         
    
 
