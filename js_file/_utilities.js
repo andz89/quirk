@@ -70,9 +70,12 @@ export class Utilities extends Modification{
     }
 
 
-    canvasOn(property){
+    canvasOn(){
     this.canvas.on({
-    'selection:updated': function(o){
+    'selection:updated':select_object,
+    'selection:created':select_object,
+    });
+    function select_object(o){
     var activeObj = o.selected[0];
 
     //bold text
@@ -92,9 +95,9 @@ export class Utilities extends Modification{
 
     //fontSize 
     if(activeObj.type == "textbox"){
-        document.querySelector(property).value = activeObj.fontSize
+        document.querySelector("#fontSize").value = activeObj.fontSize
     }else{
-       document.querySelector(property).value = ''
+       document.querySelector("#fontSize").value = ''
     }
     //-------------------------------------//
     
@@ -141,90 +144,7 @@ export class Utilities extends Modification{
     }
     //-------------------------------------//
 
-
-    activeObj.set("borderColor","#333");
-    activeObj.set("cornerColor","#17a2b8");
-    activeObj.set("cornerSize",15);
-    activeObj.set("cornerStyle","circle");
-    activeObj.set("transparentCorners",false);
-    activeObj.set("lockUniScaling",true);
-
-    },
-    'selection:created': function(o){
-    var activeObj = o.selected[0];
-
-    //bold text
-    let bold =  document.querySelector('#bold')
-    if(activeObj.type == "textbox" && activeObj.fontWeight === 'bold'){bold.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
-    if(activeObj.type == "textbox" && activeObj.fontWeight === 'normal'){bold.style.backgroundColor = ''}
-    if(activeObj.type !== "textbox"){bold.style.backgroundColor = ''}
-    //-------------------------------------//
-
-    //italic text
-    let italic =  document.querySelector('#italic')
-    if(activeObj.type == "textbox" && activeObj.fontStyle === 'italic'){italic.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
-    if(activeObj.type == "textbox" && activeObj.fontStyle === 'normal'){italic.style.backgroundColor = ''}
-    if(activeObj.type !== "textbox"){italic.style.backgroundColor = ''}
-    //-------------------------------------//
-
-    //fontSize 
-    if(activeObj.type == "textbox"){
-        document.querySelector(property).value = activeObj.fontSize
-    }else{
-       document.querySelector(property).value = ''
-    }
-    //-------------------------------------//
-
-
-       //opacity
-    let opacity =  document.querySelector('#opacity')
-  
-    if(activeObj.opacity === 1){
-    opacity.value = 10
-    }
-    if(activeObj.opacity === 0.9){
-    opacity.value = 9
-    }
-    if(activeObj.opacity === 0.8){
-    opacity.value = 8
-    }
-    if(activeObj.opacity === 0.7){
-    opacity.value = 7
-    }
-    if(activeObj.opacity === 0.6){
-    opacity.value = 6
-    }
-    if(activeObj.opacity === 0.5){
-    opacity.value = 5
-    }
-    if(activeObj.opacity === 0.4){
-    opacity.value = 4
-    }
-    if(activeObj.opacity === 0.3){
-    opacity.value = 3
-    }
-    if(activeObj.opacity === 0.2){
-    opacity.value = 2
-    }
-     if(activeObj.opacity === 0.1){
-    opacity.value = 1
-    }
-     if(activeObj.opacity === 0){
-    opacity.value = 0
-    }
-  
-    //-------------------------------------//
-
-
-        //stroke_width
-      
-  document.querySelector('#stroke_width').value = activeObj.strokeWidth
-    //-------------------------------------//
-
-
-
-    
-    if(activeObj.group  !== undefined){
+   if(activeObj.group  !== undefined){
      let group = activeObj.group
     group.set("borderColor","#333");
     group.set("cornerColor","#17a2b8");
@@ -233,11 +153,6 @@ export class Utilities extends Modification{
     group.set("transparentCorners",false);
     group.set("lockUniScaling",true);
     }
-  
-
-
-
-
     activeObj.set("borderColor","#333");
     activeObj.set("cornerColor","#17a2b8");
     activeObj.set("cornerSize",15);
@@ -245,11 +160,10 @@ export class Utilities extends Modification{
     activeObj.set("transparentCorners",false);
     activeObj.set("lockUniScaling",true);
 
-    },
-
-    });
-
     }
+    }
+
+   
 
 
 

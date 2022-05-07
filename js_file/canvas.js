@@ -22,7 +22,7 @@ let utils = new Utilities({
         })
 
         utils.deleteObjects()
-        utils.canvasOn('#fontSize')
+        utils.canvasOn()
         utils.discardActiveObject()
       
       
@@ -45,6 +45,7 @@ let menu_tools = new Menu_tools({
         menu_tools.bringToFront_object()
         menu_tools.bringToBack_object()
         menu_tools.crop_image_init()
+        menu_tools.center_object()
 
 
         //shapes

@@ -433,6 +433,63 @@ async save_file_json(){
             }
 
     }
+  center_object(){
+  let centerObject = document.querySelector('#align_to_canvas')
+  centerObject.onchange = (e)=>{
 
+    if(e.target.value == 'horizontal'){
+    
+        if(this.canvas.getActiveObject().type === 'activeSelection'){
+        let obj = this.canvas.getActiveObject().toGroup()
+        this.canvas.viewportCenterObjectH(obj)
+
+        let a = this.canvas.getActiveObject().toActiveSelection();
+        objectStyle(a)
+        this.canvas.requestRenderAll();
+        }else{
+        let object = this.canvas.getActiveObject();
+        this.canvas.viewportCenterObjectH(object)
+        this.canvas.setActiveObject(object)
+        }
+
+        
+    }
+    if(e.target.value == 'vertical'){
+      if(this.canvas.getActiveObject().type === 'activeSelection'){
+      let obj = this.canvas.getActiveObject().toGroup()
+      this.canvas.viewportCenterObjectV(obj)
+      let a = this.canvas.getActiveObject().toActiveSelection();
+      objectStyle(a)
+      this.canvas.requestRenderAll();
+      }else{
+      let object = this.canvas.getActiveObject();
+      this.canvas.viewportCenterObjectV(object)
+      this.canvas.setActiveObject(object)
+      }
+    }
+
+    if(e.target.value === 'center'){
+
+      if(this.canvas.getActiveObject().type === 'activeSelection'){
+let obj = this.canvas.getActiveObject().toGroup()
+this.canvas.viewportCenterObject(obj)
+let a = this.canvas.getActiveObject().toActiveSelection();
+objectStyle(a)
+this.canvas.requestRenderAll();
+
+}else{
+  let object = this.canvas.getActiveObject();  
+this.canvas.viewportCenterObject(object)
+
+this.canvas.setActiveObject(object)
+
+}
+
+
+    }
+
+
+}
+}
 
 }
