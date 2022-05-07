@@ -22,15 +22,10 @@ let utils = new Utilities({
         })
 
         utils.deleteObjects()
-        utils.canvasOn({fontSize:'#fontSize'})
+        utils.canvasOn('#fontSize')
         utils.discardActiveObject()
       
-        let objects = this.canvas._objects
-        objects.forEach((e)=>{
-                console.log(e.type)
-           
-        })
-        // console.log(this.canvas._objects)
+      
 
 let menu_tools = new Menu_tools({
         canvas : this.canvas,
@@ -61,6 +56,7 @@ let menu_tools = new Menu_tools({
         fill: 'gray'
         });
         object.name ="square"
+        
         this.adding_object_style(object)
    
         })
@@ -76,18 +72,7 @@ let menu_tools = new Menu_tools({
         this.adding_object_style(object)
         })
 
-        menu_tools.insert_shape('#diamond',()=>{
-        var object = new fabric.Rect({
-        left: 100,
-        top: 100,
-        fill: 'red',
-        width: 20,
-        height: 20,
-        angle: 45,
-        });
-        object.name ="diamond"
-        this.adding_object_style(object)
-        })
+   
 
 let right_tools = new Right_tools({
         canvas : this.canvas,
@@ -102,12 +87,16 @@ let right_tools = new Right_tools({
         right_tools.backgroundColor()
         right_tools.remove_fill_color()
         right_tools.fontColor('#color')
+        right_tools.bold_text()
+        right_tools.italic_text()
+        right_tools.stroke_color()
+        right_tools.stroke_width()
+        right_tools.opacity()
 
 
-        // menu_tools.log()
+        right_tools.log()
+
         menu_tools.clip()
-        // menu_tools.position()
-        // menu_tools.crop_test()
         
    
 

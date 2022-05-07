@@ -81,21 +81,21 @@ async save_file_json(){
       document.getElementById('save_json').addEventListener('click', async ()=>{
           
             
-      let display_name = `test_101`
+    
 
-    let json = this.canvas.toJSON([ 'clip_image_src_org','borderColor','cornerColor','cornerSize','cornerStyle','transparentCorners',
-    "lockMovementX","lockMovementY","lockScalingX","lockScalingY","selectable","textAlign","fontFamily","orig_url", "id", "name","clipPath", "absolutePositioned"])
-console.log(json)
+    let json = this.canvas.toJSON([ 'borderColor','cornerColor','cornerSize','cornerStyle','transparentCorners',
+    "lockMovementX","lockMovementY","lockScalingX","lockScalingY","selectable","textAlign","fontFamily", "id", "name",'clip_image_src_org',"orig_url"])
 
-    var size = {w:this.width, h:this.height,  f:display_name };
+
+    var size = {w:this.width, h:this.height};
     let merge ={json,size}
     if(this.fileHandle == undefined){
 
-        let display_name = `test_102`
+        let suggest_name = document.querySelector('#file_name').innerHTML
 
         this.fileHandle = await window.showSaveFilePicker({
         startIn: 'desktop',
-        suggestedName: `${display_name}.json`,
+        suggestedName: `${suggest_name}.json`,
         types: [{
         description: 'Text documents',
         accept: {
@@ -108,12 +108,14 @@ console.log(json)
     let stream =  await this.fileHandle.createWritable();
     await stream.write(JSON.stringify(merge))
     await stream.close();
-        
+    document.querySelector('#file_name').innerHTML = this.fileHandle.name.replace('.json', ' ')
+   
     }else{
 
     let stream =  await this.fileHandle.createWritable();
     await stream.write(JSON.stringify(merge))
     await stream.close();
+   
         
     }
       
@@ -176,21 +178,12 @@ console.log(json)
     if(image.orig_url === undefined){
     crop_image_element.src = image._originalElement.currentSrc;
 
-        // let reader = new FileReader();
-        // reader.readAsDataURL(image)
-
-        // reader.onload = () => {
-
-        //     console.log(reader.result);
-        // }
-
     document.querySelector(".modal-content-cropper").appendChild(crop_image_element)
     setTimeout(() => {
     document.querySelector(".modal-cropper").style.visibility = "visible"
     this.loaderHide()
 
     })
-
 
 
     let cropper = new Cropper(crop_image_element);
@@ -225,31 +218,33 @@ console.log(json)
    
    
     clip(){
-             
-          function objectSizeOnCanvas(object, width, height){
-            if(width > 3000){
-            object.scaleToWidth(700);
-            }else if(height > 2000){
+          class Clip{
+          static     objectSizeOnCanvas(object, width, height){
+          if(width > 3000){
+          object.scaleToWidth(700);
+          }else if(height > 2000){
 
-            object.scaleToWidth(450);
-            }
-            else if(height == 800 && width == 400){
-            object.scaleToWidth(200);
-            }
-            else{
-            object.scaleToWidth(250);
-            }
-           
-            } 
+          object.scaleToWidth(450);
+          }
+          else if(height == 800 && width == 400){
+          object.scaleToWidth(200);
+          }
+          else{
+          object.scaleToWidth(250);
+          }
+          } 
 
-            function objectStyle(object){
-            object.set("borderColor","#333");
-            object.set("cornerColor","#17a2b8");
-            object.set("cornerSize",15);
-            object.set("cornerStyle","circle");
-            object.set("transparentCorners",false);
-            object.set("lockUniScaling",true);
-            }
+          static  objectStyle(object){
+          object.set("borderColor","#333");
+          object.set("cornerColor","#17a2b8");
+          object.set("cornerSize",15);
+          object.set("cornerStyle","circle");
+          object.set("transparentCorners",false);
+          object.set("lockUniScaling",true);
+          }
+
+          }
+        
 
         document.querySelector('#clip_circle').addEventListener('click', ()=>{
         let object = this.canvas.getActiveObject();
@@ -325,13 +320,13 @@ console.log(json)
         img.scaleY = object.image_value_in_canvas.scaleY;
         img.top = object.image_value_in_canvas.top;
         img.left = object.image_value_in_canvas.left;
-        objectStyle(img)
+        Clip.objectStyle(img)
           canvas_clip.add(img)
           canvas_clip.sendToBack(img)
           canvas_clip.renderAll()
         }else{
-        objectStyle(img)
-        objectSizeOnCanvas(img, width, height)
+        Clip.objectStyle(img)
+        Clip.objectSizeOnCanvas(img, width, height)
           canvas_clip.viewportCenterObject(img)
           canvas_clip.add(img)
           canvas_clip.sendToBack(img)

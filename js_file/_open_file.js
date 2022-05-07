@@ -18,11 +18,11 @@ export class Open_file{
   let fileData = await fileHandle.getFile();
 
   let text = await fileData.text()
-
-
+  let fileName = fileData.name
+ 
   let canvas =  await JSON.parse(text)
 
-  return await  {canvas , fileHandle}
+  return await  {canvas , fileHandle, fileName}
 
 }
 }

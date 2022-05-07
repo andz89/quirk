@@ -34,7 +34,7 @@ import {header} from './js_file/_header.js'
     let createCanvasModal = new Modal('#createCanvasModal', {
     backgroundColor: 'rgba(51, 51, 51, 0.705)',
     width:'480px',
-    height:'270px',
+    height:'320px',
     title: 'Create Canvas',
     showButton:'#showCreateCanvasModalBtn',
     modalHeaderColor:'teal',
@@ -54,6 +54,14 @@ import {header} from './js_file/_header.js'
     let SCALE_FACTOR = 1.1;
     let width = document.querySelector('#canvas_width').value
     let height = document.querySelector('#canvas_height').value
+    let fileName = document.querySelector('#project_name').value
+
+      if(fileName){
+      document.querySelector('#file_name').innerHTML = fileName
+      }else{
+      document.querySelector('#file_name').innerHTML = 'untitled'
+      }
+
     let fileHandle;
       const canvas = (width, height) => {
     let c = document.createElement("canvas")
@@ -143,16 +151,19 @@ zoomOut("#zoomOut")
 
 //================= open json file and create canvas ===========================//
 document.querySelector('#open_file').addEventListener('click', async function(){
-let open = new Open_file();
-console.log(open)
-let json_file = await open.get_file_json()
+let file = new Open_file();
+
+let json_file = await file.get_file_json()
  
 
   let canvasScale = 1;
   let SCALE_FACTOR = 1.1;
   let width =  json_file.canvas.size.w;
   let height = json_file.canvas.size.h;
-   
+  //file name
+  document.querySelector('#file_name').innerHTML = json_file.fileName.replace('.json', '')
+ 
+              
 
 
 const canvas = (width, height) => {
@@ -273,6 +284,7 @@ zoomOut("#zoomOut")
 
 document.querySelector('#canvas-property-btn').addEventListener('click', ()=>{
 document.querySelector('.canvas-options').style.display = "block"
+console.log('ss')
 
 })
 document.querySelector('.close-container-btn').addEventListener('click', ()=>{
@@ -285,87 +297,87 @@ document.querySelector('.canvas-options').style.display = "none"
 
 //========================== development only ====================//
 
-//   let canvasScale = 1;
-//     let SCALE_FACTOR;
-//     let width = 3510;
-//     let height =2490;
-//     let fileHandle;
+  let canvasScale = 1;
+    let SCALE_FACTOR;
+    let width = 3510;
+    let height =2490;
+    let fileHandle;
 
-//     const canvas = (width, height) => {
-//     let c = document.createElement("canvas")
-//     c.id = "canvas"
-//     document.querySelector('#canvas-background').appendChild(c)
-//     return new fabric.Canvas("canvas", {
-//     width : width,
-//     height :height,
-//     backgroundColor:"#fff",
-//     preserveObjectStacking:true,
-//     })
-//     }
-//    let canvas_created = canvas(width, height)
-//     let canvasInit = new Canvas({
-//         canvas: canvas_created,
-//         width: width,
-//         height: height,
-//         canvasScale: canvasScale,
-//         SCALE_FACTOR:SCALE_FACTOR,
-//         fileHandle: fileHandle
-//     })
-//     canvasInit.create_main_canvas()
-// function fitCanvasToScreen(){
-//     // this.canvasScale = 1; 
-//     if(width >= 3000){
-//     SCALE_FACTOR =5.2;
-//     }
-//     else if(width <= 2999 && width >= 2000){
-//     SCALE_FACTOR= 2.8;
-//     }
-//     else if(width <= 1999 && width >= 1000){
-//        SCALE_FACTOR= 2.1;
-//     }
-//     else{
-//     SCALE_FACTOR= 1.1;
-//     }
-//     canvasScale = canvasScale / SCALE_FACTOR;
-//     canvas_created.setHeight(height * (1 / SCALE_FACTOR));
-//     canvas_created.setWidth(width * (1 / SCALE_FACTOR));
-//     canvas_created.setZoom(canvasScale);     
-//     canvas_created.renderAll();
-//   }
+    const canvas = (width, height) => {
+    let c = document.createElement("canvas")
+    c.id = "canvas"
+    document.querySelector('#canvas-background').appendChild(c)
+    return new fabric.Canvas("canvas", {
+    width : width,
+    height :height,
+    backgroundColor:"#fff",
+    preserveObjectStacking:true,
+    })
+    }
+   let canvas_created = canvas(width, height)
+    let canvasInit = new Canvas({
+        canvas: canvas_created,
+        width: width,
+        height: height,
+        canvasScale: canvasScale,
+        SCALE_FACTOR:SCALE_FACTOR,
+        fileHandle: fileHandle
+    })
+    canvasInit.create_main_canvas()
+function fitCanvasToScreen(){
+    // this.canvasScale = 1; 
+    if(width >= 3000){
+    SCALE_FACTOR =5.2;
+    }
+    else if(width <= 2999 && width >= 2000){
+    SCALE_FACTOR= 2.8;
+    }
+    else if(width <= 1999 && width >= 1000){
+       SCALE_FACTOR= 2.1;
+    }
+    else{
+    SCALE_FACTOR= 1.1;
+    }
+    canvasScale = canvasScale / SCALE_FACTOR;
+    canvas_created.setHeight(height * (1 / SCALE_FACTOR));
+    canvas_created.setWidth(width * (1 / SCALE_FACTOR));
+    canvas_created.setZoom(canvasScale);     
+    canvas_created.renderAll();
+  }
 
-//   fitCanvasToScreen()
+  fitCanvasToScreen()
 
 
-//  function zoomIn(selector) {
-//     SCALE_FACTOR = 1.1
+ function zoomIn(selector) {
+    SCALE_FACTOR = 1.1
 
-//     let zoomIn = document.querySelector(selector)
-//     zoomIn.addEventListener('click', ()=>{
-//     canvasScale = canvasScale * SCALE_FACTOR;
-//     canvas_created.setHeight(canvas_created.getHeight() * SCALE_FACTOR);
-//     canvas_created.setWidth(canvas_created.getWidth() * SCALE_FACTOR);
-//     canvas_created.setZoom(canvasScale);
-//     canvas_created.renderAll();
-//     })
+    let zoomIn = document.querySelector(selector)
+    zoomIn.addEventListener('click', ()=>{
+    canvasScale = canvasScale * SCALE_FACTOR;
+    canvas_created.setHeight(canvas_created.getHeight() * SCALE_FACTOR);
+    canvas_created.setWidth(canvas_created.getWidth() * SCALE_FACTOR);
+    canvas_created.setZoom(canvasScale);
+    canvas_created.renderAll();
+    })
 
-//     }
-// zoomIn("#zoomIn")
+    }
+zoomIn("#zoomIn")
     
-//      function zoomOut(selector){
-//     let zoomOut = document.querySelector(selector)
-//     SCALE_FACTOR = 1.1
+     function zoomOut(selector){
+    let zoomOut = document.querySelector(selector)
+    SCALE_FACTOR = 1.1
 
-//     zoomOut.addEventListener('click', (e)=>{
-//     canvasScale = canvasScale / SCALE_FACTOR;
-//     canvas_created.setHeight(canvas_created.getHeight() * (1 / SCALE_FACTOR));
-//     canvas_created.setWidth(canvas_created.getWidth() * (1 / SCALE_FACTOR));
-//     canvas_created.setZoom(canvasScale);     
-//     canvas_created.renderAll();
-//     })
+    zoomOut.addEventListener('click', (e)=>{
+    canvasScale = canvasScale / SCALE_FACTOR;
+    canvas_created.setHeight(canvas_created.getHeight() * (1 / SCALE_FACTOR));
+    canvas_created.setWidth(canvas_created.getWidth() * (1 / SCALE_FACTOR));
+    canvas_created.setZoom(canvasScale);     
+    canvas_created.renderAll();
+    })
 
-//     }
+    }
 
-// zoomOut("#zoomOut")
+zoomOut("#zoomOut")
 
 //=============================================================================//
 

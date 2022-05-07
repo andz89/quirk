@@ -78,7 +78,7 @@ header{
         justify-content: flex-start;
         cursor: pointer;
         user-select: none;
-        gap: 20px;
+        gap: 10px;
         width: 890px;
        
       img{
@@ -104,11 +104,21 @@ header{
           background-color:rgb(246, 246, 246);
         //   font-size: 12px;
       }
+      .file_name_container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(2, 100, 118);
+      margin: 0 4px 4px 4px;
+      padding: 0 5px;
+      color: #fff;
+      }
       #file_name{
-          color: #fff;
-          background-color: rgb(2, 100, 118);
-            margin: 0 4px 4px 4px;
-            padding: 0 5px;
+            display: inline-block;
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden !important;
+            text-overflow: ellipsis;
       
       }
       .canvas-options-container{

@@ -145,117 +145,222 @@ this.canvas.renderAll()
 }
 })
 }
-   
-
-// clip_image(){
-
-// let object = this.canvas.getActiveObject()
-// document.querySelector('#clip').addEventListener('click', ()=>{
-//     // let image = document.querySelector('#img-test').src
-//  fabric.Image.fromURL(image, (img)=> {
-//     // var scalar = 1, abort;
-//     var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
-//     var shell = new fabric.Path(path, { 
-//       fill: '',
-//       stroke: 'blue',
-//       strokeWidth: 5,
-//       scaleX: 2,
-//       scaleY: 2,
-//     //   lockScalingX: true,
-//     //   lockScalingY: true,
-//     //   lockSkewingX: true,
-//     //   lockSkewingY: true,
-//       originX: 'center',
-//       originY: 'center',
-//     });
+log(){
+    document.querySelector('#log').onclick = ()=>{
+                  let object = this.canvas.getActiveObject();
+            console.log(object.type)
+    }
     
-//     var clipPath = new fabric.Path(path, {
-//       absolutePositioned: true,
-//       originX: 'center',
-//       originY: 'center',
-//       scaleX: 2,
-//       scaleY: 2
-//     });
-   
+}
+  bold_text(){
+
+      document.querySelector('#bold').onclick =()=>{
+          let object = this.canvas.getActiveObject();
+
+        if(object && object.bold === undefined){
+            console.log('ee')
+            if(object.getSelectedText() == ""){//empty
+            object.removeStyle('fontWeight')
+            object.set({fontWeight: "bold" })
+            object.dirty = true;
+            this.canvas.renderAll()
+            bold.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'
+            object.bold = true
+            }else{
+            object.setSelectionStyles({fontWeight: "bold" })
+            bold.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'
+            object.bold = true
+            object.dirty = true;
+            this.canvas.renderAll()
+            }
+        }else{
+            
+        if(object.getSelectedText() == ""){//empty
+            object.removeStyle('fontWeight')
+      
+        //to check if some text is normal and bold
+            if(object.fontWeight == 'normal'){
+            object.set({fontWeight: "bold" })
+            this.canvas.renderAll()
+            }else{
+                object.set({fontWeight: "normal" })
+            object.dirty = true;
+            this.canvas.renderAll()
+            bold.style.backgroundColor = ''
+            object.bold = undefined
+            }
+      
+        }else{
+        object.setSelectionStyles({fontWeight: "normal" })
+        object.dirty = true;
+        bold.style.backgroundColor = ''
+        this.canvas.renderAll()
+        object.bold = undefined
+        }
+      
+
+        }
+
+      }
+
+  }
+
+  italic_text(){
+      let italic = document.querySelector('#italic')
+      italic.onclick= ()=>{
+
+let object = this.canvas.getActiveObject();
+
+if(object.italic === undefined){
+
+    if(object.getSelectedText() == ""){
+          object.removeStyle('fontStyle')
     
-//     // function animate() {
-//     //   abort = fabric.util.animate({
-//     //     startValue: 0,
-//     //     endValue: 360 * scalar,
-//     //     duration: 1000,
-//     //     easing: fabric.util.ease.easeInOutSine,
-//     //     onChange: function (value) {
-//     //       shell.set('angle', value);
-//     //       clipPath.set('angle', value);
-//     //       img.set('dirty', true);
-//     //     },
-//     //     onComplete: function () {
-//     //       scalar += Math.sign(scalar);
-//     //       scalar *= -1;
-//     //       animate();
-//     //     }
-//     //   });
-//     // }
+        object.set({fontStyle:'italic' })
 
-//     img.scale(0.5).set({
-//       left: 200,
-//       top: 180,
-//       clipPath: clipPath
-//     });
-//     shell.on('moving', ({ e, transform, pointer }) => {
-//       //  only because they are absolutePositioned
-//       clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
-//       img.set('dirty', true);
-//     });
-//     // shell.on('rotating', () => {
-//     //   clipPath.set({ angle: shell.angle });
-//     //   img.set('dirty', true);
-//     // });
-//     // shell.on('selected', () => {
-//     //   abort();
-//     // });
-//     // shell.on('deselected', () => {
-//     //   scalar = 1;
-//     // //   animate()
-//     // });
-//     img.clipPath = clipPath;
-//     this.canvas.add(img, shell);
-//     this.canvas.setActiveObject(img);
-
-//     // animate();
-//   });
-// })
+    object.dirty = true;
+    this.canvas.renderAll()
+    object.italic = true;
+     italic.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'
+    }else{
  
+    object.setSelectionStyles({fontStyle:'italic' })
+    object.dirty = true;
+    this.canvas.renderAll()
+    object.italic = true;
+    italic.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'
+    }
+}else{
 
-// }
 
-// crop_image(){
+  
+
+    if(object.getSelectedText() == ""){
+    object.removeStyle('fontStyle')
+    console.log(object.fontStyle )
+    //to check if some text is normal and italic
+    if(object.fontStyle == 'normal'){
+    object.set({fontStyle: "italic" })
+    this.canvas.renderAll()
+    }else{
+    object.set({fontStyle: "" })
+    object.dirty = true;
+    this.canvas.renderAll()
+    italic.style.backgroundColor = ''
+    object.italic = undefined;
+    }
+
+    }else{
+           console.log('jare')
+  object.setSelectionStyles({fontStyle: "normal" })
+
+    object.dirty = true;
+    this.canvas.renderAll()
+    object.italic = undefined;
+italic.style.backgroundColor = ''
+  }
+
+
+}
+
+
+
+}
+  }
+
+  stroke_color(){
+      let strokeColor = document.querySelector('#stroke_color');
+        strokeColor.oninput = (e) =>{
+        let object = this.canvas.getActiveObject();
+        object.stroke =  e.target.value;
+        // if(object.type == 'textbox' && object.strokeWidth == 1){
+        //        object.strokeWidth = 1
+        // }
+        
+        if(object.type == 'rect' && object.strokeWidth == 1){
+            object.strokeWidth = 30
+            document.querySelector('#stroke_width').value =object.strokeWidth
+        }
+
+        if(object.type == 'image' && object.strokeWidth == 0){
+            object.strokeWidth = 10
+            document.querySelector('#stroke_width').value =object.strokeWidth
+        }
+   
+     
+        object.objectCaching = false,
+        object.dirty = true;
+        object.paintFirst = "stroke";
+        this.canvas.renderAll()
+        }
+  }
+    stroke_width(){
+      let strokeWidth = document.querySelector('#stroke_width');
+      strokeWidth.oninput = (e) =>{
+        let value = e.target.value
+        if(e.target.value == ''){
+            value = 0
+        }
+        let object = this.canvas.getActiveObject();
+        console.log(object.stroke);
+        if(object.stroke == null){object.stroke =  'teal';}
+        object.strokeWidth = parseInt(value, 10);
+        object.objectCaching = false,
+        object.dirty = true;
+        object.paintFirst = "stroke";
+        this.canvas.renderAll()
       
         
-//         document.querySelector('#crop').addEventListener('click', ()=>{
-//         let objects = this.canvas.getActiveObjects();
-//         let img = objects[0]._originalElement;
-//         let cropper_objects = objects[1]
-//         // console.log()
-//      console.log( `height` + ` `+ cropper_objects.getScaledHeight())
+      }
+  }
 
+  
+  opacity(){
+   let opacity = document.querySelector('#opacity')
+      opacity.oninput = (e) =>{
+      
+  let object = this.canvas.getActiveObject();
 
-//         let  imgInstance = new fabric.Image(img, {
-//         height:cropper_objects.getScaledHeight(), //unsa katas on ang pag crop
-//         // cropY:0//asa ng sugod ang crop
-//         });
-       
-//         // console.log()
-//      console.log( `height` + ` `+ img.height)
+ if(!object){return false;}
+  if(e.target.value == 10){
+  object.opacity = 1;
+  }
+  if(e.target.value == 9){
+  object.opacity = 0.9;
+  }
+  if(e.target.value == 8){
+  object.opacity = 0.8;
+  }
+  if(e.target.value == 7){
+  object.opacity = 0.7;
+  }
+  if(e.target.value == 6){
+  object.opacity = 0.6;
+  }
+  if(e.target.value == 5){
+  object.opacity = 0.5;
+  }
+  if(e.target.value == 4){
+  object.opacity = 0.4;
+  }
+  if(e.target.value == 3){
+  object.opacity = 0.3;
+  }
+   if(e.target.value == 2){
+  object.opacity = 0.2;
+  }
+   if(e.target.value == 1){
+  object.opacity = 0.1;
+  }
+     if(e.target.value == 0){
+  object.opacity = 0;
+  }
 
-//         this.adding_object_style(imgInstance);
-//         // this.canvas.add(imgInstance)
-//         })
-     
-
-        
-// }
-
+ 
+  
+  this.canvas.renderAll()
+}
+  }
 
 
 }   

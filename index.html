@@ -72,7 +72,7 @@
         <div id="myDropdown" class="dropdown-content">
         <a id="square"> Square</a>
         <a id="circle">Circle</a>
-        <a id="diamond">Diamond</a>
+
         </div>
     </div>
     <div class="dropdown dropdown-insert-text">
@@ -97,13 +97,17 @@
         <li id="crop_init"  class="dropbtn dropbtn-clip-image">Crop</li>
    
     </div>
+     <div class="dropdown">
+        <li id="log"  class="dropbtn dropbtn-clip-image">log</li>
+   
+    </div>
    
 </ul> 
 
 </header>
 <div class="sub_header">
-    <div id="file_name">
-    graduation
+  <div class="file_name_container">
+  <span>File:</span> <span  id="file_name">...</span> 
     </div>
     |
    <div class="order"> 
@@ -235,12 +239,12 @@
         <!-- stroke -->
         <div class="stroke-tools ">
         <div class="stroke-color">
-        <label for="strokeInput">Stroke Color</label>
-        <input type="color"  id="strokeInput" value="#f4911f" >
+        <label for="stroke_color">Stroke Color</label>
+        <input type="color"  id="stroke_color" value="#f4911f" >
         </div>
         <div class="strokeWidth-container">
         <span>Stroke width</span>
-        <input type="number" id="strokeWidthInput"  min="0" max="100" value="30" >
+        <input type="number" id="stroke_width"  min="0" max="100" value="" >
         </div>
         </div>
 
@@ -249,7 +253,7 @@
         
     <div class="opacity-container hover">
     <label for="opacity">Opacity</label>
-    <input type="range" id="opacity" class=" " name="opacity" min="100" max="500" value="10" style="width:100%" >
+    <input type="range" id="opacity" class=" " name="opacity" min="0" max="10" value="10" style="width:100%" >
     </div>
 
    

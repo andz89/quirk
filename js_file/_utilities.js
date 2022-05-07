@@ -27,21 +27,27 @@ export class Utilities extends Modification{
 
 
     discardActiveObject(){
+ 
     window.onclick = (e)=>{
-
-    if(e.target.id  === 'canvas-background'){
+   
+      if(e.target.classList.contains('upper-canvas')){
     document.querySelector('.canvas-options').style.display = "none"
+
+
+      }
+    if(e.target.id  === 'canvas-background' ){
+
+    document.querySelector('.canvas-options').style.display = "none"
+    // document.querySelector('.canvas-options').style.display = "none"
+
 
     this.canvas.discardActiveObject()
     this.canvas.renderAll()
     }
 
-    }
-
-    //this is from header, to display 'none' the dropdown btn
+        //this is from header, to display 'none' the dropdown btn
     //gebutang ini diri kay dili mo detect kung gawas sa classing ibutang
-      window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
+    if (!e.target.matches('.dropbtn')) {
       var dropdowns = document.getElementsByClassName("dropdown-content");
       var i;
       for (i = 0; i < dropdowns.length; i++) {
@@ -56,7 +62,10 @@ export class Utilities extends Modification{
       e.style.backgroundColor = '';
       })
     }
-  }
+    }
+
+
+
 
     }
 
@@ -64,15 +73,75 @@ export class Utilities extends Modification{
     canvasOn(property){
     this.canvas.on({
     'selection:updated': function(o){
-    var activeObj = o.selected[0];//to throw error type o.target
+    var activeObj = o.selected[0];
 
-    //reset fontSize
+    //bold text
+    let bold =  document.querySelector('#bold')
+    if(activeObj.type == "textbox" && activeObj.fontWeight === 'bold'){bold.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
+    if(activeObj.type == "textbox" && activeObj.fontWeight === 'normal'){bold.style.backgroundColor = ''}
+    if(activeObj.type !== "textbox"){bold.style.backgroundColor = ''}
+    //-------------------------------------//
+
+    //italic text
+    let italic =  document.querySelector('#italic')
+    if(activeObj.type == "textbox" && activeObj.fontStyle === 'italic'){italic.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
+    if(activeObj.type == "textbox" && activeObj.fontStyle === 'normal'){italic.style.backgroundColor = ''}
+    if(activeObj.type !== "textbox"){italic.style.backgroundColor = ''}
+    //-------------------------------------//
+
+
+    //fontSize 
     if(activeObj.type == "textbox"){
-        let fontSize = document.querySelector(property.fontSize)
-        fontSize.value = activeObj.fontSize
-
+        document.querySelector(property).value = activeObj.fontSize
+    }else{
+       document.querySelector(property).value = ''
     }
+    //-------------------------------------//
     
+  //stroke_width
+
+  document.querySelector('#stroke_width').value = activeObj.strokeWidth
+  //-------------------------------------//
+
+        //opacity
+    let opacity =  document.querySelector('#opacity')
+
+    if(activeObj.opacity === 1){
+    opacity.value = 10
+    }
+    if(activeObj.opacity === 0.9){
+    opacity.value = 9
+    }
+    if(activeObj.opacity === 0.8){
+    opacity.value = 8
+    }
+    if(activeObj.opacity === 0.7){
+    opacity.value = 7
+    }
+    if(activeObj.opacity === 0.6){
+    opacity.value = 6
+    }
+    if(activeObj.opacity === 0.5){
+    opacity.value = 5
+    }
+    if(activeObj.opacity === 0.4){
+    opacity.value = 4
+    }
+    if(activeObj.opacity === 0.3){
+    opacity.value = 3
+    }
+    if(activeObj.opacity === 0.2){
+    opacity.value = 2
+    }
+     if(activeObj.opacity === 0.1){
+    opacity.value = 1
+    }
+     if(activeObj.opacity === 0){
+    opacity.value = 0
+    }
+    //-------------------------------------//
+
+
     activeObj.set("borderColor","#333");
     activeObj.set("cornerColor","#17a2b8");
     activeObj.set("cornerSize",15);
@@ -83,6 +152,78 @@ export class Utilities extends Modification{
     },
     'selection:created': function(o){
     var activeObj = o.selected[0];
+
+    //bold text
+    let bold =  document.querySelector('#bold')
+    if(activeObj.type == "textbox" && activeObj.fontWeight === 'bold'){bold.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
+    if(activeObj.type == "textbox" && activeObj.fontWeight === 'normal'){bold.style.backgroundColor = ''}
+    if(activeObj.type !== "textbox"){bold.style.backgroundColor = ''}
+    //-------------------------------------//
+
+    //italic text
+    let italic =  document.querySelector('#italic')
+    if(activeObj.type == "textbox" && activeObj.fontStyle === 'italic'){italic.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
+    if(activeObj.type == "textbox" && activeObj.fontStyle === 'normal'){italic.style.backgroundColor = ''}
+    if(activeObj.type !== "textbox"){italic.style.backgroundColor = ''}
+    //-------------------------------------//
+
+    //fontSize 
+    if(activeObj.type == "textbox"){
+        document.querySelector(property).value = activeObj.fontSize
+    }else{
+       document.querySelector(property).value = ''
+    }
+    //-------------------------------------//
+
+
+       //opacity
+    let opacity =  document.querySelector('#opacity')
+  
+    if(activeObj.opacity === 1){
+    opacity.value = 10
+    }
+    if(activeObj.opacity === 0.9){
+    opacity.value = 9
+    }
+    if(activeObj.opacity === 0.8){
+    opacity.value = 8
+    }
+    if(activeObj.opacity === 0.7){
+    opacity.value = 7
+    }
+    if(activeObj.opacity === 0.6){
+    opacity.value = 6
+    }
+    if(activeObj.opacity === 0.5){
+    opacity.value = 5
+    }
+    if(activeObj.opacity === 0.4){
+    opacity.value = 4
+    }
+    if(activeObj.opacity === 0.3){
+    opacity.value = 3
+    }
+    if(activeObj.opacity === 0.2){
+    opacity.value = 2
+    }
+     if(activeObj.opacity === 0.1){
+    opacity.value = 1
+    }
+     if(activeObj.opacity === 0){
+    opacity.value = 0
+    }
+  
+    //-------------------------------------//
+
+
+        //stroke_width
+      
+  document.querySelector('#stroke_width').value = activeObj.strokeWidth
+    //-------------------------------------//
+
+
+
+    
     if(activeObj.group  !== undefined){
      let group = activeObj.group
     group.set("borderColor","#333");
@@ -92,12 +233,7 @@ export class Utilities extends Modification{
     group.set("transparentCorners",false);
     group.set("lockUniScaling",true);
     }
-    //reset fontSize
-    if(activeObj.type == "textbox"){
-    let fontSize = document.querySelector(property.fontSize)
-    fontSize.value = activeObj.fontSize
-    
-    }
+  
 
 
 
