@@ -12,6 +12,14 @@ export class Canvas extends Modification{
 
  create_main_canvas =()=>{
 
+
+
+
+
+
+
+
+
 let utils = new Utilities({
         canvas : this.canvas,
         width : this.width,
@@ -54,7 +62,7 @@ let menu_tools = new Menu_tools({
         menu_tools.align_top()
         menu_tools.align_middle()
         menu_tools.align_bottom()
-
+        menu_tools.dragAndDrop_image()
 
 
 
@@ -120,10 +128,21 @@ let right_tools = new Right_tools({
    
 
         
-   
+  setTimeout(() => {
+  let objects =  this.canvas.getObjects()
+    let lock_objects = objects.filter((each_object)=>{
+    if(each_object.lockMovementX === true && each_object.lockMovementY === true){ 
+    return each_object
+    }
+    })
 
+  this.display_lockObjects(lock_objects)
+  },1000)
+  
+ 
           
 }
+
 
 
 

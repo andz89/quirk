@@ -68,6 +68,37 @@ export class Menu_tools extends Modification{
     
 }   
 
+  dragAndDrop_image(){
+       const dropZoneElement = document.querySelector(".drop-zone__input").closest(".canvas-container");
+
+    dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
+       let file = e.dataTransfer.files
+
+  
+       Array.from(file).forEach((e)=>{
+
+           let reader = new FileReader();
+        reader.readAsDataURL(e)
+
+        reader.onload = () => {
+    
+        fabric.Image.fromURL(reader.result, (img)=>{
+        img.name = img.type
+        img.id = this.uniqueId()
+        this.adding_object_style(img)
+        })
+
+        };
+       })
+ 
+    
+      
+
+    })
+
+  }
+
 
     insert_shape(selector, cb){
     let element = document.querySelector(selector)
@@ -152,7 +183,7 @@ async save_file_json(){
 
     let object = this.canvas.getActiveObject();
 
-    this.canvas.bringToFront(object)
+    this.canvas.bringForward(object)
 
     }
     }
@@ -160,7 +191,7 @@ async save_file_json(){
     let bringToBack  =   document.querySelector('#bringToBack_object')
     bringToBack.onclick = (e)=>{
     let object = this.canvas.getActiveObject();
-    this.canvas.sendToBack(object)
+    this.canvas.sendBackwards(object)
     }
     }
 
