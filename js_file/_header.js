@@ -25,24 +25,23 @@ document.querySelector(".dropdown-clip-image .dropdown-content").style.display =
 
 }
 
-  // Close the dropdown menu if the user clicks outside of it
-  // window.onclick = function(event) {
-  //   if (!event.target.matches('.dropbtn')) {
-  //     var dropdowns = document.getElementsByClassName("dropdown-content");
-  //     var i;
-  //     for (i = 0; i < dropdowns.length; i++) {
-  //       var openDropdown = dropdowns[i];
-  //       if (openDropdown.style.display == 'block') {
-  //         openDropdown.style.display = 'none';
-    
-  
-  //       }
-  //     }
-  //     document.querySelectorAll('li').forEach((e)=>{
-  //     e.style.backgroundColor = '';
-  //     })
-  //   }
-  // }
+//sub header area
+document.querySelector('#canvas-property-btn').addEventListener('click', ()=>{
+document.querySelector('.canvas-options').style.display = "block"
+
+
+})
+document.querySelector('.close-container-btn').addEventListener('click', ()=>{
+document.querySelector('.canvas-options').style.display = "none"
+
+})
+
+document.querySelector('.align_canvas').addEventListener('click', ()=>{
+document.querySelector('.align_canvas_container').style.display = "block"
+
+})
+
+
 
 
 

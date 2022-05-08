@@ -96,14 +96,30 @@ header{
       img:hover {
           background-color: rgba(160, 158, 158, 0.712)
       }
-      select{
-          border-radius: 5px;
-          height: 30px;
+         .align_canvas{
+        position: relative;
+        li{
+      
+          list-style: none
+        }
+        .align_canvas_container{
+          position: absolute;
+          background-color: rgb(219, 217, 217);
+          z-index: 4;
+          width:140px;
+          margin-top:5px;
+          padding: 2px;
+          display:none;
+          div{
+            padding: 1px 10px;
+          }
+          div:hover{
+            background-color:rgb(107, 168, 168)
+          }
+        }
+
       }
-      option{
-          background-color:rgb(246, 246, 246);
-        //   font-size: 12px;
-      }
+
       .file_name_container{
       display: flex;
       justify-content: center;
@@ -185,4 +201,17 @@ header{
             }
       }
    
+}
+
+#alert-header{
+
+display: flex;
+padding:2px 5px;
+justify-content: flex-start;
+cursor: pointer;
+user-select: none;
+gap: 10px;
+width: 100%;
+background-color:rgb(255, 237, 137);
+text-align: center;
 }

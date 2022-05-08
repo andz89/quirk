@@ -31,13 +31,16 @@ export class Utilities extends Modification{
     window.onclick = (e)=>{
    
       if(e.target.classList.contains('upper-canvas')){
+         //sub header area
     document.querySelector('.canvas-options').style.display = "none"
-
+   document.querySelector('.align_canvas_container').style.display = "none"
 
       }
     if(e.target.id  === 'canvas-background' ){
 
+      //sub header area
     document.querySelector('.canvas-options').style.display = "none"
+    document.querySelector('.align_canvas_container').style.display = "none"
     // document.querySelector('.canvas-options').style.display = "none"
 
 
@@ -74,10 +77,10 @@ export class Utilities extends Modification{
     this.canvas.on({
     'selection:updated':select_object,
     'selection:created':select_object,
+    
     });
     function select_object(o){
     var activeObj = o.selected[0];
-
     //bold text
     let bold =  document.querySelector('#bold')
     if(activeObj.type == "textbox" && activeObj.fontWeight === 'bold'){bold.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
@@ -105,6 +108,9 @@ export class Utilities extends Modification{
 
   document.querySelector('#stroke_width').value = activeObj.strokeWidth
   //-------------------------------------//
+
+
+
 
         //opacity
     let opacity =  document.querySelector('#opacity')
@@ -145,6 +151,7 @@ export class Utilities extends Modification{
     //-------------------------------------//
 
    if(activeObj.group  !== undefined){
+
      let group = activeObj.group
     group.set("borderColor","#333");
     group.set("cornerColor","#17a2b8");
@@ -153,6 +160,8 @@ export class Utilities extends Modification{
     group.set("transparentCorners",false);
     group.set("lockUniScaling",true);
     }
+    
+
     activeObj.set("borderColor","#333");
     activeObj.set("cornerColor","#17a2b8");
     activeObj.set("cornerSize",15);

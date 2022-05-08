@@ -1,19 +1,15 @@
    #canvas-background{
             overflow-y: auto;
             overflow-x: auto;
-            // position: relative;
             display: flex;
             justify-content: center;
             width: 100%;
-            // align-items: center;
+      
             padding: 50px;
             background-color:#333;
            margin: 0 auto;
             .upper-canvas{
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-            //  margin: 30px;
-               //   justify-content: center;
-        
             }
          
             }

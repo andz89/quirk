@@ -9,15 +9,18 @@ import {header} from './js_file/_header.js'
     //==================window height size=======================//
     let header_size = document.querySelector('header').offsetHeight
     let sub_header_size = document.querySelector('.sub_header').offsetHeight
+    let alert_header = document.querySelector('#alert-header').offsetHeight
 
-    document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size +  'px';
+
+    document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size  - alert_header +  'px';
 
     //window_height resize
     window.addEventListener('resize', ()=>{
     let header_size = document.querySelector('header').offsetHeight
     let sub_header_size = document.querySelector('.sub_header').offsetHeight
+    let alert_header = document.querySelector('#alert-header').offsetHeight
 
-    document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size+  'px';
+    document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size - alert_header+  'px';
     })
 
 
@@ -282,16 +285,6 @@ zoomOut("#zoomOut")
     }
 
 
-document.querySelector('#canvas-property-btn').addEventListener('click', ()=>{
-document.querySelector('.canvas-options').style.display = "block"
-console.log('ss')
-
-})
-document.querySelector('.close-container-btn').addEventListener('click', ()=>{
-document.querySelector('.canvas-options').style.display = "none"
-
-})
-
 
 
 
@@ -390,3 +383,5 @@ zoomOut("#zoomOut")
 
 
     //================================== end ==============================//
+
+

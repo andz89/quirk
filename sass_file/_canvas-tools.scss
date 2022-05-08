@@ -383,42 +383,36 @@
             display: flex;
             justify-content:space-between;
             align-items:center;
+            border-radius:2px;
+           cursor: pointer;
+            width: 100%;
+                  user-select: none;
+
+              
+            }
+
+             li:hover{
+                background-color: rgb(46, 64, 71)
+            }
 
             input{
-            user-select: none;
-            font-size: .8rem;
-            border: unset;
-            border-radius: 2px;
-            outline: none;
-            color: #fff;
-            padding: 5px;
-
-            max-width: 150px;
-            cursor: pointer;
-            background-color:transparent;
-            display: none;
+                  user-select: none;
+                // max-width: 200px;
+                width: 70px;
+                background-color:transparent;
+                outline: none;
+                border: none;
+                color: #fff;
+                height:20px;
+                padding: 0 5px;
+                
             }
-            .object-display-name{
-            background-color: transparent;
+            input:focus{
+                background-color:#fff;
+                color: #333;
+                user-select: none;
             }
-            .object-display-name:focus{
-            background-color: transparent;
-            }
-            span{
-            transition: all 0.1s ease-in;
-            font-size:.8rem;
-            font-style: italic;
-            padding: 3px;
-            border-radius:3px;
-            }
-            span:hover{
-            background-color:rgba(121, 118, 118, 0.431);
-            }
-            }
-
-            .active{
-            background-color:rgba(134, 134, 134, 0.733);
-            }
+           
 
 
     }

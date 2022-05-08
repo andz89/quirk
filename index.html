@@ -53,7 +53,7 @@
     </div>
 
 
-    <div class="alert"></div>
+   
     <div id="createCanvasModal"></div>
 <header>
  <ul> 
@@ -94,13 +94,13 @@
     </div>
 
     <div class="dropdown">
-        <li id="crop_init"  class="dropbtn dropbtn-clip-image">Crop</li>
-   
-    </div>
-     <div class="dropdown">
-        <li id="log"  class="dropbtn dropbtn-clip-image">log</li>
-   
-    </div>
+        <li id="crop_init"  class="dropbtn">Crop</li>
+   </div>
+    <div  class="dropdown">
+        <li id="log"  class="dropbtn">log</li>
+   </div>
+
+
    
 </ul> 
 
@@ -118,28 +118,28 @@
   </div>
         |
     <div>
-    <img id="sendToBack"  src="./icons/align_left.png" title="align-left" draggable="false" alt="">
-    <img id="sendToBack"  src="./icons/align_center.png" title="align-center" draggable="false" alt="">
-    <img id="sendToBack"  src="./icons/align_right.png" title="align-right" draggable="false" alt="">
+    <img id="align_left"  src="./icons/align_left.png" title="align-left" draggable="false" alt="">
+    <img id="align_center"  src="./icons/align_center.png" title="align-center" draggable="false" alt="">
+    <img id="align-right"  src="./icons/align_right.png" title="align-right" draggable="false" alt="">
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <img id="sendToBack"  src="./icons/align_bottom.png" title="align-bottom" draggable="false" alt="">
-    <img id="sendToBack"  src="./icons/align_mid.png" title="align-middle" draggable="false" alt="">
-    <img id="sendToBack"  src="./icons/align_top.png" title="align-top" draggable="false" alt="">
-
+    <img id="align-bottom"  src="./icons/align_bottom.png" title="align-bottom" draggable="false" alt="">
+    <img id="align-middle"  src="./icons/align_mid.png" title="align-middle" draggable="false" alt="">
+    <img id="align-top"  src="./icons/align_top.png" title="align-top" draggable="false" alt="">
 
     </div>
         |
 
-    <div>
-        <!-- <label for="center_canvas" class="btn btn-sm btn-primary">Align to canvas</label> -->
-    <select name="center_canvas" id="align_to_canvas">
-        <option value="">Align to canvas</option>
-        <option value="horizontal">Horizontal</option>
-        <option value="vertical">Vertical</option>
-        <option value="center">Center</option>
+    <div class="align_canvas">
+        <li class="btn btn-primary">Align to canvas</li>
+        <div class="align_canvas_container">
+                <div id="horizontal">Horizontal</div>
+                <div id="vertical">Vertical</div>
+                <div id="center">Center</div>
 
-    </select>
+        </div>
+
     </div>
+
     <div class="canvas-options-container">
         <span id="canvas-property-btn" class="btn btn-primary">Canvas</span>
         <div class="canvas-options" style="display: none;">
@@ -160,6 +160,7 @@
     </div>
 
 </div>
+ <div id="alert-header"> the object is lock</div>
 <main>
   
         <div id="canvas-background"></div>

@@ -145,13 +145,7 @@ this.canvas.renderAll()
 }
 })
 }
-log(){
-    document.querySelector('#log').onclick = ()=>{
-                  let object = this.canvas.getActiveObject();
-            console.log(object.type)
-    }
-    
-}
+
   bold_text(){
 
       document.querySelector('#bold').onclick =()=>{
@@ -297,17 +291,32 @@ italic.style.backgroundColor = ''
     stroke_width(){
       let strokeWidth = document.querySelector('#stroke_width');
       strokeWidth.oninput = (e) =>{
+          
         let value = e.target.value
         if(e.target.value == ''){
             value = 0
         }
         let object = this.canvas.getActiveObject();
-        console.log(object.stroke);
+       
         if(object.stroke == null){object.stroke =  'teal';}
+
+        if(object.type !== "activeSelection"){
         object.strokeWidth = parseInt(value, 10);
         object.objectCaching = false,
         object.dirty = true;
         object.paintFirst = "stroke";
+        }else{
+     
+        object._objects.forEach((e)=>{
+        if(e.stroke == null){e.stroke =  'teal';}
+        e.strokeWidth = parseInt(value, 10);
+        e.objectCaching = false,
+        e.dirty = true;
+        e.paintFirst = "stroke";
+        })
+
+        }
+      
         this.canvas.renderAll()
       
         
@@ -362,5 +371,109 @@ italic.style.backgroundColor = ''
 }
   }
 
+      duplicate(){
+      document.querySelector('#duplicate').onclick = (e) =>{
+
+      let object = this.canvas.getActiveObject()
+      
+      object.clone( (cloned)=>{
+      let newCloned =  cloned
+      newCloned.clone((clonedObj)=> {
+      this.canvas.discardActiveObject();
+      clonedObj.set({
+      left: clonedObj.left + 10,
+      top: clonedObj.top + 10,
+      });
+
+      if(clonedObj.type == 'group'){
+
+      clonedObj._objects.forEach((e)=>{
+      e.name = e.type
+      // e.id = uniqueId();
+      })
+
+      };
+
+      if (clonedObj.type === 'activeSelection') {
+      // active selection needs a reference to the canvas.
+      clonedObj.canvas = this.canvas;
+      clonedObj.forEachObject((obj)=> {
+
+      obj.name = object.type
+      // obj.id = uniqueId();
+      this.groupObjectStyle(obj)
+      this.canvas.add(obj);
+
+      });
+      // this should solve the unselectability
+      }
+    else {
+    clonedObj.name = object.type
+    // clonedObj.id = uniqueId();
+    this.canvas.add(clonedObj);
+    }
+    newCloned.top += 10;
+    newCloned.left += 10;
+    clonedObj.setCoords();
+    // objectStyle(clonedObj)
+    this.canvas.setActiveObject(clonedObj);
+    this.canvas.requestRenderAll();
+
+    });
+      })
+
+          // clone again, so you can do multiple copies.
+
+
+
+      }
+  
+    }
+
+    lock(){
+        let lock = document.querySelector('#lock')
+        lock.onclick = ()=>{
+        let objects = this.canvas.getActiveObjects();
+        if(objects.length > 1){
+        let lockObjects = []
+        objects.forEach((obj)=>{
+              
+        lockObjects.push({'id':obj.id, 'name':obj.name});
+     
+        
+            
+        obj.selectable = false;
+        obj.set("lockMovementX", true)
+        obj.set("lockMovementY", true)
+        obj.set("lockScalingX", true)
+        obj.set("lockScalingY", true)
+        obj.set("lockRotation", true)
+        this.canvas.discardActiveObject()
+        this.canvas.renderAll();
+        })
+
+        this.display_lockObjects(lockObjects)
+
+        }else{
+        let object = this.canvas.getActiveObject();
+
+        let lockObjects = {}
+        lockObjects.id = object.id;
+        lockObjects.name = object.name;
+
+        this.display_lockObjects(lockObjects)
+        this.canvas.discardActiveObject();
+        object.selectable = false;
+        object.set("lockMovementX", true)
+        object.set("lockMovementY", true)
+        object.set("lockScalingX", true)
+        object.set("lockScalingY", true)
+        object.set("lockRotation", true)
+        this.canvas.renderAll();
+        }
+    
+        }
+        
+    }
 
 }   

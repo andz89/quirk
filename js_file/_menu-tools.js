@@ -1,5 +1,5 @@
 import {Modification} from "./_modification.js";
-import {Canvas} from "./canvas.js";
+
 export class Menu_tools extends Modification{
 
 
@@ -11,7 +11,7 @@ export class Menu_tools extends Modification{
 
     object.set("textAlign","center")
     object.set("fontSize",12)
-    object.width = 100
+
     // object.perPixelTargetFind = true;
     object.setControlsVisibility({
     // mt: false, // middle top disable
@@ -24,6 +24,7 @@ export class Menu_tools extends Modification{
     // br: false // bottom right
     });
     object.name = object.type
+    object.id = this.uniqueId()
      object.dirty = true
     this.adding_object_style(object)
 
@@ -56,7 +57,7 @@ export class Menu_tools extends Modification{
         reader.onload = () => {
         fabric.Image.fromURL(reader.result, (img)=>{
         img.name = img.type
-
+            img.id = this.uniqueId()
         this.adding_object_style(img)
     
         this.loaderHide()
@@ -135,7 +136,7 @@ async save_file_json(){
     }
     let transparent = document.querySelector('#transparent')
     transparent.onclick = ()=>{
-    console.log('tr')
+
 
     this.canvas.setBackgroundColor(null)
     this.canvas.renderAll()
@@ -254,6 +255,8 @@ async save_file_json(){
 
         let clipPath =  new fabric.Circle({ radius: 250 , top: 500 / 2, left: 500 / 2,   originX:"center", originY:"center" ,absolutePositioned: true})
         if(object === undefined){return false}//to check if object is selected
+        if(object.lockMovementX == true && object.lockMovementY == true){ return false}
+
         clip_circle(object, clipPath, shape_object)
         })
 
@@ -266,6 +269,7 @@ async save_file_json(){
 
         let clipPath =  new fabric.Rect({ width: 500,height: 500, top: 500 / 2, left: 500 / 2,   originX:"center", originY:"center" ,absolutePositioned: true})
         if(object === undefined){return false}//to check if object is selected
+        if(object.lockMovementX == true && object.lockMovementY == true){ return false}
 
         clip_circle(object, clipPath, shape_object)
 
@@ -393,7 +397,8 @@ async save_file_json(){
     img.canvas_backgroundColor = canvas_backgroundColor
     img.left = object.left;
     img.top = object.top
-
+    img.name = object.type
+    img.id = this.uniqueId()
     this.objectSizeOnCanvas(img)
     this.canvas.add(img);
     this.canvas.renderAll()
@@ -433,63 +438,221 @@ async save_file_json(){
             }
 
     }
-  center_object(){
-  let centerObject = document.querySelector('#align_to_canvas')
-  centerObject.onchange = (e)=>{
 
-    if(e.target.value == 'horizontal'){
-    
-        if(this.canvas.getActiveObject().type === 'activeSelection'){
-        let obj = this.canvas.getActiveObject().toGroup()
-        this.canvas.viewportCenterObjectH(obj)
 
-        let a = this.canvas.getActiveObject().toActiveSelection();
-        objectStyle(a)
-        this.canvas.requestRenderAll();
-        }else{
-        let object = this.canvas.getActiveObject();
-        this.canvas.viewportCenterObjectH(object)
-        this.canvas.setActiveObject(object)
-        }
 
-        
+
+    horizontal_object(){
+      document.querySelector('#horizontal').onclick = () =>{
+    if(this.canvas.getActiveObject().type === 'activeSelection'){
+    let obj = this.canvas.getActiveObject().toGroup()
+    this.canvas.viewportCenterObjectH(obj)
+
+    let selected_objects = this.canvas.getActiveObject().toActiveSelection();
+    selected_objects.set("borderColor","#333");
+    selected_objects.set("cornerColor","#17a2b8");
+    selected_objects.set("cornerSize",15);
+    selected_objects.set("cornerStyle","circle");
+    selected_objects.set("transparentCorners",false);
+    selected_objects.set("lockUniScaling",true);
+
+    this.canvas.renderAll();
+    }else{
+    let object = this.canvas.getActiveObject();
+    this.canvas.viewportCenterObjectH(object)
+    this.canvas.setActiveObject(object)
     }
-    if(e.target.value == 'vertical'){
+  
+
+    }
+
+    }
+
+    vertical_object(){
+      document.querySelector('#vertical').onclick = ()=>{
       if(this.canvas.getActiveObject().type === 'activeSelection'){
       let obj = this.canvas.getActiveObject().toGroup()
       this.canvas.viewportCenterObjectV(obj)
-      let a = this.canvas.getActiveObject().toActiveSelection();
-      objectStyle(a)
-      this.canvas.requestRenderAll();
+    let selected_objects = this.canvas.getActiveObject().toActiveSelection();
+    selected_objects.set("borderColor","#333");
+    selected_objects.set("cornerColor","#17a2b8");
+    selected_objects.set("cornerSize",15);
+    selected_objects.set("cornerStyle","circle");
+    selected_objects.set("transparentCorners",false);
+    selected_objects.set("lockUniScaling",true);
+
+      this.canvas.renderAll();
       }else{
       let object = this.canvas.getActiveObject();
       this.canvas.viewportCenterObjectV(object)
       this.canvas.setActiveObject(object)
       }
-    }
-
-    if(e.target.value === 'center'){
-
-      if(this.canvas.getActiveObject().type === 'activeSelection'){
-let obj = this.canvas.getActiveObject().toGroup()
-this.canvas.viewportCenterObject(obj)
-let a = this.canvas.getActiveObject().toActiveSelection();
-objectStyle(a)
-this.canvas.requestRenderAll();
-
-}else{
-  let object = this.canvas.getActiveObject();  
-this.canvas.viewportCenterObject(object)
-
-this.canvas.setActiveObject(object)
-
-}
-
+      }
+ 
 
     }
+  center_object(){
+    document.querySelector('#center').onclick = () =>{
+    if(this.canvas.getActiveObject().type === 'activeSelection'){
+    let obj = this.canvas.getActiveObject().toGroup()
+    this.canvas.viewportCenterObject(obj)
+  let selected_objects = this.canvas.getActiveObject().toActiveSelection();
+    this.groupObjectStyle(selected_objects)
+
+
+    this.canvas.renderAll();
+
+    }else{
+    let object = this.canvas.getActiveObject();  
+    this.canvas.viewportCenterObject(object)
+
+    this.canvas.setActiveObject(object)
+
+    }
+    }
+
+}
+
+align_left(){
+  let align_left = document.querySelector('#align_left')
+  align_left.onclick = ()=> {
+  let object =  this.canvas.getActiveObjects()
+
+  let group_objects =  this.canvas.getActiveObject().toGroup()
+
+  var groupWidth = group_objects.width
+
+  object.forEach((obj)=> {
+
+  obj.set({
+  left: -(groupWidth / 2),
+  originX: 'left'
+  });
+
+
+  });
+  let each_object = this.canvas.getActiveObject().toActiveSelection();
+  this.groupObjectStyle(each_object)
+  this.canvas.renderAll();
+  };
 
 
 }
+align_center(){
+  let align_center = document.querySelector('#align_center')
+  align_center.onclick = ()=> {
+  let object =  this.canvas.getActiveObjects()
+
+  let group_objects =  this.canvas.getActiveObject().toGroup()
+
+  var groupWidth = group_objects.width
+
+  object.forEach((obj)=> {
+
+var itemWidth = obj.getBoundingRect().width;
+obj.set({
+left: (0 - itemWidth/2),
+originX: 'left'
+  });
+
+
+  });
+  let each_object = this.canvas.getActiveObject().toActiveSelection();
+  this.groupObjectStyle(each_object)
+  this.canvas.renderAll();
+  };
+
+
 }
+
+align_right(){
+  let align_right = document.querySelector('#align-right')
+  align_right.onclick = ()=> {
+  let object =  this.canvas.getActiveObjects()
+
+  let group_objects =  this.canvas.getActiveObject().toGroup()
+
+  var groupWidth = group_objects.width
+
+object.forEach((obj)=> {
+var itemWidth = obj.getBoundingRect().width;
+obj.set({
+left: (groupWidth/2 - itemWidth/2),
+originX: 'center'
+});
+});
+
+  let each_object = this.canvas.getActiveObject().toActiveSelection();
+  this.groupObjectStyle(each_object)
+  this.canvas.renderAll();
+  };
+
+
+}
+
+align_top(){
+  document.querySelector('#align-top').onclick = () =>{
+  let object =  this.canvas.getActiveObjects()
+  let group_objects =  this.canvas.getActiveObject().toGroup()
+  var groupHeight = group_objects.height
+
+  object.forEach((obj)=> {
+  obj.set({
+  top:(0 - groupHeight / 2),
+  originY: 'top'
+  });
+  });
+
+  let each_object = this.canvas.getActiveObject().toActiveSelection();
+  this.groupObjectStyle(each_object)
+  this.canvas.renderAll();
+  }
+
+}
+align_middle(){
+
+    document.querySelector('#align-middle').onclick = () =>{
+
+    let object =  this.canvas.getActiveObjects();
+   
+    object.forEach((obj)=> {
+
+    let  itemHeight = obj.getBoundingRect().height;
+
+    obj.set({
+    top:(0 - itemHeight/2),
+    originY: 'top',
+    });
+    });
+
+   
+    this.canvas.renderAll();
+    
+    }
+
+}
+align_bottom(){
+  
+    document.querySelector('#align-bottom').onclick = () =>{
+    let object =  this.canvas.getActiveObjects();
+      let group_objects =  this.canvas.getActiveObject().toGroup()
+    var groupHeight = group_objects.height
+
+    object.forEach((obj)=> {
+    var itemHeight = obj.getBoundingRect().height;
+    obj.set({
+    top:(groupHeight/2 - itemHeight/2),
+    originY: 'center',
+    });
+
+
+    });
+    let each_object = this.canvas.getActiveObject().toActiveSelection();
+    this.groupObjectStyle(each_object);
+    this.canvas.renderAll();
+  }
+
+}
+
 
 }

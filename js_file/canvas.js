@@ -45,7 +45,18 @@ let menu_tools = new Menu_tools({
         menu_tools.bringToFront_object()
         menu_tools.bringToBack_object()
         menu_tools.crop_image_init()
+        menu_tools.horizontal_object()
+        menu_tools.vertical_object()
         menu_tools.center_object()
+        menu_tools.align_left()
+        menu_tools.align_center()
+        menu_tools.align_right()
+        menu_tools.align_top()
+        menu_tools.align_middle()
+        menu_tools.align_bottom()
+
+
+
 
 
         //shapes
@@ -56,7 +67,8 @@ let menu_tools = new Menu_tools({
         shape: 'square',
         fill: 'gray'
         });
-        object.name ="square"
+        object.name ="square";
+          object.id = this.uniqueId()
         
         this.adding_object_style(object)
    
@@ -68,7 +80,8 @@ let menu_tools = new Menu_tools({
         left: 100,
         top: 100,
         });
-        object.name ="circle"
+        object.name ="circle";
+          object.id = this.uniqueId()
       
         this.adding_object_style(object)
         })
@@ -95,9 +108,17 @@ let right_tools = new Right_tools({
         right_tools.opacity()
 
 
-        right_tools.log()
+        right_tools.duplicate()
+        right_tools.lock()
+
+        
 
         menu_tools.clip()
+   
+
+    
+   
+
         
    
 

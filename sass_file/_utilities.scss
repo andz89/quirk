@@ -94,35 +94,7 @@
 
     
 }
-.alert{
-    padding:0 0.8rem;
-    margin:0rem 0;
-    opacity:0.9;
-    // background-color:$light-color;
-    color: #333;
-    height: 26px;
-    position: fixed;
-    width: 100%;
-    
-    
 
-     &-primary {
-        @include set-background($primary-color);
-    }
-     &-dark {
-        @include set-background($dark-color);
-    }
-     &-danger {
-        @include set-background($danger-color);
-    }
-     &-success {
-        @include set-background($success-color);
-    }
-     &-light {
-        @include set-background($light-color);
-    }
-
-}
 
 .loader{
     border:3px solid #f3f3f3;

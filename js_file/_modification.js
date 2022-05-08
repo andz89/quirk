@@ -67,7 +67,7 @@ export class Modification{
       img.cropBoxData = crop_size
       img.left = left;
       img.top = top
-
+      img.id = this.uniqueId()
       this.objectSizeOnCanvas(img)
       this.canvas.add(img);
       this.canvas.renderAll()
@@ -123,9 +123,127 @@ export class Modification{
         }
 
 
+      groupObjectStyle(object){
+      object.set("borderColor","#333");
+      object.set("cornerColor","#17a2b8");
+      object.set("cornerSize",15);
+      object.set("cornerStyle","circle");
+      object.set("transparentCorners",false);
+      object.set("lockUniScaling",true);
+      }
 
+      uniqueId(){
+    let d = new Date();
+    let dateString =  d.getFullYear().toString() + d.getMonth().toString() + d.getDate().toString() + d.getHours().toString() + d.getSeconds().toString() + d.getMilliseconds().toString()
+    let random = Math.floor(Math.random() * 1000000).toString()
+    return dateString + random
+    }
 
+    display_lockObjects(object) {
 
+  if(object.length > 0){
     
+  object.forEach(e=>{
+    let li = document.createElement("li");
+      li.className = "list_objects"
+    li.id = e.id
+  li.innerHTML = `
+  <input spellcheck = false type="text" id="${e.id}" class="object_name_input" value="${e.name}">  <span class="unlock" style="font-style: italic">unlock </span>
+  `
+
+     let lockContainer = document.querySelector('.lock-object-container')
+
+  lockContainer.prepend(li)
+  document.querySelector('.object_name_input').disabled = true;
+
+  lockContainer.scrollTop = 0;
+  });
+
+
+
+  }else{
+
+  let li = document.createElement("li");
+  li.className = "list_objects"
+  li.id = object.id;
+  li.innerHTML = `
+  <input spellcheck = false type="text" id="${object.id}" class="object_name_input" value="${object.name}">  <span class="unlock" style="font-style: italic">unlock </span>
+  `
+  // unlockObject()
+  let lockContainer = document.querySelector('.lock-object-container')
+
+  lockContainer.prepend(li)
+  document.querySelector('.object_name_input').disabled = true;
+
+  lockContainer.scrollTop = 0;
+  // lockName()
+
+
+
+
+  }
+
+    document.querySelector(".lock-object-container").onclick = (e)=>{
+
+      if(e.target.id){
+      let objects = this.canvas.getObjects();
+      let obj = objects.filter((object)=>{
+      return object.id === e.target.id
+      })
+
+      this.canvas.setActiveObject(obj[0]);
+      this.canvas.renderAll()
+      }
+      //unlock
+      if(e.target.classList.contains('unlock')){
+       let parent_id = e.target.parentElement.id
+        let objects = this.canvas.getObjects();
+      let obj = objects.filter((object)=>{
+      return object.id === parent_id
+      })
+
+      obj[0].selectable = true;
+      obj[0].set("lockMovementX", false)
+      obj[0].set("lockMovementY", false)
+      obj[0].set("lockScalingX", false)
+      obj[0].set("lockScalingY", false)
+      obj[0].set("lockRotation", false)
+      this.canvas.setActiveObject(obj[0]);
+      this.canvas.renderAll()
+      e.target.parentElement.remove()
+      }
+
+
+  
+  }
+   document.querySelector('.lock-object-container').ondblclick = (e) =>{
+    if(e.target.classList.contains('object_name_input')){
+      e.target.disabled = false
+      e.target.focus()
+      e.target.addEventListener('blur', (e) =>{
+      e.target.disabled = true
+ 
+    let objects = this.canvas.getObjects();
+    let obj = objects.filter((object)=>{
+    return object.id === e.target.id
+    })
+
+    obj[0].name = e.target.value
+    this.canvas.renderAll()
+    
+      })
+    }
+    
+
+   }
+
+
+  
+
+          
+    
+ 
+    }
+
 }
 
