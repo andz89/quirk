@@ -17,15 +17,23 @@
     
 
       }
+      .zoom_and_undo_container{
+         margin: 15px 0px 0px;
+        display:flex;
+        justify-self: center;
+        align-items: center;
+        gap: 20px;
+
+      }
         .zoom-container{
-        margin: 15px 0px 0px;
+       
         background-color:rgba(87, 86, 86, 0.431);
         padding: 5px;
         border-radius: 3px;
         font-size: .8rem;
         width: 120px;
         text-align: center;
-        display: inline-block;
+        // display: inline-block;
         button{
         color: #fff;
         margin: 0px 5px ;
@@ -38,6 +46,14 @@
         
     }
 
+        }
+
+        .undo-container{
+                button{
+                    width: 80px;
+                    height: 30px
+                }
+        
         }
 
         .hide-tools-btn-container{     

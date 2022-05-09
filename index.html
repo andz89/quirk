@@ -97,7 +97,7 @@
         <li id="crop_init"  class="dropbtn">Crop</li>
    </div>
     <div  class="dropdown">
-        <li id="log"  class="dropbtn">log</li>
+        <li id="test_crop"  class="dropbtn">test_crop</li>
    </div>
 
 
@@ -167,14 +167,24 @@
     <div id="canvas-tools-container">
          <div class="hide-tools-btn-container">
             <button id="hide-tools-btn">>></button>
+          
         </div>
-        <!-- zoom btm -->
+
+     
         <div class="canvas-tools">
-        <div class="zoom-container">
-        <button id="zoomOut">&#9866;</button>
-        VIEW
-        <button id="zoomIn">&#10010; </button>
-        </div>
+            <div class="zoom_and_undo_container">
+                <div class="zoom-container">
+                <button id="zoomOut">&#9866;</button>
+                VIEW
+                <button id="zoomIn">&#10010; </button>
+                </div>
+
+                <div class="undo-container">
+                <button class="btn btn-primary" id="undo">Back</button>
+                </div>
+                
+            </div>
+      
        
    
 

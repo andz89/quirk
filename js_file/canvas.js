@@ -14,6 +14,16 @@ export class Canvas extends Modification{
 
 
 
+let right_tools = new Right_tools({
+        canvas : this.canvas,
+        width : this.width,
+        height :this.height,
+        canvasScale: this.canvasScale,
+        SCALE_FACTOR: this.SCALE_FACTOR,
+        fileHandle: this.fileHandle,
+        mods: this.mods,
+        state: this.state,
+        })
 
 
 
@@ -33,6 +43,7 @@ let utils = new Utilities({
         utils.canvasOn()
         utils.discardActiveObject()
         utils.arrowMovement()
+     
       
 
 let menu_tools = new Menu_tools({
@@ -65,8 +76,7 @@ let menu_tools = new Menu_tools({
         menu_tools.dragAndDrop_image()
         menu_tools.clip()
         menu_tools.paste_image()
-
-
+        menu_tools.test_crop_image()
 
 
         //shapes
@@ -79,7 +89,8 @@ let menu_tools = new Menu_tools({
         });
         object.name ="square";
           object.id = this.uniqueId()
-        
+ 
+         this.updateModifications(true)
         this.adding_object_style(object)
    
         })
@@ -92,20 +103,13 @@ let menu_tools = new Menu_tools({
         });
         object.name ="circle";
           object.id = this.uniqueId()
+         this.updateModifications(true)
       
         this.adding_object_style(object)
         })
 
    
 
-let right_tools = new Right_tools({
-        canvas : this.canvas,
-        width : this.width,
-        height :this.height,
-        canvasScale: this.canvasScale,
-        SCALE_FACTOR: this.SCALE_FACTOR,
-        fileHandle: this.fileHandle,
-        })
 
         right_tools.fontSize('#fontSize')
         right_tools.backgroundColor()
@@ -127,10 +131,33 @@ let right_tools = new Right_tools({
       right_tools.textAlign_right()
         right_tools.fontStyle()
 
+    
+        // right_tools.undo()
+
         
 
    
+    // undo(){
 
+let mods = 0
+
+  let undo_btn = document.querySelector("#undo")
+ undo_btn.onclick = ()=>{
+
+console.log(this.state);
+
+if (mods < this.state.length) {
+  
+        this.canvas.clear().renderAll();
+
+        this.canvas.loadFromJSON(this.state[this.state.length + 1  - 1 - mods - 1]);
+        this.canvas.renderAll();
+        mods += 1;
+
+    }
+
+}
+// }
     
    
 

@@ -15,9 +15,11 @@ export class Menu_tools extends Modification{
     object.name = object.type;
     object.id = this.uniqueId();
      object.dirty = true;
+    this.updateModifications(true)
+     
     this.adding_object_style(object);
 
-  // this.canvas.renderAll()
+
       })
       
 
@@ -757,6 +759,39 @@ align_bottom(){
     this.canvas.renderAll();
   }
 
+}
+
+test_crop_image(){
+  document.querySelector('#test_crop').onclick = () => {
+     let object = this.canvas.getActiveObjects();
+  
+         let image = object[0]
+         let shape = object[1]
+    // shape.width = shape.width +10
+    console.log(image.width + ' image');
+    console.log(shape.width + ' shape');
+
+    console.log(shape.getBoundingRect())
+    console.log(image.getBoundingRect())
+
+    console.log('shape width getScaledWidth : ' + shape.getScaledWidth())
+    let a = image.getBoundingRect().width  - shape.getBoundingRect().width
+  fabric.Image.fromURL(image._originalElement.currentSrc, (img)=>{
+  
+    img.width =   a// ang kalaparon
+    img.cropX =  0   // asa magsugod ang cropping
+   img.height = shape.getBoundingRect().height
+    img.cropY =  0   // asa magsugod ang cropping
+
+    // this.canvas.add(img)
+     this.adding_object_style(img)
+      console.log('created image width ' + img.width)
+
+
+  })
+
+  }
+ 
 }
 
 

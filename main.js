@@ -296,6 +296,10 @@ zoomOut("#zoomOut")
     let width = 3510;
     let height =2490;
     let fileHandle;
+    let mods = 0;
+ 
+    let state = []
+
 
     const canvas = (width, height) => {
     let c = document.createElement("canvas")
@@ -308,6 +312,7 @@ zoomOut("#zoomOut")
     preserveObjectStacking:true,
     })
     }
+
    let canvas_created = canvas(width, height)
     let canvasInit = new Canvas({
         canvas: canvas_created,
@@ -315,7 +320,9 @@ zoomOut("#zoomOut")
         height: height,
         canvasScale: canvasScale,
         SCALE_FACTOR:SCALE_FACTOR,
-        fileHandle: fileHandle
+        fileHandle: fileHandle,
+        mods: mods,
+        state: state
     })
     canvasInit.create_main_canvas()
 function fitCanvasToScreen(){

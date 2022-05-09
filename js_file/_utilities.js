@@ -74,13 +74,10 @@ export class Utilities extends Modification{
 
 
     canvasOn(){
-    this.canvas.on({
-    'selection:updated':select_object,
-    'selection:created':select_object,
-    
-    });
-    function select_object(o){
+       const  select_object =(o)=>{
     var activeObj = o.selected[0];
+    // this.updateModifications(true)
+
     //bold text
     let bold =  document.querySelector('#bold')
     if(activeObj.type == "textbox" && activeObj.fontWeight === 'bold'){bold.style.backgroundColor = 'rgba(87, 86, 86, 0.733)'}
@@ -170,6 +167,13 @@ export class Utilities extends Modification{
     activeObj.set("lockUniScaling",true);
 
     }
+
+    this.canvas.on({
+    'selection:updated':select_object,
+    'selection:created':select_object,
+    
+    });
+  
     }
 
 
@@ -206,6 +210,9 @@ fabric.util.addListener(document.body, 'keydown',(options)=> {
 });
 
 }
+
+
+
 
 
 
