@@ -31,10 +31,7 @@ document.querySelector('.canvas-options').style.display = "block"
 
 
 })
-document.querySelector('.close-container-btn').addEventListener('click', ()=>{
-document.querySelector('.canvas-options').style.display = "none"
 
-})
 
 document.querySelector('.align_canvas').addEventListener('click', ()=>{
 document.querySelector('.align_canvas_container').style.display = "block"

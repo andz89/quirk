@@ -7,26 +7,15 @@ export class Menu_tools extends Modification{
     insertText(selector){
       let insert_text = document.querySelector(selector)
       insert_text.addEventListener('click', ()=>{
-            let object = new fabric.Textbox('Your Text Here')
+      let object = new fabric.Textbox('Your Text Here')
 
-    object.set("textAlign","center")
-    object.set("fontSize",12)
-
+    object.set("textAlign","center");
+    object.set("fontSize",12);
     // object.perPixelTargetFind = true;
-    object.setControlsVisibility({
-    // mt: false, // middle top disable
-    // mb: false, // midle bottom
-    // ml: true, // middle left
-    // mr: true, // middle right
-    // tl: false, // top left
-    // tr: false, // top right
-    // bl: false, // bottom left
-    // br: false // bottom right
-    });
-    object.name = object.type
-    object.id = this.uniqueId()
-     object.dirty = true
-    this.adding_object_style(object)
+    object.name = object.type;
+    object.id = this.uniqueId();
+     object.dirty = true;
+    this.adding_object_style(object);
 
   // this.canvas.renderAll()
       })
@@ -97,6 +86,77 @@ export class Menu_tools extends Modification{
 
     })
 
+  }
+
+  paste_image(){
+
+  window.addEventListener('paste', (e)=>{
+ 
+
+  var items= e.clipboardData.items;
+
+
+  if(items.length === 3){
+      if(items[1].type === 'text/html'){
+
+        return true;
+    }
+  }
+  
+    
+
+    //  console.log(items.length)
+    if(items.length === 1){
+     let local_image = items[0].getAsFile()
+console.log('local_image')
+          if(local_image.type === 'image/png' || local_image.type === 'image/jpeg'){
+
+      let reader = new FileReader();
+      reader.readAsDataURL(local_image)
+
+      reader.onload = () => {
+      fabric.Image.fromURL(reader.result, (img)=>{
+      img.name = img.type
+      img.id = this.uniqueId()
+      this.adding_object_style(img)
+      })
+
+      };
+    }
+    }
+  
+
+
+      // if gikan sa web brower ang file
+      if(items.length > 1){
+      let imageData = items[1].getAsFile()
+console.log('browser_image')
+            if(imageData.type === 'image/png' || imageData.type === 'image/jpeg'){
+      let reader = new FileReader();
+   
+
+      reader.readAsDataURL(imageData)
+
+      reader.onload = () => {
+
+      fabric.Image.fromURL(reader.result, (img)=>{
+      img.name = img.type
+      img.id = this.uniqueId()
+      this.adding_object_style(img)
+      })
+
+      };
+
+      }else{
+      return false;
+      }
+      }
+    
+    
+
+
+
+  })
   }
 
 
@@ -286,7 +346,11 @@ async save_file_json(){
 
         let clipPath =  new fabric.Circle({ radius: 250 , top: 500 / 2, left: 500 / 2,   originX:"center", originY:"center" ,absolutePositioned: true})
         if(object === undefined){return false}//to check if object is selected
-        if(object.lockMovementX == true && object.lockMovementY == true){ return false}
+        if(object.lockMovementX == true && object.lockMovementY == true){
+          this.alert('The object you selected is locked. Unlocked firts the object')
+          
+          return false;
+        }
 
         clip_circle(object, clipPath, shape_object)
         })
@@ -494,7 +558,7 @@ async save_file_json(){
     this.canvas.setActiveObject(object)
     }
   
-
+      
     }
 
     }
@@ -548,6 +612,7 @@ align_left(){
   let align_left = document.querySelector('#align_left')
   align_left.onclick = ()=> {
   let object =  this.canvas.getActiveObjects()
+    if(object.length < 2){return false};
 
   let group_objects =  this.canvas.getActiveObject().toGroup()
 
@@ -572,7 +637,10 @@ align_left(){
 align_center(){
   let align_center = document.querySelector('#align_center')
   align_center.onclick = ()=> {
+    
   let object =  this.canvas.getActiveObjects()
+    if(object.length < 2){return false};
+
 
   let group_objects =  this.canvas.getActiveObject().toGroup()
 
@@ -600,6 +668,7 @@ align_right(){
   let align_right = document.querySelector('#align-right')
   align_right.onclick = ()=> {
   let object =  this.canvas.getActiveObjects()
+    if(object.length < 2){return false};
 
   let group_objects =  this.canvas.getActiveObject().toGroup()
 
@@ -624,6 +693,8 @@ originX: 'center'
 align_top(){
   document.querySelector('#align-top').onclick = () =>{
   let object =  this.canvas.getActiveObjects()
+    if(object.length < 2){return false};
+
   let group_objects =  this.canvas.getActiveObject().toGroup()
   var groupHeight = group_objects.height
 
@@ -645,7 +716,8 @@ align_middle(){
     document.querySelector('#align-middle').onclick = () =>{
 
     let object =  this.canvas.getActiveObjects();
-   
+ 
+    if(object.length < 2){return false};
     object.forEach((obj)=> {
 
     let  itemHeight = obj.getBoundingRect().height;
@@ -666,6 +738,8 @@ align_bottom(){
   
     document.querySelector('#align-bottom').onclick = () =>{
     let object =  this.canvas.getActiveObjects();
+    if(object.length < 2){return false};
+
       let group_objects =  this.canvas.getActiveObject().toGroup()
     var groupHeight = group_objects.height
 

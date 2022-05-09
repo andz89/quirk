@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kurenaido&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Scope+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@700&display=swap');
+
 @import 'config';
 @import 'utilities';
 @import 'modal_createCanvas';
@@ -16,6 +24,7 @@
     padding: 0;
 }
 body{
+  font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     line-height: 1.6;
    background-color:rgba(87, 86, 86, 0.431);

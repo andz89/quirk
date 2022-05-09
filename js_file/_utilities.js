@@ -41,7 +41,7 @@ export class Utilities extends Modification{
       //sub header area
     document.querySelector('.canvas-options').style.display = "none"
     document.querySelector('.align_canvas_container').style.display = "none"
-    // document.querySelector('.canvas-options').style.display = "none"
+   
 
 
     this.canvas.discardActiveObject()
@@ -155,7 +155,7 @@ export class Utilities extends Modification{
      let group = activeObj.group
     group.set("borderColor","#333");
     group.set("cornerColor","#17a2b8");
-    group.set("cornerSize",15);
+    group.set("cornerSize",12);
     group.set("cornerStyle","circle");
     group.set("transparentCorners",false);
     group.set("lockUniScaling",true);
@@ -164,7 +164,7 @@ export class Utilities extends Modification{
 
     activeObj.set("borderColor","#333");
     activeObj.set("cornerColor","#17a2b8");
-    activeObj.set("cornerSize",15);
+    activeObj.set("cornerSize",12);
     activeObj.set("cornerStyle","circle");
     activeObj.set("transparentCorners",false);
     activeObj.set("lockUniScaling",true);
@@ -172,7 +172,44 @@ export class Utilities extends Modification{
     }
     }
 
-   
+
+    //arrow movement
+arrowMovement(){
+var Direction = {
+  LEFT: 0,
+  UP: 1,
+  RIGHT: 2,
+  DOWN: 3
+};
+
+fabric.util.addListener(document.body, 'keydown',(options)=> {
+  if (options.repeat) {
+    return;
+  }
+  let object = this.canvas.getActiveObject()
+  if(object){
+    if(object.lockMovementX !== true){
+      var key = options.which || options.keyCode; // key detection
+    if (key === 37) { // handle Left key
+     this. moveSelected(Direction.LEFT);
+    } else if (key === 38) { // handle Up key
+      this.moveSelected(Direction.UP);
+    } else if (key === 39) { // handle Right key
+      this.moveSelected(Direction.RIGHT);
+    } else if (key === 40) { // handle Down key
+     this.moveSelected(Direction.DOWN);
+    }
+    }
+  }
+
+  
+});
+
+}
+
+
+
+
 
 
 

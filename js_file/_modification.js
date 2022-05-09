@@ -126,7 +126,7 @@ export class Modification{
       groupObjectStyle(object){
       object.set("borderColor","#333");
       object.set("cornerColor","#17a2b8");
-      object.set("cornerSize",15);
+      object.set("cornerSize",12);
       object.set("cornerStyle","circle");
       object.set("transparentCorners",false);
       object.set("lockUniScaling",true);
@@ -138,6 +138,7 @@ export class Modification{
     let random = Math.floor(Math.random() * 1000000).toString()
     return dateString + random
     }
+
 
     display_lockObjects(object) {
 
@@ -169,17 +170,10 @@ export class Modification{
   li.innerHTML = `
   <input spellcheck = false type="text" id="${object.id}" class="object_name_input" value="${object.name}">  <span class="unlock" style="font-style: italic">unlock </span>
   `
-  // unlockObject()
   let lockContainer = document.querySelector('.lock-object-container')
-
   lockContainer.prepend(li)
   document.querySelector('.object_name_input').disabled = true;
-
   lockContainer.scrollTop = 0;
-  // lockName()
-
-
-
 
   }
 
@@ -215,7 +209,9 @@ export class Modification{
 
 
   
-  }
+  };
+
+
    document.querySelector('.lock-object-container').ondblclick = (e) =>{
     if(e.target.classList.contains('object_name_input')){
       e.target.disabled = false
@@ -237,13 +233,59 @@ export class Modification{
 
    }
 
-
-  
-
-          
-    
- 
     }
+
+    alert(text){
+    let alert_container =  document.querySelector('#alert-header')
+    alert_container.innerHTML = ''
+    alert_container.style.display = 'flex'
+    let span =  document.createElement('span');
+    span.innerHTML = `${text}`;
+    alert_container.appendChild(span);
+    
+
+
+    setTimeout(() => {
+    alert_container.removeChild(span)
+    alert_container.style.display = 'none'
+    },5000)
+
+
+    }
+
+
+    moveSelected (direction){
+let STEP = 5;
+
+var Direction = {
+  LEFT: 0,
+  UP: 1,
+  RIGHT: 2,
+  DOWN: 3
+};
+  var activeObject = this.canvas.getActiveObject();
+  console.log(activeObject.left)
+  if (activeObject) {
+    switch (direction) {
+      case Direction.LEFT:
+        activeObject.left = activeObject.left - STEP;
+        break;
+      case Direction.UP:
+        activeObject.top = activeObject.top - STEP;
+        break;
+      case Direction.RIGHT:
+        activeObject.left = activeObject.left + STEP;
+        break;
+      case Direction.DOWN:
+        activeObject.top = activeObject.top + STEP;
+        break;
+    }
+    activeObject.setCoords();
+    this.canvas.renderAll();
+
+  } 
+
+}
 
 }
 

@@ -245,7 +245,7 @@ if(object.italic === undefined){
     }
 
     }else{
-           console.log('jare')
+         
   object.setSelectionStyles({fontStyle: "normal" })
 
     object.dirty = true;
@@ -474,6 +474,113 @@ italic.style.backgroundColor = ''
     
         }
         
+    }
+
+    group_objects(){
+       let group = document.querySelector('#group')
+        group.onclick = () =>{
+        let obj = this.canvas.getActiveObject().toGroup();
+        obj.name = obj.type;
+        obj.id = this.uniqueId();
+        this.groupObjectStyle(obj)
+
+        
+        }
+    }
+
+    ungroup_objects(){
+    let ungroup = document.querySelector('#ungroup')
+    ungroup.onclick = () =>{
+        let object = this.canvas.getActiveObject()
+        if(object.lockMovementX == true){return false;}
+    let a = this.canvas.getActiveObject().toActiveSelection();
+        this.groupObjectStyle(a)
+
+        }
+    }
+
+    textAlign_left(){
+        document.querySelector('#alignLeftText')
+        alignLeftText.onclick= ()=>{
+        let object = this.canvas.getActiveObject();
+        if(!object){return false;}
+        object.set("textAlign","left")
+        object.dirty = true;
+        this.canvas.renderAll()
+        }
+        
+    }
+
+        textAlign_center(){
+            let alignCenterText = document.querySelector('#alignCenterText')
+            alignCenterText.onclick= ()=>{
+            let object = this.canvas.getActiveObject();
+            if(!object){return false}
+            object.set("textAlign","center")
+            object.dirty = true;
+            this.canvas.renderAll()
+            
+
+
+        }
+    }
+
+    textAlign_right(){
+        let alignRightText = document.querySelector('#alignRightText')
+        alignRightText.onclick= ()=>{
+        let object = this.canvas.getActiveObject();
+        if(!object){return false;}
+        object.set("textAlign","right")
+        this.canvas.setActiveObject(object)
+        object.dirty = true;
+        this.canvas.renderAll()
+        
+
+        }
+    }
+
+    fontStyle(){
+        //fonts
+var fonts = ["Roboto",'Scope One', "Zen Kurenaido",'Rubik Mono One','Annie Use Your Telescope','Dancing Script','Work Sans' ];
+
+fonts.unshift('Times New Roman');
+// Populate the fontFamily select
+        document.querySelector('#fontFamilySelect')
+fonts.forEach((font)=> {
+  var option = document.createElement('option');
+  option.innerHTML = font;
+  option.value = font;
+  option.style.fontFamily = font;
+  option.style.fontSize = "1rem";
+
+  fontFamilySelect.appendChild(option);
+});
+
+// Apply selected font on change
+fontFamilySelect.onchange = ()=> {
+  if (this.value !== 'Times New Roman') {
+    loadAndUse(this.value);
+  } else {
+    this.canvas.getActiveObject().set("fontFamily", this.value);
+    this.canvas.requestRenderAll();
+  }
+};
+
+const loadAndUse =(font)=> {
+  var myfont = new FontFaceObserver(font)
+  myfont.load()
+    .then(() => {
+      // when font is loaded, use it.
+  
+      this.canvas.getActiveObject().set("fontFamily", font);
+      this.canvas.requestRenderAll();
+    }).catch((e)=>{
+      console.log(e)
+      this.alert('unstable internet connection. cannot load google fonts')
+  
+   
+    });
+}
     }
 
 }   

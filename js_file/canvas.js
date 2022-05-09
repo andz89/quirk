@@ -32,7 +32,7 @@ let utils = new Utilities({
         utils.deleteObjects()
         utils.canvasOn()
         utils.discardActiveObject()
-      
+        utils.arrowMovement()
       
 
 let menu_tools = new Menu_tools({
@@ -63,6 +63,8 @@ let menu_tools = new Menu_tools({
         menu_tools.align_middle()
         menu_tools.align_bottom()
         menu_tools.dragAndDrop_image()
+        menu_tools.clip()
+        menu_tools.paste_image()
 
 
 
@@ -116,12 +118,17 @@ let right_tools = new Right_tools({
         right_tools.opacity()
 
 
-        right_tools.duplicate()
-        right_tools.lock()
+      right_tools.duplicate()
+      right_tools.lock()
+      right_tools.group_objects()
+      right_tools.ungroup_objects()
+      right_tools.textAlign_left()
+      right_tools.textAlign_center()
+      right_tools.textAlign_right()
+        right_tools.fontStyle()
 
         
 
-        menu_tools.clip()
    
 
     
@@ -135,7 +142,7 @@ let right_tools = new Right_tools({
     return each_object
     }
     })
-
+  if(lock_objects.length === 0){return false}
   this.display_lockObjects(lock_objects)
   },1000)
   
