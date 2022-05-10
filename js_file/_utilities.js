@@ -76,7 +76,9 @@ export class Utilities extends Modification{
     canvasOn(){
        const  select_object =(o)=>{
     var activeObj = o.selected[0];
-    this.updateModifications(true)
+  
+   
+    // this.updateModifications(true)
 
     //bold text
     let bold =  document.querySelector('#bold')
@@ -166,12 +168,18 @@ export class Utilities extends Modification{
     activeObj.set("transparentCorners",false);
     activeObj.set("lockUniScaling",true);
 
+ 
+    }
+
+    const modify_object =()=>{
+    this.updateModifications(true)
     }
 
     this.canvas.on({
     'selection:updated':select_object,
     'selection:created':select_object,
-    
+    'object:modified': modify_object
+   
     });
   
     }

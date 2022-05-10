@@ -1,45 +1,93 @@
 
 import {Modal, ActiveBtn} from "./js_file/gwill.js";
-import {createCanvasFormModal} from "./js_file/_textElement.js";
 import {Canvas} from "./js_file/canvas.js";
 import {Open_file} from "./js_file/_open_file.js";
 import {header} from './js_file/_header.js'
-import {Modification} from './js_file/_modification.js'
 
 
+  //==================window height size=======================//
+  let header_size = document.querySelector('header').offsetHeight
+  let sub_header_size = document.querySelector('.sub_header').offsetHeight
 
-    //==================window height size=======================//
-    let header_size = document.querySelector('header').offsetHeight
-    let sub_header_size = document.querySelector('.sub_header').offsetHeight
-    
+  document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size   +  'px';
 
-
-    document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size   +  'px';
-
-    //window_height resize
-    window.addEventListener('resize', ()=>{
-    let header_size = document.querySelector('header').offsetHeight
-    let sub_header_size = document.querySelector('.sub_header').offsetHeight
-    
-
-    document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size +  'px';
-    })
+  //window_height resize
+  window.addEventListener('resize', ()=>{
+  let header_size = document.querySelector('header').offsetHeight
+  let sub_header_size = document.querySelector('.sub_header').offsetHeight
 
 
+  document.querySelector('main').style.height = window.innerHeight - header_size - sub_header_size +  'px';
+  })
+
+  //==========================================================//
 
 
   //==========header active btn ===================================//
 
   new ActiveBtn('dropbtn',{styleProperty: 'teal',customClassName:false,});
   header();
+  //==============================================================//
 
 
 
     //===========create and select size of canvas modal===========//
+    let sizes = [
+      {
+        
+      }
+    ];
+    const create_canvas_form_element =()=>{
+    return      `
+    <div class="createCanvasFormModal">
+
+    <div class="size-content">
+     <div>
+    <label for="">Project Name<label>
+    </div>
+ 
+    <div>
+    <input id="project_name" placeholder="Project Name"type="text">
+    </div>
+   
+    <div>
+    <label for="">Canvas Size<label>
+    </div>
+
+    <select id="canvas-size-select">
+    <option value="A4-Landscap">A4 size / Landscape</option>
+    <option value="A4-Portrait">A4 size / Portrait</option>
+     
+    <option value="letter-Landscape">Letter size  / Landscape</option>
+    <option value="letter-Portrait">Letter size  / Portrait</option>
+
+    <option value="2x2">2x2 in Picture</option>
+    <option value="1x1">1x1 in Picture</option>
+    <option value="Passport">Passport Size</option>
+
+    <option value="custom-size">Custom size</option>
+    </select>
+
+    </div>
+
+    <div class="message_tips">
+      <p>
+      print is not available for this size.
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos tempore labore animi iure, minima facere!
+      </p>
+    </div>
+
+    <button id="createCanvasBtn" class="btn btn-primary">Create Project</button>
+    </div>
+    </div>
+    `
+    }
+
+
     let createCanvasModal = new Modal('#createCanvasModal', {
     backgroundColor: 'rgba(51, 51, 51, 0.705)',
     width:'480px',
-    height:'320px',
+    height:'380px',
     title: 'Create Canvas',
     showButton:'#showCreateCanvasModalBtn',
     modalHeaderColor:'teal',
@@ -47,25 +95,60 @@ import {Modification} from './js_file/_modification.js'
     modalContentBackgroundColor:'#fff',
     })
 
-    createCanvasModal.bodyContent(createCanvasFormModal,()=>{
+    //================create the main canvas in modal================//
+
+    createCanvasModal.bodyContent(create_canvas_form_element(),()=>{
+         
+    let canvasScale = 1;
+    let SCALE_FACTOR = 1.1;
+    let fileName = document.querySelector('#project_name').value
+    let width = 3510;
+    let height =2490;
+
+      document.querySelector('#canvas-size-select').onchange = (e)=>{
+      if(e.target.value ===  'A4-Landscape'){
+        width = 3510;
+        height =2490;
+      };
+
+      if(e.target.value ===  'A4-Portrait'){
+      width = 2490;
+      height = 3510;
+      };
+
+      if(e.target.value ===  'letter-Landscape'){
+      width = 3300;
+      height = 2550;
+      };
+
+      if(e.target.value ===  'letter-Landscape'){
+      width = 2550;
+      height= 3300;
+      };
+
+      if(e.target.value ===  '2x2'){
+      width = 600;
+      height = 600;
+      };
+
+      if(e.target.value ===  '1x1'){
+      width = 300;
+      height = 300;
+      };
+
+
+    }
+
     //custom close button
     document.querySelector('#createCanvasBtn').onclick = ()=>{
     document.querySelector('#createCanvasModal').style.display = 'none';
 
 
-    //================create the main canvas in modal================//
-  
-    let canvasScale = 1;
-    let SCALE_FACTOR = 1.1;
-    let width = document.querySelector('#canvas_width').value
-    let height = document.querySelector('#canvas_height').value
-    let fileName = document.querySelector('#project_name').value
-
-      if(fileName){
-      document.querySelector('#file_name').innerHTML = fileName
-      }else{
-      document.querySelector('#file_name').innerHTML = 'untitled'
-      }
+    if(fileName){
+    document.querySelector('#file_name').innerHTML = fileName
+    }else{
+    document.querySelector('#file_name').innerHTML = 'untitled'
+    }
 
     let fileHandle;
       const canvas = (width, height) => {
@@ -92,6 +175,8 @@ import {Modification} from './js_file/_modification.js'
 
 
 function fitCanvasToScreen(){
+
+
 // this.canvasScale = 1; 
 if(width >= 3000){
 SCALE_FACTOR =5.2;
@@ -165,8 +250,8 @@ let json_file = await file.get_file_json()
   let SCALE_FACTOR = 1.1;
   let width =  json_file.canvas.size.w;
   let height = json_file.canvas.size.h;
-  //file name
-  document.querySelector('#file_name').innerHTML = json_file.fileName.replace('.json', '')
+
+  document.querySelector('#file_name').innerHTML = json_file.fileName.replace('.json', '')  //file name
  
               
 
@@ -185,17 +270,6 @@ preserveObjectStacking:true,
 let canvas_created = canvas(width, height)
 
 canvas_created.loadFromJSON(json_file.canvas.json);
-
-
-//   let objects=  canvas_created.getObjects()
-//  let lock_objects = objects.filter((each_object)=>{
-//     if(each_object.lockMovementX === true && each_object.lockMovementY === true){ 
-//     return each_object
-//     }
-//     })
-//   let a = new Modification()
-
-
 
 let canvasInit = new Canvas({
 canvas: canvas_created,

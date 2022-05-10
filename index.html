@@ -64,6 +64,9 @@
         <a id="showCreateCanvasModalBtn">Create Canvas</a>
         <a id="open_file">Open File</a>
         <a id="save_json">Save</a>
+        <a id="download-image">Download as Image</a>
+
+       
         <!-- <a id="save_again">Save_again</a> -->
         </div>
     </div>
@@ -151,6 +154,13 @@
                     <input id="canvas_background" value="#008080" type="color"> 
                     <img id="transparent"  src="./icons/transparent.png" title="align-top" draggable="false" alt="">
                 </li>
+                |
+                <li  class="canvas-option-background">
+                    <label>Stroke width</label>
+                    <input type="number" id="canvas_stroke_width"  min="0" max="100" value="0" >
+                    <input type="color" id=""  >
+                    
+                </li>
 
 
         </div>
@@ -180,7 +190,7 @@
                 </div>
 
                 <div class="undo-container">
-                <button class="btn btn-primary" id="undo">undo</button>
+                <button class="btn btn-primary" id="undo"> &#8630;</button>
                 </div>
                 
             </div>
@@ -302,10 +312,14 @@
 
 
 <!-- <img id="img-test" src="./img.jpeg" alt=""> -->
+
 <script type="module" src="main.js"></script>
+
 <script  src="./library_js/fabric.js"></script>
 <script src="./library_js/cropper.js"></script>
 <script src="./library_js/fonts.js"></script>
+<!-- <script type="module" src="./js_file/create_canvas.js"></script> -->
+
 
 
 <!-- <script type="module" src="./js_file/_modal.js"></script> -->

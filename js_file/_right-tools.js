@@ -590,17 +590,11 @@ const loadAndUse =(font)=> {
 
         let undo_btn = document.querySelector("#undo")
         undo_btn.onclick = ()=>{
-
         if (mods < this.canvas.state.length) {
-
         this.canvas.clear().renderAll();
-
-        
         this.canvas.loadFromJSON(this.canvas.state[this.canvas.state.length - 1]);
         this.canvas.state.pop();
         this.canvas.renderAll();
- 
-
         }
 
         }

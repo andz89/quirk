@@ -10,10 +10,6 @@ export class Modification{
         this.fileHandle = property.fileHandle;
         this.width = property.width;
         this.height = property.height;
-        this.state = property.state;
-        // this.mods = property.mods;
-        // this.state = property.state
-
     }
 
     objectSizeOnCanvas(object) {
@@ -111,6 +107,7 @@ export class Modification{
   this.canvas.viewportCenterObject(object)
   this.canvas.add(object);
   this.canvas.renderAll()
+      this.updateModifications(true)
 }
 
 
@@ -299,6 +296,15 @@ let json = this.canvas.toJSON(['borderColor','cornerColor','cornerSize','cornerS
 
 let myjson = JSON.stringify(json);
 this.canvas.state.push(myjson);
+console.log(this.canvas.state.length)
+let a = this.canvas.state
+a.forEach((e)=>{
+  console.log(e.length)
+})
+if(this.canvas.state.length === 20){
+  this.canvas.state.shift()
+}
+
 }
 
 

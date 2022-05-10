@@ -21,8 +21,6 @@ let right_tools = new Right_tools({
         canvasScale: this.canvasScale,
         SCALE_FACTOR: this.SCALE_FACTOR,
         fileHandle: this.fileHandle,
-        mods: this.mods,
-        state: this.state,
         })
 
 
@@ -53,7 +51,6 @@ let menu_tools = new Menu_tools({
         canvasScale: this.canvasScale,
         SCALE_FACTOR: this.SCALE_FACTOR,
         fileHandle: this.fileHandle,
-         state: this.state,
         })
 
 
@@ -78,7 +75,8 @@ let menu_tools = new Menu_tools({
         menu_tools.clip()
         menu_tools.paste_image()
         menu_tools.test_crop_image()
-
+        menu_tools.download_as_image()
+        menu_tools.canvasStroke()
 
         //shapes
         menu_tools.insert_shape('#square',()=>{
@@ -90,8 +88,6 @@ let menu_tools = new Menu_tools({
         });
         object.name ="square";
           object.id = this.uniqueId()
- 
-         this.updateModifications(true)
         this.adding_object_style(object)
    
         })
@@ -104,8 +100,6 @@ let menu_tools = new Menu_tools({
         });
         object.name ="circle";
           object.id = this.uniqueId()
-         this.updateModifications(true)
-      
         this.adding_object_style(object)
         })
 
@@ -138,7 +132,8 @@ let menu_tools = new Menu_tools({
         
 
    
-
+ 
+  
     
    
 
@@ -146,16 +141,14 @@ let menu_tools = new Menu_tools({
   setTimeout(() => {
   let objects =  this.canvas.getObjects()
     let lock_objects = objects.filter((each_object)=>{
-    if(each_object.lockMovementX === true && each_object.lockMovementY === true){ 
+    if(each_object.lockMovementX === true && each_object.lockMovementY === true && each_object.name !== 'canvas_stroke'){ 
     return each_object
     }
     })
   if(lock_objects.length === 0){return false}
   this.display_lockObjects(lock_objects)
   },1000)
-  
  
-          
 }
 
 

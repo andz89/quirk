@@ -8,6 +8,7 @@
         background-color: rgb(42, 49, 51);
         overflow-y:scroll;
         overflow-x: hidden;
+      
       .canvas-tools{
         animation-name: modalOpen;
         animation-duration: 0.4s; 
@@ -50,6 +51,7 @@
 
         .undo-container{
                 button{
+                    font-size: 26px;
                     width: 80px;
                     height: 30px
                 }
@@ -62,8 +64,8 @@
             padding: 0 15px;
             display:flex;
             justify-content: flex-end;
-
             button{
+            cursor: pointer;
                 
                 padding: 0 5px;
                 position:fixed;

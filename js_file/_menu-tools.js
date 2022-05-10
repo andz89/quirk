@@ -15,8 +15,7 @@ export class Menu_tools extends Modification{
     object.name = object.type;
     object.id = this.uniqueId();
      object.dirty = true;
-    this.updateModifications(true)
-     
+ 
     this.adding_object_style(object);
 
 
@@ -52,7 +51,7 @@ export class Menu_tools extends Modification{
         this.adding_object_style(img)
     
         this.loaderHide()
-      this.updateModifications(true)
+    
         
         })
 
@@ -67,8 +66,9 @@ export class Menu_tools extends Modification{
     dropZoneElement.addEventListener("drop", (e) => {
     e.preventDefault();
        let file = e.dataTransfer.files
-
-  
+      if(file[0].type == 'image/jpeg' || file[0].type == 'image/png' ){
+      console.log(file[0].type)
+          
        Array.from(file).forEach((e)=>{
 
            let reader = new FileReader();
@@ -80,12 +80,16 @@ export class Menu_tools extends Modification{
         img.name = img.type
         img.id = this.uniqueId()
         this.adding_object_style(img)
-    this.updateModifications(true)
+
 
         })
 
         };
        })
+      }else{
+        return false;
+      }
+    
  
     
       
@@ -161,7 +165,7 @@ console.log('browser_image')
     
 
 
-    this.updateModifications(true)
+
 
   })
   }
@@ -222,7 +226,26 @@ async save_file_json(){
 
 
     }
+    canvasStroke(){
+        let shape_object =  new fabric.Rect({width: this.width, height: this.height, fill: null,stroke:'teal',lockMovementX: true,lockMovementY: true,lockScalingX: true,lockScalingY: true,lockRotation: true,selectable: false, name:'canvas_stroke', originX:'left', originY:'top',});
+     
 
+    this.canvas.viewportCenterObject(shape_object)
+    shape_object.perPixelTargetFind =true, 
+    shape_object.strokeWidth = 0
+
+    this.canvas.add(shape_object) 
+
+    document.querySelector('#canvas_stroke_width').oninput = (e) =>{
+    shape_object.strokeWidth = parseInt(e.target.value);
+    shape_object.objectCaching = false,
+    shape_object.dirty = true;
+    shape_object.paintFirst = "stroke";
+      this.canvas.viewportCenterObject(shape_object)
+        
+      this.canvas.renderAll()
+    }
+    }
     canvasBackgroundColor(){
 
     let canvasBackground = document.querySelector('#canvas_background')
@@ -798,6 +821,46 @@ test_crop_image(){
   }
  
 }
+
+    download_as_image(){
+      const download_image = document.querySelector("#download-image")
+        download_image.onclick = () =>{
+          var scaleFactor = 1;
+        this.canvas.setWidth(this.width * scaleFactor);
+        this.canvas.setHeight(this.height * scaleFactor);
+        this.canvas.setZoom(scaleFactor);
+
+ 
+
+        let display_name = document.querySelector("#file_name").innerHTML
+        const a = document.createElement("a");
+        document.body.appendChild(a)
+        a.href = this.canvas.toDataURL()
+        a.download =  `${display_name}.jpeg`;
+        a.click();
+        document.body.removeChild(a)
+        let canvasScale = 1;
+        let SCALE_FACTOR;
+      if(this.width >= 3000){
+      SCALE_FACTOR =5.2;
+      }
+      else if(this.width <= 2999 && this.width >= 2000){
+      SCALE_FACTOR= 2.8;
+      }
+      else if(this.width <= 1999 && this.width >= 1000){
+      SCALE_FACTOR= 2.1;
+      }
+      else{
+      SCALE_FACTOR= 1.1;
+      }
+      canvasScale = canvasScale / SCALE_FACTOR;
+      this.canvas.setHeight(this.height * (1 / SCALE_FACTOR));
+      this.canvas.setWidth(this.width * (1 / SCALE_FACTOR));
+      this.canvas.setZoom(canvasScale);     
+      this.canvas.renderAll();
+        this.canvas.renderAll();
+        }
+    }
 
 
 }

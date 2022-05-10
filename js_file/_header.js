@@ -27,8 +27,7 @@ document.querySelector(".dropdown-clip-image .dropdown-content").style.display =
 
 //sub header area
 document.querySelector('#canvas-property-btn').addEventListener('click', ()=>{
-document.querySelector('.canvas-options').style.display = "block"
-
+document.querySelector('.canvas-options').style.display = "flex"
 
 })
 
