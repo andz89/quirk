@@ -12,7 +12,7 @@ export class Canvas extends Modification{
 
  create_main_canvas =()=>{
 
-
+this.canvas.state = []
 
 let right_tools = new Right_tools({
         canvas : this.canvas,
@@ -52,7 +52,8 @@ let menu_tools = new Menu_tools({
         height :this.height,
         canvasScale: this.canvasScale,
         SCALE_FACTOR: this.SCALE_FACTOR,
-        fileHandle: this.fileHandle
+        fileHandle: this.fileHandle,
+         state: this.state,
         })
 
 
@@ -132,32 +133,12 @@ let menu_tools = new Menu_tools({
         right_tools.fontStyle()
 
     
-        // right_tools.undo()
+        right_tools.undo()
 
         
 
    
-    // undo(){
 
-let mods = 0
-
-  let undo_btn = document.querySelector("#undo")
- undo_btn.onclick = ()=>{
-
-console.log(this.state);
-
-if (mods < this.state.length) {
-  
-        this.canvas.clear().renderAll();
-
-        this.canvas.loadFromJSON(this.state[this.state.length + 1  - 1 - mods - 1]);
-        this.canvas.renderAll();
-        mods += 1;
-
-    }
-
-}
-// }
     
    
 

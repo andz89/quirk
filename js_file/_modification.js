@@ -290,26 +290,15 @@ var Direction = {
 
 }
 
-updateModifications(savehistory) {
-// let state = [];
-// let targetLength = 0
-
-// let mods = 0;
-let state = []
+updateModifications(savehistory){
 
 if (savehistory === true) {
-// targetLength ++
+
 let json = this.canvas.toJSON(['borderColor','cornerColor','cornerSize','cornerStyle','transparentCorners',
     "lockMovementX","lockMovementY","lockScalingX","lockScalingY","selectable","textAlign","fontFamily", "id", "name"])
 
 let myjson = JSON.stringify(json);
-
-state.push(myjson);
-this.state = state;
-
- console.log(this.state);
-
-//  this.state = state;
+this.canvas.state.push(myjson);
 }
 
 

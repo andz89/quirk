@@ -76,7 +76,7 @@ export class Utilities extends Modification{
     canvasOn(){
        const  select_object =(o)=>{
     var activeObj = o.selected[0];
-    // this.updateModifications(true)
+    this.updateModifications(true)
 
     //bold text
     let bold =  document.querySelector('#bold')

@@ -52,6 +52,8 @@ export class Menu_tools extends Modification{
         this.adding_object_style(img)
     
         this.loaderHide()
+      this.updateModifications(true)
+        
         })
 
         };
@@ -78,6 +80,8 @@ export class Menu_tools extends Modification{
         img.name = img.type
         img.id = this.uniqueId()
         this.adding_object_style(img)
+    this.updateModifications(true)
+
         })
 
         };
@@ -157,6 +161,7 @@ console.log('browser_image')
     
 
 
+    this.updateModifications(true)
 
   })
   }
