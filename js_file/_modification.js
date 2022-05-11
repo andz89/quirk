@@ -296,11 +296,6 @@ let json = this.canvas.toJSON(['borderColor','cornerColor','cornerSize','cornerS
 
 let myjson = JSON.stringify(json);
 this.canvas.state.push(myjson);
-console.log(this.canvas.state.length)
-let a = this.canvas.state
-a.forEach((e)=>{
-  console.log(e.length)
-})
 if(this.canvas.state.length === 20){
   this.canvas.state.shift()
 }

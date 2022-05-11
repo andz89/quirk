@@ -434,14 +434,18 @@ italic.style.backgroundColor = ''
         let lock = document.querySelector('#lock')
         lock.onclick = ()=>{
         let objects = this.canvas.getActiveObjects();
+       
         if(objects.length > 1){
-        let lockObjects = []
+       
+      
         objects.forEach((obj)=>{
-              
-        lockObjects.push({'id':obj.id, 'name':obj.name});
-     
-        
-            
+        let lockObjects = {}
+           
+        lockObjects.id = obj.id;
+        lockObjects.name = obj.name;
+       
+        this.display_lockObjects(lockObjects)
+
         obj.selectable = false;
         obj.set("lockMovementX", true)
         obj.set("lockMovementY", true)
@@ -451,8 +455,8 @@ italic.style.backgroundColor = ''
         this.canvas.discardActiveObject()
         this.canvas.renderAll();
         })
+     
 
-        this.display_lockObjects(lockObjects)
 
         }else{
         let object = this.canvas.getActiveObject();
@@ -462,6 +466,8 @@ italic.style.backgroundColor = ''
         lockObjects.name = object.name;
 
         this.display_lockObjects(lockObjects)
+
+
         this.canvas.discardActiveObject();
         object.selectable = false;
         object.set("lockMovementX", true)
@@ -593,9 +599,34 @@ const loadAndUse =(font)=> {
         if (mods < this.canvas.state.length) {
         this.canvas.clear().renderAll();
         this.canvas.loadFromJSON(this.canvas.state[this.canvas.state.length - 1]);
+        
         this.canvas.state.pop();
         this.canvas.renderAll();
         }
+
+        this.canvas.lockObjects = []
+        let objects =  this.canvas.getObjects()
+        let lock_objects = objects.filter((each_object)=>{
+        if(each_object.lockMovementX === true && each_object.lockMovementY === true && each_object.name !== 'canvas_stroke'){ 
+        return each_object
+        }
+        })
+      
+        lock_objects.forEach((object)=>{
+      
+        let lockObjects = {}
+        lockObjects.id = object.id;
+        lockObjects.name = object.name;
+        this.canvas.lockObjects.push(lockObjects);
+        })
+
+        document.querySelector('.lock-object-container').innerHTML = ''
+      
+        this.canvas.lockObjects.forEach((e)=>{
+        this.display_lockObjects(e)
+        })
+
+        
 
         }
         }

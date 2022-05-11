@@ -12,7 +12,8 @@ export class Canvas extends Modification{
 
  create_main_canvas =()=>{
 
-this.canvas.state = []
+this.canvas.state = [];
+
 
 let right_tools = new Right_tools({
         canvas : this.canvas,
@@ -41,6 +42,7 @@ let utils = new Utilities({
         utils.canvasOn()
         utils.discardActiveObject()
         utils.arrowMovement()
+        utils.load_UI_lock_objects()
      
       
 
@@ -137,17 +139,7 @@ let menu_tools = new Menu_tools({
     
    
 
-        
-  setTimeout(() => {
-  let objects =  this.canvas.getObjects()
-    let lock_objects = objects.filter((each_object)=>{
-    if(each_object.lockMovementX === true && each_object.lockMovementY === true && each_object.name !== 'canvas_stroke'){ 
-    return each_object
-    }
-    })
-  if(lock_objects.length === 0){return false}
-  this.display_lockObjects(lock_objects)
-  },1000)
+
  
 }
 

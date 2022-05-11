@@ -245,6 +245,14 @@ async save_file_json(){
         
       this.canvas.renderAll()
     }
+     document.querySelector('#canvas_stroke_color').oninput = (e) =>{
+    shape_object.stroke = e.target.value;
+    shape_object.dirty = true;
+
+      // this.canvas.viewportCenterObject(shape_object)
+        
+      this.canvas.renderAll()
+    }
     }
     canvasBackgroundColor(){
 
