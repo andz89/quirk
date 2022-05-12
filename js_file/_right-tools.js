@@ -437,14 +437,12 @@ italic.style.backgroundColor = ''
        
         if(objects.length > 1){
        
+        let lockObjects = []
       
         objects.forEach((obj)=>{
-        let lockObjects = {}
-           
-        lockObjects.id = obj.id;
-        lockObjects.name = obj.name;
+        lockObjects.push({'id': obj.id, 'name':obj.name})
        
-        this.display_lockObjects(lockObjects)
+       
 
         obj.selectable = false;
         obj.set("lockMovementX", true)
@@ -455,6 +453,7 @@ italic.style.backgroundColor = ''
         this.canvas.discardActiveObject()
         this.canvas.renderAll();
         })
+        this.display_lockObjects(lockObjects)
      
 
 

@@ -14,21 +14,6 @@ export class Canvas extends Modification{
 
 this.canvas.state = [];
 
-
-let right_tools = new Right_tools({
-        canvas : this.canvas,
-        width : this.width,
-        height :this.height,
-        canvasScale: this.canvasScale,
-        SCALE_FACTOR: this.SCALE_FACTOR,
-        fileHandle: this.fileHandle,
-        })
-
-
-
-
-
-
 let utils = new Utilities({
         canvas : this.canvas,
         width : this.width,
@@ -43,7 +28,7 @@ let utils = new Utilities({
         utils.discardActiveObject()
         utils.arrowMovement()
         utils.load_UI_lock_objects()
-     
+        utils.header()
       
 
 let menu_tools = new Menu_tools({
@@ -79,6 +64,8 @@ let menu_tools = new Menu_tools({
         menu_tools.test_crop_image()
         menu_tools.download_as_image()
         menu_tools.canvasStroke()
+        // menu_tools.atay()
+
 
         //shapes
         menu_tools.insert_shape('#square',()=>{
@@ -105,9 +92,14 @@ let menu_tools = new Menu_tools({
         this.adding_object_style(object)
         })
 
-   
-
-
+  let right_tools = new Right_tools({
+        canvas : this.canvas,
+        width : this.width,
+        height :this.height,
+        canvasScale: this.canvasScale,
+        SCALE_FACTOR: this.SCALE_FACTOR,
+        fileHandle: this.fileHandle,
+        })
         right_tools.fontSize('#fontSize')
         right_tools.backgroundColor()
         right_tools.remove_fill_color()
@@ -117,18 +109,14 @@ let menu_tools = new Menu_tools({
         right_tools.stroke_color()
         right_tools.stroke_width()
         right_tools.opacity()
-
-
-      right_tools.duplicate()
-      right_tools.lock()
-      right_tools.group_objects()
-      right_tools.ungroup_objects()
-      right_tools.textAlign_left()
-      right_tools.textAlign_center()
-      right_tools.textAlign_right()
+        right_tools.duplicate()
+        right_tools.lock()
+        right_tools.group_objects()
+        right_tools.ungroup_objects()
+        right_tools.textAlign_left()
+        right_tools.textAlign_center()
+        right_tools.textAlign_right()
         right_tools.fontStyle()
-
-    
         right_tools.undo()
 
         

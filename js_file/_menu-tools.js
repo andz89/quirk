@@ -190,8 +190,7 @@ async save_file_json(){
     "lockMovementX","lockMovementY","lockScalingX","lockScalingY","selectable","textAlign","fontFamily", "id", "name",'clip_image_src_org',"orig_url"])
 
 
-    var size = {w:this.width, h:this.height};
-    let merge ={json,size}
+  
     if(this.fileHandle == undefined){
 
         let suggest_name = document.querySelector('#file_name').innerHTML
@@ -207,7 +206,9 @@ async save_file_json(){
         }],
 
         });
-
+    var size = {w:this.width, h:this.height};
+    let fileHandle = {s:this.fileHandle}
+    let merge ={json,size, fileHandle}
     let stream =  await this.fileHandle.createWritable();
     await stream.write(JSON.stringify(merge))
     await stream.close();
@@ -215,6 +216,9 @@ async save_file_json(){
    
     }else{
 
+  var size = {w:this.width, h:this.height};
+    let fileHandle = {s:this.fileHandle}
+    let merge ={json,size, fileHandle}
     let stream =  await this.fileHandle.createWritable();
     await stream.write(JSON.stringify(merge))
     await stream.close();
@@ -233,8 +237,8 @@ async save_file_json(){
     this.canvas.viewportCenterObject(shape_object)
     shape_object.perPixelTargetFind =true, 
     shape_object.strokeWidth = 0
-
     this.canvas.add(shape_object) 
+      console.log('shape_object.perPixelTargetFind =true, ')
 
     document.querySelector('#canvas_stroke_width').oninput = (e) =>{
     shape_object.strokeWidth = parseInt(e.target.value);

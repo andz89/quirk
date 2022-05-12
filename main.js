@@ -2,7 +2,7 @@
 import {Modal, ActiveBtn} from "./js_file/gwill.js";
 import {Canvas} from "./js_file/canvas.js";
 import {Open_file} from "./js_file/_open_file.js";
-import {header} from './js_file/_header.js'
+// import {header} from './js_file/_header.js'
 
 
   //==================window height size=======================//
@@ -24,19 +24,13 @@ import {header} from './js_file/_header.js'
 
 
   //==========header active btn ===================================//
-
   new ActiveBtn('dropbtn',{styleProperty: 'teal',customClassName:false,});
-  header();
   //==============================================================//
 
 
 
     //===========create and select size of canvas modal===========//
-    let sizes = [
-      {
-        
-      }
-    ];
+
     const create_canvas_form_element =()=>{
     return      `
     <div class="createCanvasFormModal">
@@ -142,6 +136,7 @@ import {header} from './js_file/_header.js'
     //custom close button
     document.querySelector('#createCanvasBtn').onclick = ()=>{
     document.querySelector('#createCanvasModal').style.display = 'none';
+  document.querySelector('.open_and_create_project').style.display = 'none'
 
 
     if(fileName){
@@ -238,105 +233,109 @@ zoomOut("#zoomOut")
     })
 
 
+  
+
+
+
 
 //================= open json file and create canvas ===========================//
-document.querySelector('#open_file').addEventListener('click', async function(){
+
 let file = new Open_file();
 
-let json_file = await file.get_file_json()
+file.get_file_json()
  
 
-  let canvasScale = 1;
-  let SCALE_FACTOR = 1.1;
-  let width =  json_file.canvas.size.w;
-  let height = json_file.canvas.size.h;
+//   let canvasScale = 1;
+//   let SCALE_FACTOR = 1.1;
+//   let width =  json_file.canvas.size.w;
+//   let height = json_file.canvas.size.h;
 
-  document.querySelector('#file_name').innerHTML = json_file.fileName.replace('.json', '')  //file name
+//   document.querySelector('#file_name').innerHTML = json_file.fileName.replace('.json', '')  //file name
  
               
 
 
-const canvas = (width, height) => {
-let c = document.createElement("canvas")
-c.id = "canvas"
-document.querySelector('#canvas-background').appendChild(c)
-return new fabric.Canvas("canvas", {
-width : width,
-height :height,
-backgroundColor:"#fff",
-preserveObjectStacking:true,
-})
-}
-let canvas_created = canvas(width, height)
+// const canvas = (width, height) => {
+// let c = document.createElement("canvas")
+// c.id = "canvas"
+// document.querySelector('#canvas-background').appendChild(c)
+// return new fabric.Canvas("canvas", {
+// width : width,
+// height :height,
+// backgroundColor:"#fff",
+// preserveObjectStacking:true,
+// })
+// }
+// let canvas_created = canvas(width, height)
 
-canvas_created.loadFromJSON(json_file.canvas.json);
+// canvas_created.loadFromJSON(json_file.canvas.json);
 
-let canvasInit = new Canvas({
-canvas: canvas_created,
-width: width,
-height: height,
-canvasScale: canvasScale,
-SCALE_FACTOR:SCALE_FACTOR,
-fileHandle: json_file.fileHandle
-})
-canvasInit.create_main_canvas()
-
-
-function fitCanvasToScreen(){
-// this.canvasScale = 1; 
-if(width >= 3000){
-SCALE_FACTOR =5.2;
-}
-else if(width <= 2999 && width >= 2000){
-SCALE_FACTOR= 2.8;
-}
-else if(width <= 1999 && width >= 1000){
-SCALE_FACTOR= 2.1;
-}
-else{
-SCALE_FACTOR= 1.1;
-}
-canvasScale = canvasScale / SCALE_FACTOR;
-canvas_created.setHeight(height * (1 / SCALE_FACTOR));
-canvas_created.setWidth(width * (1 / SCALE_FACTOR));
-canvas_created.setZoom(canvasScale);     
-canvas_created.renderAll();
-}
-
-fitCanvasToScreen()
+// let canvasInit = new Canvas({
+// canvas: canvas_created,
+// width: width,
+// height: height,
+// canvasScale: canvasScale,
+// SCALE_FACTOR:SCALE_FACTOR,
+// fileHandle: json_file.fileHandle
+// })
+// canvasInit.create_main_canvas()
 
 
-function zoomIn(selector) {
-SCALE_FACTOR = 1.1
+// function fitCanvasToScreen(){
+// // this.canvasScale = 1; 
+// if(width >= 3000){
+// SCALE_FACTOR =5.2;
+// }
+// else if(width <= 2999 && width >= 2000){
+// SCALE_FACTOR= 2.8;
+// }
+// else if(width <= 1999 && width >= 1000){
+// SCALE_FACTOR= 2.1;
+// }
+// else{
+// SCALE_FACTOR= 1.1;
+// }
+// canvasScale = canvasScale / SCALE_FACTOR;
+// canvas_created.setHeight(height * (1 / SCALE_FACTOR));
+// canvas_created.setWidth(width * (1 / SCALE_FACTOR));
+// canvas_created.setZoom(canvasScale);     
+// canvas_created.renderAll();
+// }
 
-let zoomIn = document.querySelector(selector)
-zoomIn.addEventListener('click', ()=>{
-canvasScale = canvasScale * SCALE_FACTOR;
-canvas_created.setHeight(canvas_created.getHeight() * SCALE_FACTOR);
-canvas_created.setWidth(canvas_created.getWidth() * SCALE_FACTOR);
-canvas_created.setZoom(canvasScale);
-canvas_created.renderAll();
-})
+// fitCanvasToScreen()
 
-}
-zoomIn("#zoomIn")
 
-function zoomOut(selector){
-let zoomOut = document.querySelector(selector)
-SCALE_FACTOR = 1.1
+// function zoomIn(selector) {
+// SCALE_FACTOR = 1.1
 
-zoomOut.addEventListener('click', (e)=>{
-canvasScale = canvasScale / SCALE_FACTOR;
-canvas_created.setHeight(canvas_created.getHeight() * (1 / SCALE_FACTOR));
-canvas_created.setWidth(canvas_created.getWidth() * (1 / SCALE_FACTOR));
-canvas_created.setZoom(canvasScale);     
-canvas_created.renderAll();
-})
+// let zoomIn = document.querySelector(selector)
+// zoomIn.addEventListener('click', ()=>{
+// canvasScale = canvasScale * SCALE_FACTOR;
+// canvas_created.setHeight(canvas_created.getHeight() * SCALE_FACTOR);
+// canvas_created.setWidth(canvas_created.getWidth() * SCALE_FACTOR);
+// canvas_created.setZoom(canvasScale);
+// canvas_created.renderAll();
+// })
 
-}
+// }
+// zoomIn("#zoomIn")
 
-zoomOut("#zoomOut")
-})
+// function zoomOut(selector){
+// let zoomOut = document.querySelector(selector)
+// SCALE_FACTOR = 1.1
+
+// zoomOut.addEventListener('click', (e)=>{
+// canvasScale = canvasScale / SCALE_FACTOR;
+// canvas_created.setHeight(canvas_created.getHeight() * (1 / SCALE_FACTOR));
+// canvas_created.setWidth(canvas_created.getWidth() * (1 / SCALE_FACTOR));
+// canvas_created.setZoom(canvasScale);     
+// canvas_created.renderAll();
+// })
+
+// }
+
+// zoomOut("#zoomOut")
+
 
     //=========== show and hide canvas right tools ==========================//
 

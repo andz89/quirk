@@ -10,6 +10,7 @@ export class Modification{
         this.fileHandle = property.fileHandle;
         this.width = property.width;
         this.height = property.height;
+        
     }
 
     objectSizeOnCanvas(object) {

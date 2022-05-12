@@ -61,10 +61,13 @@
     <div class="dropdown dropdown-files">
         <li  class="dropbtn dropbtn-files">Files</li>
         <div id="myDropdown" class="dropdown-content">
-        <a id="showCreateCanvasModalBtn">Create Canvas</a>
-        <a id="open_file">Open File</a>
         <a id="save_json">Save</a>
         <a id="download-image">Download as Image</a>
+        <a href="index.html" target="_blank">New Tab</a>
+        <!-- <a id="showCreateCanvasModalBtn">Create Canvas</a>
+        <a id="open_file">Open File</a> -->
+
+
 
        
         <!-- <a id="save_again">Save_again</a> -->
@@ -171,7 +174,19 @@
 <main>
   
         <div id="canvas-background" class="canvas-container" >
+            <div class="open_and_create_project">
+                <li id="showCreateCanvasModalBtn">Create Canvas</li>
+                <li id="open_file" style="background-color: rgb(209, 208, 208); color: #333;">Open Existing File</li>
+                <div class="drop-zone__input_json_container">
+                    <p><small> Drag and drop file here to </small>   <br><strong>"AUTO CREATE A COPY" </strong> <br> <small> of your existing file</small></p>
+                <input type="file" name="myFile" class="drop-zone__input_json" style="display: none">
+                </div>
+            </div>
+        
+         
              <input type="file" name="myFile" class="drop-zone__input" style="display: none">
+
+
         </div>
 
     <div id="canvas-tools-container">
@@ -313,7 +328,7 @@
 
 <!-- <img id="img-test" src="./img.jpeg" alt=""> -->
 
-<script type="module" src="main.js"></script>
+<script type="module" src="./main.js"></script>
 
 <script  src="./library_js/fabric.js"></script>
 <script src="./library_js/cropper.js"></script>
