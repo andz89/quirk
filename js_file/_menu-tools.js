@@ -79,8 +79,14 @@ export class Menu_tools extends Modification{
         fabric.Image.fromURL(reader.result, (img)=>{
         img.name = img.type
         img.id = this.uniqueId()
-        this.adding_object_style(img)
-
+        
+        // this.adding_object_style(img)
+  this.canvas.setActiveObject(img);
+  // this.objectSizeOnCanvas(object)
+  this.canvas.viewportCenterObject(img)
+  this.canvas.add(img);
+  this.canvas.renderAll()
+      this.updateModifications(true)
 
         })
 
@@ -230,34 +236,11 @@ async save_file_json(){
 
 
     }
-    canvasStroke(){
-        let shape_object =  new fabric.Rect({width: this.width, height: this.height, fill: null,stroke:'teal',lockMovementX: true,lockMovementY: true,lockScalingX: true,lockScalingY: true,lockRotation: true,selectable: false, name:'canvas_stroke', originX:'left', originY:'top',});
-     
+  
+ 
 
-    this.canvas.viewportCenterObject(shape_object)
-    shape_object.perPixelTargetFind =true, 
-    shape_object.strokeWidth = 0
-    this.canvas.add(shape_object) 
-      console.log('shape_object.perPixelTargetFind =true, ')
 
-    document.querySelector('#canvas_stroke_width').oninput = (e) =>{
-    shape_object.strokeWidth = parseInt(e.target.value);
-    shape_object.objectCaching = false,
-    shape_object.dirty = true;
-    shape_object.paintFirst = "stroke";
-      this.canvas.viewportCenterObject(shape_object)
-        
-      this.canvas.renderAll()
-    }
-     document.querySelector('#canvas_stroke_color').oninput = (e) =>{
-    shape_object.stroke = e.target.value;
-    shape_object.dirty = true;
 
-      // this.canvas.viewportCenterObject(shape_object)
-        
-      this.canvas.renderAll()
-    }
-    }
     canvasBackgroundColor(){
 
     let canvasBackground = document.querySelector('#canvas_background')
@@ -393,8 +376,9 @@ async save_file_json(){
           
           return false;
         }
-
-        clip_circle(object, clipPath, shape_object)
+        let width = 500;
+        let height = 500;
+        clip_circle(object, clipPath, shape_object,width, height)
         })
 
 
@@ -407,13 +391,15 @@ async save_file_json(){
         let clipPath =  new fabric.Rect({ width: 500,height: 500, top: 500 / 2, left: 500 / 2,   originX:"center", originY:"center" ,absolutePositioned: true})
         if(object === undefined){return false}//to check if object is selected
         if(object.lockMovementX == true && object.lockMovementY == true){ return false}
-
-        clip_circle(object, clipPath, shape_object)
+         let width = 500;
+        let height = 500;
+        clip_circle(object, clipPath, shape_object, width, height)
 
         })
+    
 
 
-      const clip_circle = (object, clipPath, shape_object)=>{
+      const clip_circle = (object, clipPath, shape_object, clip_width, clip_height) =>{
             
 
         let image_to_clip;
@@ -425,8 +411,8 @@ async save_file_json(){
         image_to_clip = object.clip_image_src_org;
         }
   
-        let width = 500;
-        let height = 500;
+        let width = clip_width
+        let height = clip_height
 
         //function to create canvas
         const canvas = (width, height) => {
@@ -801,78 +787,116 @@ align_bottom(){
 
 }
 
-test_crop_image(){
-  document.querySelector('#test_crop').onclick = () => {
-     let object = this.canvas.getActiveObjects();
-  
-         let image = object[0]
-         let shape = object[1]
-    // shape.width = shape.width +10
-    console.log(image.width + ' image');
-    console.log(shape.width + ' shape');
 
-    console.log(shape.getBoundingRect())
-    console.log(image.getBoundingRect())
-
-    console.log('shape width getScaledWidth : ' + shape.getScaledWidth())
-    let a = image.getBoundingRect().width  - shape.getBoundingRect().width
-  fabric.Image.fromURL(image._originalElement.currentSrc, (img)=>{
-  
-    img.width =   a// ang kalaparon
-    img.cropX =  0   // asa magsugod ang cropping
-   img.height = shape.getBoundingRect().height
-    img.cropY =  0   // asa magsugod ang cropping
-
-    // this.canvas.add(img)
-     this.adding_object_style(img)
-      console.log('created image width ' + img.width)
-
-
-  })
-
-  }
- 
-}
 
     download_as_image(){
       const download_image = document.querySelector("#download-image")
         download_image.onclick = () =>{
-          var scaleFactor = 1;
-        this.canvas.setWidth(this.width * scaleFactor);
-        this.canvas.setHeight(this.height * scaleFactor);
-        this.canvas.setZoom(scaleFactor);
+        //   var scaleFactor = 1;
+        // this.canvas.setWidth(this.width * scaleFactor);
+        // this.canvas.setHeight(this.height * scaleFactor);
+        // this.canvas.setZoom(scaleFactor);
+
+     
+        // this.canvas.setWidth(this.width);
+        // this.canvas.setHeight(this.height);
+          
+        this.canvas.renderAll()
+       
 
  
 
         let display_name = document.querySelector("#file_name").innerHTML
         const a = document.createElement("a");
         document.body.appendChild(a)
-        a.href = this.canvas.toDataURL()
-        a.download =  `${display_name}.jpeg`;
+        a.href = this.canvas.toDataURL({
+          format: 'png',
+          // quality:  1
+        
+        
+        })
+        a.download =  `${display_name}.png`;
         a.click();
         document.body.removeChild(a)
-        let canvasScale = 1;
-        let SCALE_FACTOR;
-      if(this.width >= 3000){
-      SCALE_FACTOR =5.2;
-      }
-      else if(this.width <= 2999 && this.width >= 2000){
-      SCALE_FACTOR= 2.8;
-      }
-      else if(this.width <= 1999 && this.width >= 1000){
-      SCALE_FACTOR= 2.1;
-      }
-      else{
-      SCALE_FACTOR= 1.1;
-      }
-      canvasScale = canvasScale / SCALE_FACTOR;
-      this.canvas.setHeight(this.height * (1 / SCALE_FACTOR));
-      this.canvas.setWidth(this.width * (1 / SCALE_FACTOR));
-      this.canvas.setZoom(canvasScale);     
-      this.canvas.renderAll();
-        this.canvas.renderAll();
+      //   let canvasScale = 1;
+      //   let SCALE_FACTOR;
+      // if(this.width >= 3000){
+      // SCALE_FACTOR =5.2;
+      // }
+      // else if(this.width <= 2999 && this.width >= 2000){
+      // SCALE_FACTOR= 2.8;
+      // }
+      // else if(this.width <= 1999 && this.width >= 1000){
+      // SCALE_FACTOR= 2.1;
+      // }
+      // else{
+      // SCALE_FACTOR= 3.1;
+      // }
+      // canvasScale = canvasScale / SCALE_FACTOR;
+      // this.canvas.setHeight(this.height * (1 / SCALE_FACTOR));
+      // this.canvas.setWidth(this.width * (1 / SCALE_FACTOR));
+      // this.canvas.setZoom(canvasScale);     
+      // this.canvas.renderAll();
+      //   this.canvas.renderAll();
         }
     }
+
+//     print() {
+//     let printCanvas = document.querySelector('#printCanvas')
+//     console.log(this.canvas.width)
+//     console.log(this.width)
+
+//     printCanvas.onclick = () =>{
+//     let scaleFactor = 1;
+//     this.canvas.setWidth(this.width * scaleFactor);
+//     this.canvas.setHeight(this.height * scaleFactor);
+//     this.canvas.setZoom(scaleFactor);
+   
+//     this.canvas.renderAll()
+
+//     const dataUrl = this.canvas.toDataURL(); 
+
+//     console.log(this.canvas.width)
+//     console.log(this.width)
+//     printJS({
+//     printable: [dataUrl],
+//     type: 'image',
+//     imageStyle: `
+//     display:flex; 
+//     justify-content:center;
+//     align-items: center;
+//     margin: auto;
+//     max-width: 100%; 
+//     `
+//     })
+
+
+// // let canvasScale = 1; 
+// if(this.width >= 3000){
+// this.SCALE_FACTOR =5.2;
+// }
+// else if(this.width <= 2999 && this.width >= 2000){
+// this.SCALE_FACTOR= 2.8;
+// }
+// else if(this.width <= 1999 && this.width >= 1000){
+// this.SCALE_FACTOR= 2.1;
+// }
+// else{
+// this.SCALE_FACTOR= 1.1;
+// }
+// canvasScale = canvasScale / this.SCALE_FACTOR;
+// this.canvas.setHeight(this.height * (1 / this.SCALE_FACTOR));
+// this.canvas.setWidth(this.width * (1 / this.SCALE_FACTOR));
+// this.canvas.setZoom(canvasScale);     
+// this.canvas.renderAll();
+
+
+         
+         
+//           }
+//     }
+
+
 
 
 }

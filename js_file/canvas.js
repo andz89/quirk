@@ -14,6 +14,7 @@ export class Canvas extends Modification{
 
 this.canvas.state = [];
 
+
 let utils = new Utilities({
         canvas : this.canvas,
         width : this.width,
@@ -61,23 +62,31 @@ let menu_tools = new Menu_tools({
         menu_tools.dragAndDrop_image()
         menu_tools.clip()
         menu_tools.paste_image()
-        menu_tools.test_crop_image()
+   
         menu_tools.download_as_image()
-        menu_tools.canvasStroke()
-        // menu_tools.atay()
+        // menu_tools.print()
+    
 
 
         //shapes
         menu_tools.insert_shape('#square',()=>{
         var object = new fabric.Rect({
-        width:549,
-        height:549,
+        // width:549,
+        // height:549,
+          width :600,
+      height :600,
         shape: 'square',
         fill: 'gray'
         });
         object.name ="square";
           object.id = this.uniqueId()
-        this.adding_object_style(object)
+        // this.adding_object_style(object)
+          this.canvas.setActiveObject(object);
+  // this.objectSizeOnCanvas(object)
+  this.canvas.viewportCenterObject(object)
+  this.canvas.add(object);
+  this.canvas.renderAll()
+      this.updateModifications(true)
    
         })
           menu_tools.insert_shape('#circle',()=>{
@@ -118,6 +127,7 @@ let menu_tools = new Menu_tools({
         right_tools.textAlign_right()
         right_tools.fontStyle()
         right_tools.undo()
+        right_tools.opacity()
 
         
 

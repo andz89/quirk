@@ -630,5 +630,15 @@ const loadAndUse =(font)=> {
         }
         }
 
+        opacity(){
+            document.querySelector('#scale-image').oninput = (e)=>{
+                let object = this.canvas.getActiveObject()
+                object.scaleX = e.target.value;
+                object.scaleY = e.target.value;
+                // console.log(e.target.value);
+                // this.canvas.viewportCenterObject(object)
+                this.canvas.renderAll()
+            }
+        }
 
 }   

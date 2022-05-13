@@ -120,6 +120,7 @@ fileHandle: fileHandle
 canvasInit.create_main_canvas()
 
 
+
 function fitCanvasToScreen(){
 // this.canvasScale = 1; 
 if(width >= 3000){

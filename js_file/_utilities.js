@@ -78,7 +78,8 @@ export class Utilities extends Modification{
     var activeObj = o.selected[0];
   
    
-    // this.updateModifications(true)
+//scale image
+ document.querySelector('#scale-image').value = activeObj.scaleX
 
     //bold text
     let bold =  document.querySelector('#bold')
@@ -175,10 +176,11 @@ export class Utilities extends Modification{
     this.updateModifications(true)
     }
 
+
     this.canvas.on({
     'selection:updated':select_object,
     'selection:created':select_object,
-    'object:modified': modify_object
+    'object:modified': modify_object,
    
     });
   
@@ -236,13 +238,15 @@ load_UI_lock_objects(){
 
 header(){
 
-document.querySelector('header').onclick = function(e){
+document.querySelector('header').onclick = (e)=>{
 
 document.querySelectorAll('.dropdown .dropdown-content').forEach((e)=>{e.style.display = 'none'})
 
 let element = e.target
 
 if(element.classList.contains('dropbtn-files')){
+  // this.canvas.discardActiveObject()
+  // this.canvas.renderAll()
 
 document.querySelector(".dropdown-files .dropdown-content").style.display = 'block';
 }
