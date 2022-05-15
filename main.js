@@ -97,34 +97,19 @@ import {Open_file} from "./js_file/_open_file.js";
     let SCALE_FACTOR = 1.1;
     let fileName = document.querySelector('#project_name').value
 
-    //     let width = '10in';
-    // let height = '7in';
-
-    // let width = '11.6929133858in';
-    // let height = '8.6220472441in';
-
-    // let width ='29.7cm'
-    // let height = '20.9cm'
-
-    //a4  or 8.3 x 11.7 inches
-    //formula to make 300 dpi
-  // 300dpi x size in inches
+ 
 
     let width = 3510;
     let height =2460;
 
-        //  let width = fabric.utils.parseUnit('21cm');
-        // let  height =fabric.utils.parseUnit('29.7cm');
       document.querySelector('#canvas-size-select').onchange = (e)=>{
       if(e.target.value ===  'A4-Landscape'){
         console.log('A4-Landscape')
-        width = '11.6929133858in';
-        height = '8.6220472441in';
+        width = 3510;
+        height =2460;
       };
 
       if(e.target.value ===  'A4-Portrait'){
-        console.log('A4-Portrait')
-
       width = 2490;
       height = 3510;
       };
@@ -134,7 +119,7 @@ import {Open_file} from "./js_file/_open_file.js";
       height = 2550;
       };
 
-      if(e.target.value ===  'letter-Landscape'){
+      if(e.target.value ===  'letter-Portrait'){
       width = 2550;
       height= 3300;
       };
@@ -145,8 +130,8 @@ import {Open_file} from "./js_file/_open_file.js";
       };
 
       if(e.target.value ===  '1x1'){
-        width = fabric.util.parseUnit('1in');
-      height = fabric.util.parseUnit('1in');
+        width = 300;
+      height = 300;
       
       };
 
@@ -154,8 +139,8 @@ import {Open_file} from "./js_file/_open_file.js";
     }
 
     //custom close button
-    document.querySelector('#createCanvasBtn').onclick = ()=>{
-    document.querySelector('#createCanvasModal').style.display = 'none';
+  document.querySelector('#createCanvasBtn').onclick = ()=>{
+  document.querySelector('#createCanvasModal').style.display = 'none';
   document.querySelector('.open_and_create_project').style.display = 'none'
 
 
@@ -187,15 +172,12 @@ import {Open_file} from "./js_file/_open_file.js";
         fileHandle: fileHandle
     })
     canvasInit.create_main_canvas()
-
-
-canvas_created.renderAll()
+// canvas_created.renderAll()
 function fitCanvasToScreen(){
-
 
 // this.canvasScale = 1; 
 if(width >= 3000){
-SCALE_FACTOR =5.2;
+SCALE_FACTOR =4.2;
 }
 else if(width <= 2999 && width >= 2000){
 SCALE_FACTOR= 2.8;
@@ -203,11 +185,9 @@ SCALE_FACTOR= 2.8;
 else if(width <= 1999 && width >= 1000){
     SCALE_FACTOR= 2.1;
 }
-else{
-SCALE_FACTOR= 1.1;
-}
-
-// SCALE_FACTOR =0.5; //for 1x1 picture
+// else{
+// SCALE_FACTOR= 1.1;
+// }
 
 canvasScale = canvasScale / SCALE_FACTOR;
 canvas_created.setHeight(height * (1 / SCALE_FACTOR));
@@ -273,19 +253,15 @@ canvas_created.renderAll();
 }
 
 zoomOut("#zoomOut")
- print()
+
 
  function print() {
     let printCanvas = document.querySelector('#printCanvas')
-    console.log(width)
-    console.log(width)
-
     printCanvas.onclick = () =>{
     let scaleFactor = 1;
     canvas_created.setWidth(width * scaleFactor);
     canvas_created.setHeight(height * scaleFactor);
     canvas_created.setZoom(scaleFactor);
-   
     canvas_created.renderAll()
 
     const dataUrl = canvas_created.toDataURL(); 
@@ -330,12 +306,13 @@ SCALE_FACTOR = 1.1
           }
     }
 
+ print()
 
 
     }
 
 
-    })
+})
 
 
   

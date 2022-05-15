@@ -630,13 +630,15 @@ const loadAndUse =(font)=> {
         }
         }
 
-        opacity(){
+        scale_object(){
+        
             document.querySelector('#scale-image').oninput = (e)=>{
                 let object = this.canvas.getActiveObject()
                 object.scaleX = e.target.value;
                 object.scaleY = e.target.value;
-                // console.log(e.target.value);
-                // this.canvas.viewportCenterObject(object)
+                object.originX ='center';
+                object.originY ='center';
+              
                 this.canvas.renderAll()
             }
         }

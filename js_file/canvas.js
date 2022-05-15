@@ -65,28 +65,39 @@ let menu_tools = new Menu_tools({
    
         menu_tools.download_as_image()
         // menu_tools.print()
+
+        menu_tools.test_crop();
+        menu_tools.log();
+  
     
 
 
         //shapes
         menu_tools.insert_shape('#square',()=>{
         var object = new fabric.Rect({
-        // width:549,
-        // height:549,
-          width :600,
-      height :600,
+     
+        width :600,
+        height :600,
         shape: 'square',
-        fill: 'gray'
+        fill: 'gray',
+         originX :'left',
+          originY :'top',
+          stroke: 'red',
+          borderColor: 'red',
+          borderScaleFactor: 2,
+          borderDashArray: [10],
+          cornerStyle:"rectangle",
+      
+  
+          // strokeWidth: 20
+    
         });
+        object.dirty = true;
         object.name ="square";
-          object.id = this.uniqueId()
-        // this.adding_object_style(object)
-          this.canvas.setActiveObject(object);
-  // this.objectSizeOnCanvas(object)
-  this.canvas.viewportCenterObject(object)
-  this.canvas.add(object);
-  this.canvas.renderAll()
-      this.updateModifications(true)
+        object.id = this.uniqueId()
+        this.adding_object_style(object)
+
+
    
         })
           menu_tools.insert_shape('#circle',()=>{
@@ -127,7 +138,8 @@ let menu_tools = new Menu_tools({
         right_tools.textAlign_right()
         right_tools.fontStyle()
         right_tools.undo()
-        right_tools.opacity()
+        right_tools.scale_object()
+
 
         
 

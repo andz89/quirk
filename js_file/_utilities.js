@@ -76,7 +76,7 @@ export class Utilities extends Modification{
     canvasOn(){
        const  select_object =(o)=>{
     var activeObj = o.selected[0];
-  
+    console.log(activeObj.o)
    
 //scale image
  document.querySelector('#scale-image').value = activeObj.scaleX
@@ -159,6 +159,8 @@ export class Utilities extends Modification{
     group.set("cornerStyle","circle");
     group.set("transparentCorners",false);
     group.set("lockUniScaling",true);
+    
+    
     }
     
 
@@ -168,10 +170,25 @@ export class Utilities extends Modification{
     activeObj.set("cornerStyle","circle");
     activeObj.set("transparentCorners",false);
     activeObj.set("lockUniScaling",true);
-
  
+   
+    //adjust scale range of input
+         let scale=  document.querySelector('#scale-image')
+
+          if(activeObj.width > 1000){
+               scale.max = 1
+          }
+          else if(activeObj.type === 'textbox'){
+             scale.max = 100
+          }
+          else{
+            scale.max = 10
+          }
+
     }
 
+
+  
     const modify_object =()=>{
     this.updateModifications(true)
     }

@@ -7,14 +7,20 @@ export class Menu_tools extends Modification{
     insertText(selector){
       let insert_text = document.querySelector(selector)
       insert_text.addEventListener('click', ()=>{
-      let object = new fabric.Textbox('Your Text Here')
+      let object = new fabric.Textbox('Your Text Here', {
+          textAlign: "center",
+          width:200,
+         
+          fontSize: 30,
+          scaleY: 5,
+          scaleX: 5,
+          id:this.uniqueId(),
+          dirty :true,
+      })
 
-    object.set("textAlign","center");
-    object.set("fontSize",12);
-    // object.perPixelTargetFind = true;
-    object.name = object.type;
-    object.id = this.uniqueId();
-     object.dirty = true;
+        object.name = object.type
+     
+
  
     this.adding_object_style(object);
 
@@ -79,15 +85,9 @@ export class Menu_tools extends Modification{
         fabric.Image.fromURL(reader.result, (img)=>{
         img.name = img.type
         img.id = this.uniqueId()
-        
-        // this.adding_object_style(img)
-  this.canvas.setActiveObject(img);
-  // this.objectSizeOnCanvas(object)
-  this.canvas.viewportCenterObject(img)
-  this.canvas.add(img);
-  this.canvas.renderAll()
-      this.updateModifications(true)
-
+         img.originX ='left',
+          img.originY ='top'
+        this.adding_object_style(img)
         })
 
         };
@@ -792,10 +792,10 @@ align_bottom(){
     download_as_image(){
       const download_image = document.querySelector("#download-image")
         download_image.onclick = () =>{
-        //   var scaleFactor = 1;
-        // this.canvas.setWidth(this.width * scaleFactor);
-        // this.canvas.setHeight(this.height * scaleFactor);
-        // this.canvas.setZoom(scaleFactor);
+          var scaleFactor = 1;
+        this.canvas.setWidth(this.width * scaleFactor);
+        this.canvas.setHeight(this.height * scaleFactor);
+        this.canvas.setZoom(scaleFactor);
 
      
         // this.canvas.setWidth(this.width);
@@ -895,6 +895,50 @@ align_bottom(){
          
 //           }
 //     }
+log(){
+  let log = document.querySelector('#log')
+  log.onclick = () =>{
+    let obj = this.canvas.getActiveObject()
+    console.log(obj)
+
+    console.log(obj.offset)
+  }
+}
+test_crop(){
+
+    let test_crop_btn = document.querySelector('#test_crop');
+    test_crop_btn.onclick = () => {
+
+      let objects = this.canvas.getActiveObjects()
+      let image_object =  objects[0];
+      let rect_object = objects[1];
+      // console.log(image_object._originalElement.top)
+    console.log(image_object)
+    let a = image_object.getBoundingRect()
+    console.log(a)
+
+    
+      fabric.Image.fromURL(image_object._originalElement.currentSrc, (img)=>{
+        img.width = rect_object.getScaledWidth()
+        img.cropX = Math.abs(image_object.getBoundingRect().left * rect_object.left) 
+
+        img.height = rect_object.getScaledHeight()
+        img.cropY =  Math.abs(image_object.getBoundingRect().top * rect_object.top) 
+
+        this.adding_object_style(img)
+
+      })
+      // fabric.Image.fromURL(image_object._originalElement.currentSrc, (img)=>{
+      //   img.width = rect_object.getScaledWidth()
+      //   img.cropX = Math.abs(image_object.getBoundingRect().left - rect_object.left) 
+      //   img.height = rect_object.getScaledHeight()
+      //   img.cropY =  Math.abs(image_object.getBoundingRect().top - rect_object.top) 
+      //   this.adding_object_style(img)
+
+      // })
+
+    }
+}
 
 
 

@@ -103,12 +103,27 @@ export class Modification{
 
 
   adding_object_style(object){
-  this.canvas.setActiveObject(object);
+    if(object.width > this.canvas.width){
+      console.log("objectSizeOnCanvas")
   this.objectSizeOnCanvas(object)
-  this.canvas.viewportCenterObject(object)
-  this.canvas.add(object);
-  this.canvas.renderAll()
-      this.updateModifications(true)
+    }
+    // console.log("objectSizeOnCanvas")
+    if(object.type === 'textbox'){
+    object.perPixelTargetFind = false;
+    this.canvas.setActiveObject(object);
+    this.canvas.viewportCenterObject(object)
+    this.canvas.add(object);
+    this.canvas.renderAll()
+    this.updateModifications(true)
+    }else{
+    object.perPixelTargetFind = true,
+    this.canvas.setActiveObject(object);
+    this.canvas.viewportCenterObject(object)
+    this.canvas.add(object);
+    this.canvas.renderAll()
+    this.updateModifications(true)
+    }
+   
 }
 
 

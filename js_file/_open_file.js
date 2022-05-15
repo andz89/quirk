@@ -108,7 +108,14 @@ preserveObjectStacking:true,
 let canvas_created = canvas(width, height)
 
 canvas_created.loadFromJSON(canvas_saved.json);
-
+let obj = canvas_created.getObjects();
+ obj.forEach((each)=>{
+  if(each.type === 'textbox'){
+    return false;
+  }
+  each.perPixelTargetFind = true;
+  canvas_created.renderAll()
+ })
 let canvasInit = new Canvas({
 canvas: canvas_created,
 width: width,
